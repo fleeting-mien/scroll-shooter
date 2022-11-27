@@ -34,13 +34,13 @@ while not finished:
             ally_ship.react_on_keys(event)
 
     screen.blit(background, (0, 0))
-    ally_ship.hit()
+    ship_group.update()
     ally_ship.move()
+    ally_ship.hit()
     if randint(1, 100) == 10:
         enemy_bullet.create()
     enemy_bullet_group.draw(screen)
     ship_group.draw(screen)
-    ship_group.update()
     pygame.display.update()
     #print(ally_ship.lives)
 
