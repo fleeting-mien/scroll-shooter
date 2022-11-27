@@ -14,11 +14,12 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
 
     def create(self):
+        global enemy_bullet_group
         new_enemy_bullet = EnemyBullet("pixil-frame-0 (1).png")
         enemy_bullet_group.add(new_enemy_bullet)
 
     def update(self):
-        self.rect.top -= 20
+        self.rect.top -= self.vy
 
 
 
@@ -46,6 +47,20 @@ class AllyShip(pygame.sprite.Sprite):
     def hit(self):
             for i in pygame.sprite.spritecollide(ally_ship, enemy_bullet_group, True):
                 self.lives -= 1
+
+    def shoot(self):
+        pass
+
+    def evolve(self, event): # команда для перемещения по нажатию клавиатуры
+        if event.key == pygame.K_d:
+            self.x += 20
+        elif event.key == pygame.K_a:
+            self.x -= 20
+        elif event.key == pygame.K_w:
+            self.y -= 20
+        elif event.key == pygame.K_s:
+            self.y += 20
+
 
 pygame.init()
 clock = pygame.time.Clock()
