@@ -39,6 +39,7 @@ while not finished:
     ally_ship.hit()
     if randint(1, 100) == 10:
         enemy_bullet.create()
+    #enemy_bullet_group.update() - строчка, завтавляющая пулю лететь вниз
     enemy_bullet_group.draw(screen)
     ship_group.draw(screen)
     pygame.display.update()
