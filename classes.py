@@ -9,7 +9,9 @@ class EnemyBullet(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.x = x
+        self.y = y
+        self.rect.center = (self.x, self.y)
         # self.rect.center = enemy.rect.center
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
 
@@ -19,17 +21,19 @@ class EnemyBullet(pygame.sprite.Sprite):
         enemy_bullet_group.add(self)
 
     def update(self):
-        self.rect.top -= self.vy
+        self.y += self.vy
+        self.rect.center = (self.x, self.y)
 
 
 
 class EnemyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path):
+    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y/4):
         super().__init__(picture_path)
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
-        self.x = self.rect.left
-        self.y = self.rect.top
+        self.x = x
+        self.y = y
+        self.rect.center = (self.x, self.y)
 
 
 class AllyShip(pygame.sprite.Sprite):
