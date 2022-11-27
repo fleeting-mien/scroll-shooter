@@ -1,13 +1,15 @@
 import pygame
+from config import *
 
 enemy_bullet_group = pygame.sprite.Group()
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, picture_path):
+    def __init__(self, picture_path, x=MAX_X/4, y=MAX_Y*3/4):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
         # self.rect.center = enemy.rect.center
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
 
@@ -31,12 +33,12 @@ class EnemyShip(pygame.sprite.Sprite):
 
 
 class AllyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path):
+    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*3/4):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
-        self.x = self.rect.left
-        self.y = self.rect.top
+        self.x = x
+        self.y = y
         self.v = 20
         self.vx = 0
         self.vy = 0
@@ -47,8 +49,17 @@ class AllyShip(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
     def move(self):
-        self.x += self.vx
-        self.y -= self.vy
+        if self.x <= 0 and self.vx < 0:
+            self.x = 0
+        elif self.x >= MAX_X and self.vx > 0:
+            self.x = MAX_X
+        elif self.y <= MAX_Y/2 and self.vy > 0:
+            self.y = MAX_Y/2
+        elif self.y >= MAX_Y and self.vy < 0:
+            self.y = MAX_Y
+        else:
+            self.x += self.vx
+            self.y -= self.vy
 
     def hit(self):
         global enemy_bullet_group
