@@ -16,7 +16,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         # self.rect.center = enemy.rect.center
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
 
-    def create(self):  # а в чём смысл этого метода?
+    def create(self):  # насколько я поняла, чтобы создать пулю, нужно сначала вызвать init, а потом create? непрозрачно
         global enemy_bullet_group
         # new_enemy_bullet = EnemyBullet("enemy_bullet.png")
         enemy_bullet_group.add(self)
@@ -72,6 +72,8 @@ class AllyShip(pygame.sprite.Sprite):
     def update(self):
         # self.rect.center = pygame.mouse.get_pos()
         self.rect.center = (self.x, self.y)
+        if self.lives == 0:
+            die()
 
     def move(self):
         if self.x <= 0 and self.vx < 0:
@@ -110,6 +112,13 @@ class AllyShip(pygame.sprite.Sprite):
                 self.vx = 0
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 self.vy = 0
+
+
+def die():
+    pass
+    # очищаются группы пуль и кораблей
+    # прекращаются игровые процессы
+    # вылезает менюшка
 
 
 # Старый код, который Миша попросил закомментить но не убирать. Не уверен что с последними
