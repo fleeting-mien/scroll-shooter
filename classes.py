@@ -2,6 +2,7 @@ import pygame
 from config import *
 
 enemy_bullet_group = pygame.sprite.Group()
+ally_bullet_group = pygame.sprite.Group()
 
 
 class EnemyBullet(pygame.sprite.Sprite):
@@ -34,6 +35,26 @@ class EnemyShip(pygame.sprite.Sprite):
         self.y = y
         self.rect.center = (self.x, self.y)
 
+
+class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
+    def __init__(self, picture_path, x, y):
+        super().__init__()
+        self.image = pygame.image.load(picture_path)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.center = (self.x, self.y)
+        # self.rect.center = ally.rect.center ??? idk
+        self.vy = 20
+
+    def create(self):
+        global ally_bullet_group
+        # new_ally_bullet = AllyBullet("ally_bullet.png")
+        ally_bullet_group.add(self)
+
+    def update(self):
+        self.y -= self.vy
+        self.rect.center = (self.x, self.y)
 
 class AllyShip(pygame.sprite.Sprite):
     def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*3/4):
