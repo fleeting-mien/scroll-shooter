@@ -17,7 +17,7 @@ class EnemyBullet(pygame.sprite.Sprite):
 
     def create(self):
         global enemy_bullet_group
-        # new_enemy_bullet = EnemyBullet("pixil-frame-0 (1).png")
+        # new_enemy_bullet = EnemyBullet("enemy_bullet.png")
         enemy_bullet_group.add(self)
 
     def update(self):
@@ -99,19 +99,19 @@ class GameOverScreen:  # ?
 # clock = pygame.time.Clock()
 # print(type(enemy_bullet_group), enemy_bullet_group)
 #
-# enemy = EnemyBullet("pixil-frame-0 (1).png")
+# enemy = EnemyBullet("enemy_bullet.png")
 # enemy.create()
 #
-# background = pygame.image.load("Space (1).jpg")
+# background = pygame.image.load("background.jpg")
 #
-# ally_ship = AllyShip("pixil-frame-0 (3).png")
+# ally_ship = AllyShip("ally_ship.png")
 # ship_group = pygame.sprite.Group()
 # ship_group.add(ally_ship)
-# ship = AllyShip("pixil-frame-0 (3).png")
+# ship = AllyShip("ally_ship.png")
 # screen_width = 600
 # screen_height = 700
 # screen = pygame.display.set_mode((screen_width, screen_height))
-# enemy_bullet = EnemyBullet("pixil-frame-0 (1).png")
+# enemy_bullet = EnemyBullet("enemy_bullet.png")
 # pygame.mouse.set_visible(False)
 #
 # while True:
