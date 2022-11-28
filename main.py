@@ -37,10 +37,15 @@ while not finished:
     ship_group.update()
     ally_ship.move()
     ally_ship.hit()
-    if randint(1, 100) == 10:
+    if randint(1, 100) == 10:  # тестовая пуля, насколько я понимаю?
         enemy_bullet.create()
-    # enemy_bullet_group.update() - строчка, завтавляющая пулю лететь вниз
+
+    enemy_bullet_group.update()  # строчка, заcтавляющая пулю лететь вниз
+    ally_bullet_group.update()
+
     enemy_bullet_group.draw(screen)
+    ally_bullet_group.draw(screen)
+
     ship_group.draw(screen)
     pygame.display.update()
     # print(ally_ship.lives)

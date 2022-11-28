@@ -6,7 +6,7 @@ ally_bullet_group = pygame.sprite.Group()
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, picture_path, x=MAX_X/4, y=MAX_Y*3/4):
+    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*1/4):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -16,7 +16,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         # self.rect.center = enemy.rect.center
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
 
-    def create(self):
+    def create(self):  # а в чём смысл этого метода?
         global enemy_bullet_group
         # new_enemy_bullet = EnemyBullet("enemy_bullet.png")
         enemy_bullet_group.add(self)
@@ -47,7 +47,7 @@ class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели план
         # self.rect.center = ally.rect.center ??? idk
         self.vy = 20
 
-    def create(self):
+    def create(self):  # метод скопирован, я не знаю что он делает
         global ally_bullet_group
         # new_ally_bullet = AllyBullet("ally_bullet.png")
         ally_bullet_group.add(self)
@@ -55,6 +55,7 @@ class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели план
     def update(self):
         self.y -= self.vy
         self.rect.center = (self.x, self.y)
+
 
 class AllyShip(pygame.sprite.Sprite):
     def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*3/4):
@@ -91,7 +92,8 @@ class AllyShip(pygame.sprite.Sprite):
             self.lives -= 1
 
     def shoot(self):
-        pass
+        bullet = AllyBullet("ally_bullet.png", self.x, self.y)
+        bullet.create()
 
     def react_on_keys(self, event):  # команда для перемещения по нажатию клавиатуры
         if event.type == pygame.KEYDOWN:
@@ -109,9 +111,6 @@ class AllyShip(pygame.sprite.Sprite):
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 self.vy = 0
 
-
-class GameOverScreen:  # ?
-    pass
 
 # Старый код, который Миша попросил закомментить но не убирать. Не уверен что с последними
 # обновлениями он всё еще работает
