@@ -94,7 +94,7 @@ class AllyShip(pygame.sprite.Sprite):
             self.lives -= 1
 
     def shoot(self):
-        bullet = AllyBullet("ally_bullet.png", self.x, self.y)
+        bullet = AllyBullet("images/ally_bullet.png", self.x, self.y)
         bullet.create()
 
     def react_on_keys(self, event):  # команда для перемещения по нажатию клавиатуры

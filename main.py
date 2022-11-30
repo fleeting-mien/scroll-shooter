@@ -10,12 +10,12 @@ game_state = "game"
 # пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
 # потом сделаем "menu", вместо "game" сделаем уровни и т.д. наверное
 
-background = pygame.image.load("background.jpg")
+background = pygame.image.load("images/background.jpg")
 
-ally_ship = AllyShip("ally_ship.png")
+ally_ship = AllyShip("images/ally_ship.png")
 ship_group = pygame.sprite.Group()
 ship_group.add(ally_ship)
-enemy_bullet = EnemyBullet("enemy_bullet.png")
+enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 enemy_bullet.create()
 pygame.mouse.set_visible(False)
 pygame.display.update()
@@ -40,7 +40,7 @@ while not finished:
     ally_ship.hit()
 
     if randint(1, 100) == 10:  # тестовая пуля, насколько я понимаю?
-        enemy_bullet = EnemyBullet("enemy_bullet.png")
+        enemy_bullet = EnemyBullet("images/enemy_bullet.png")
         enemy_bullet.create()
 
     enemy_bullet_group.update()  # строчка, заcтавляющая пулю лететь вниз
