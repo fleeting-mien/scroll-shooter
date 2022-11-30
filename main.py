@@ -83,9 +83,6 @@ while not finished:
 
     screen.blit(background, (0, 0))
 
-    # if randint(1, 100) == 10:  # тестовая пуля, насколько я понимаю?
-    #     enemy_bullet = EnemyBullet()
-
     update()
     draw()
 

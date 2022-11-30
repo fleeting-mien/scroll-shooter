@@ -35,14 +35,18 @@ class EnemyShip(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+
         self.vx = 0
         self.vy = 0
+        self.lives = 1
+
         self.rect.center = (self.x, self.y)
         group.add(self)
 
     def update(self):
         self.rect.center = (self.x, self.y)
         self.move()
+        self.hit()
         if randint(1, 100) == 100:
             self.shoot()
 
@@ -52,6 +56,12 @@ class EnemyShip(pygame.sprite.Sprite):
 
     def shoot(self):
         EnemyBullet(x=self.x, y=self.y)
+
+    def hit(self):
+        for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
+            self.lives -= 1
+        if self.lives < 0:
+            self.kill()
 
 
 class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
@@ -85,10 +95,7 @@ class AllyShip(pygame.sprite.Sprite):
         ally_ship_group.add(self)
 
     def update(self):
-
         self.rect.center = (self.x, self.y)
-        if self.lives == 0:
-            game_over()
         self.move()
         self.hit()
 
@@ -114,9 +121,10 @@ class AllyShip(pygame.sprite.Sprite):
             self.y = y
 
     def hit(self):
-        global enemy_bullet_group
         for i in pygame.sprite.spritecollide(self, enemy_bullet_group, True):
             self.lives -= 1
+        if self.lives < 0:
+            game_over()
 
     def shoot(self):
         AllyBullet(x=self.x, y=self.y)
