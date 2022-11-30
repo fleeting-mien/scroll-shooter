@@ -6,6 +6,8 @@ ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 
+keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
+
 
 class EnemyBullet(pygame.sprite.Sprite):
     def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group = enemy_bullet_group):
@@ -25,8 +27,8 @@ class EnemyBullet(pygame.sprite.Sprite):
 
 
 class EnemyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path="enemy_ship.png", x=MAX_X/2, y=MAX_Y/4, group=enemy_ship_group):
-        super().__init__(picture_path)
+    def __init__(self, picture_path="images/enemy_ship.png", x=MAX_X/2, y=MAX_Y/4, group=enemy_ship_group):
+        super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
         self.x = x
@@ -36,7 +38,7 @@ class EnemyShip(pygame.sprite.Sprite):
 
 
 class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
-    def __init__(self, picture_path="ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4, group=ally_bullet_group):
+    def __init__(self, picture_path="images/ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4, group=ally_bullet_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -53,7 +55,7 @@ class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели план
 
 
 class AllyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*3/4):
+    def __init__(self, picture_path="images/ally_ship.png", x=MAX_X/2, y=MAX_Y*3/4):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -74,17 +76,25 @@ class AllyShip(pygame.sprite.Sprite):
         self.hit()
 
     def move(self):
-        if self.x <= 0 and self.vx < 0:
-            self.x = 0
-        elif self.x >= MAX_X and self.vx > 0:
-            self.x = MAX_X
-        elif self.y <= MAX_Y/2 and self.vy > 0:
-            self.y = MAX_Y/2
-        elif self.y >= MAX_Y and self.vy < 0:
-            self.y = MAX_Y
+        self.vx = (keys_down["d"] - keys_down["a"]) * self.v
+        self.vy = (keys_down["s"] - keys_down["w"]) * self.v
+
+        x = self.x + self.vx  # будущие координаты
+        y = self.y + self.vy
+
+        if x < BORDER_X:
+            self.x = BORDER_X
+        elif x > MAX_X - BORDER_X:
+            self.x = MAX_X - BORDER_X
         else:
-            self.x += self.vx
-            self.y -= self.vy
+            self.x = x
+
+        if y < MAX_Y/2 + BORDER_Y:
+            self.y = MAX_Y/2 + BORDER_Y
+        elif y > MAX_Y - BORDER_Y:
+            self.y = MAX_Y - BORDER_Y
+        else:
+            self.y = y
 
     def hit(self):
         global enemy_bullet_group
@@ -93,22 +103,6 @@ class AllyShip(pygame.sprite.Sprite):
 
     def shoot(self):
         AllyBullet("images/ally_bullet.png", self.x, self.y)
-
-    def react_on_keys(self, event):  # команда для перемещения по нажатию клавиатуры
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d:
-                self.vx = self.v
-            elif event.key == pygame.K_a:
-                self.vx = -self.v
-            elif event.key == pygame.K_w:
-                self.vy = self.v
-            elif event.key == pygame.K_s:
-                self.vy = -self.v
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_d or event.key == pygame.K_a:
-                self.vx = 0
-            if event.key == pygame.K_w or event.key == pygame.K_s:
-                self.vy = 0
 
 
 def die():

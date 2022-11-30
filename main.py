@@ -12,7 +12,7 @@ game_state = "game"
 
 background = pygame.image.load("images/background.jpg")
 
-ally_ship = AllyShip("images/ally_ship.png")
+AllyShip()
 
 enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 
@@ -42,6 +42,27 @@ def draw():
     ally_ship_group.draw(screen)
 
 
+def react_on_keys(pygame_event):  # команда для перемещения по нажатию клавиатуры
+    if pygame_event.type == pygame.KEYDOWN:
+        if pygame_event.key == pygame.K_w:
+            keys_down["w"] = 1
+        elif pygame_event.key == pygame.K_a:
+            keys_down["a"] = 1
+        elif pygame_event.key == pygame.K_s:
+            keys_down["s"] = 1
+        elif pygame_event.key == pygame.K_d:
+            keys_down["d"] = 1
+    elif pygame_event.type == pygame.KEYUP:
+        if pygame_event.key == pygame.K_w:
+            keys_down["w"] = 0
+        elif pygame_event.key == pygame.K_a:
+            keys_down["a"] = 0
+        elif pygame_event.key == pygame.K_s:
+            keys_down["s"] = 0
+        elif pygame_event.key == pygame.K_d:
+            keys_down["d"] = 0
+
+
 while not finished:
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
@@ -51,8 +72,7 @@ while not finished:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for ship in ally_ship_group:
                     ship.shoot()
-            for ship in ally_ship_group:
-                ship.react_on_keys(event)
+            react_on_keys(event)
 
     screen.blit(background, (0, 0))
 
