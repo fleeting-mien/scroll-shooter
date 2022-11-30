@@ -1,16 +1,18 @@
 import pygame
 from config import *
+from random import randint
 
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
+groups = {enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group = enemy_bullet_group):
+    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group=enemy_bullet_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -33,8 +35,23 @@ class EnemyShip(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+        self.vx = 0
+        self.vy = 0
         self.rect.center = (self.x, self.y)
         group.add(self)
+
+    def update(self):
+        self.rect.center = (self.x, self.y)
+        self.move()
+        if randint(1, 100) == 100:
+            self.shoot()
+
+    def move(self):  # for inheritance purposes
+        self.x += self.vx
+        self.y += self.vy
+
+    def shoot(self):
+        EnemyBullet(x=self.x, y=self.y)
 
 
 class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
@@ -68,10 +85,10 @@ class AllyShip(pygame.sprite.Sprite):
         ally_ship_group.add(self)
 
     def update(self):
-        # self.rect.center = pygame.mouse.get_pos()
+
         self.rect.center = (self.x, self.y)
         if self.lives == 0:
-            die()
+            game_over()
         self.move()
         self.hit()
 
@@ -102,14 +119,32 @@ class AllyShip(pygame.sprite.Sprite):
             self.lives -= 1
 
     def shoot(self):
-        AllyBullet("images/ally_bullet.png", self.x, self.y)
+        AllyBullet(x=self.x, y=self.y)
 
 
-def die():
+def game_over():
     pass
+
     # очищаются группы пуль и кораблей
     # прекращаются игровые процессы
     # вылезает менюшка
+
+    # for group in groups:
+    #     group.empty()
+    # game_state = "gameover"
+
+
+class LineEnemy(EnemyShip):
+    def __init__(self, x=MAX_X/2, y=MAX_Y/4, speed=10, amplitude=MAX_X/3, center=MAX_X/2):
+        super().__init__(x=x, y=y)  # picture_path="line_enemy.png"
+        self.vx = speed
+        self.a = amplitude
+        self.x0 = center
+
+    def move(self):
+        if not (self.x0 - self.a < self.x < self.x0 + self.a):
+            self.vx *= -1
+        super().move()
 
 
 # Старый код, который Миша попросил закомментить но не убирать. Не уверен что с последними
