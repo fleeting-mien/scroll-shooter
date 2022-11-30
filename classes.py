@@ -36,8 +36,8 @@ class EnemyShip(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
+        self.x = randint(BORDER_X, MAX_X - BORDER_X)
+        self.y = randint(BORDER_Y, MAX_Y/2)
 
         self.vx = 0
         self.vy = 0
@@ -140,11 +140,12 @@ def game_over(game=game_state):
 
 
 class LineEnemy(EnemyShip):
-    def __init__(self, x=MAX_X/2, y=MAX_Y/4, speed=10, amplitude=MAX_X/3, center=MAX_X/2):
-        super().__init__(picture_path="images/line_enemy.png", x=x, y=y)
-        self.vx = speed
-        self.a = amplitude
-        self.x0 = center
+    def __init__(self):
+        self.a = randint(MAX_X/5, MAX_X/2 - 2*BORDER_X)
+        self.x0 = randint(self.a + BORDER_X, MAX_X - self.a - BORDER_X)
+        super().__init__(picture_path="images/line_enemy.png")
+        self.vx = randint(-10, 10)
+        self.x = self.x0
 
     def move(self):
         if not (self.x0 - self.a < self.x < self.x0 + self.a):
