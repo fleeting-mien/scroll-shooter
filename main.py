@@ -13,7 +13,10 @@ background = pygame.image.load("images/background.jpg")
 
 AllyShip()
 LineEnemy()
-EnemyShip(y=MAX_Y/4-64)
+CircleEnemy()
+EnemyShip()
+
+spawn_timer = 0
 
 # enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 
@@ -70,16 +73,28 @@ def react_on_keys(pygame_event):
         elif pygame_event.key == pygame.K_d:
             keys_down["d"] = 0
 
+def spawn():
+    global spawn_timer
+    spawn_timer += 1
+    if spawn_timer == 300:
+        spawn_timer = 0
+        CircleEnemy()
+    elif spawn_timer == 100:
+        EnemyShip()
+    elif spawn_timer == 200:
+        LineEnemy()
 
 while not finished:
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
+        spawn()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 shoot()
             react_on_keys(event)
+
 
     screen.blit(background, (0, 0))
 
