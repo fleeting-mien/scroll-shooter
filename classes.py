@@ -124,6 +124,8 @@ class AllyShip(pygame.sprite.Sprite):
         for i in pygame.sprite.spritecollide(self, enemy_bullet_group, True):
             self.lives -= 1
         if self.lives < 0:
+            for group in groups:
+                group.empty()
             game_over()
 
     def shoot(self):
