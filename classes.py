@@ -3,10 +3,12 @@ from config import *
 
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
+enemy_ship_group = pygame.sprite.Group()
+ally_ship_group = pygame.sprite.Group()
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y*1/4):
+    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group = enemy_bullet_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -15,11 +17,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         # self.rect.center = enemy.rect.center
         self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
-
-    def create(self):  # насколько я поняла, чтобы создать пулю, нужно сначала вызвать init, а потом create? непрозрачно
-        global enemy_bullet_group
-        # new_enemy_bullet = EnemyBullet("enemy_bullet.png")
-        enemy_bullet_group.add(self)
+        group.add(self)
 
     def update(self):
         self.y += self.vy
@@ -27,30 +25,27 @@ class EnemyBullet(pygame.sprite.Sprite):
 
 
 class EnemyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path, x=MAX_X/2, y=MAX_Y/4):
+    def __init__(self, picture_path="enemy_ship.png", x=MAX_X/2, y=MAX_Y/4, group=enemy_ship_group):
         super().__init__(picture_path)
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
+        group.add(self)
 
 
 class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
-    def __init__(self, picture_path, x, y):
+    def __init__(self, picture_path="ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4, group=ally_bullet_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        # self.rect.center = ally.rect.center ??? idk
+        # self.rect.center = ally.rect.center ???
         self.vy = 20
-
-    def create(self):  # метод скопирован, я не знаю что он делает
-        global ally_bullet_group
-        # new_ally_bullet = AllyBullet("ally_bullet.png")
-        ally_bullet_group.add(self)
+        group.add(self)
 
     def update(self):
         self.y -= self.vy
@@ -68,12 +63,15 @@ class AllyShip(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
         self.lives = 3
+        ally_ship_group.add(self)
 
     def update(self):
         # self.rect.center = pygame.mouse.get_pos()
         self.rect.center = (self.x, self.y)
         if self.lives == 0:
             die()
+        self.move()
+        self.hit()
 
     def move(self):
         if self.x <= 0 and self.vx < 0:
@@ -94,8 +92,7 @@ class AllyShip(pygame.sprite.Sprite):
             self.lives -= 1
 
     def shoot(self):
-        bullet = AllyBullet("images/ally_bullet.png", self.x, self.y)
-        bullet.create()
+        AllyBullet("images/ally_bullet.png", self.x, self.y)
 
     def react_on_keys(self, event):  # команда для перемещения по нажатию клавиатуры
         if event.type == pygame.KEYDOWN:

@@ -13,14 +13,33 @@ game_state = "game"
 background = pygame.image.load("images/background.jpg")
 
 ally_ship = AllyShip("images/ally_ship.png")
-ship_group = pygame.sprite.Group()
-ship_group.add(ally_ship)
+
 enemy_bullet = EnemyBullet("images/enemy_bullet.png")
-enemy_bullet.create()
+
 pygame.mouse.set_visible(False)
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
+
+
+def update():
+    """
+    calls the update method of all objects
+    """
+    enemy_bullet_group.update()
+    ally_bullet_group.update()
+    enemy_ship_group.update()
+    ally_ship_group.update()
+
+
+def draw():
+    """
+    calls the draw method of all objects
+    """
+    enemy_bullet_group.draw(screen)
+    ally_bullet_group.draw(screen)
+    enemy_ship_group.draw(screen)
+    ally_ship_group.draw(screen)
 
 
 while not finished:
@@ -30,25 +49,19 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                ally_ship.shoot()
-            ally_ship.react_on_keys(event)
+                for ship in ally_ship_group:
+                    ship.shoot()
+            for ship in ally_ship_group:
+                ship.react_on_keys(event)
 
     screen.blit(background, (0, 0))
-    ship_group.update()
-
-    ally_ship.move()
-    ally_ship.hit()
 
     if randint(1, 100) == 10:  # тестовая пуля, насколько я понимаю?
-        enemy_bullet = EnemyBullet("images/enemy_bullet.png")
-        enemy_bullet.create()
+        enemy_bullet = EnemyBullet()
 
-    enemy_bullet_group.update()  # строчка, заcтавляющая пулю лететь вниз
-    ally_bullet_group.update()
-    enemy_bullet_group.draw(screen)
-    ally_bullet_group.draw(screen)
+    update()
+    draw()
 
-    ship_group.draw(screen)
     pygame.display.update()
     # print(ally_ship.lives)
 
