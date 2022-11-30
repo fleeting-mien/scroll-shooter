@@ -151,6 +151,22 @@ class LineEnemy(EnemyShip):
             self.vx *= -1
         super().move()
 
+class CircleEnemy(EnemyShip):
+    def __init__(self):
+        self.R = randint(10, 50)
+        self.x0 = randint(self.R + BORDER_X, MAX_X - self.R - BORDER_X)
+        self.y0 = randint(self.R + BORDER_Y, MAX_Y/2 - self.R)
+        super().__init__(picture_path="images/line_enemy.png")
+        self.omega = 0.1
+        self.angle = 0
+        self.x = self.x0 + self.R * cos(self.angle)
+        self.y = self.y0 + self.R * sin(self.angle)
+
+    def move(self):
+        self.angle += self.omega
+        self.x = self.x0 + self.R * cos(self.angle)
+        self.y = self.y0 + self.R * sin(self.angle)
+
 
 # Старый код, который Миша попросил закомментить но не убирать. Не уверен что с последними
 # обновлениями он всё еще работает
