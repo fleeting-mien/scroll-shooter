@@ -1,6 +1,7 @@
 import pygame
 from config import *
 from random import randint
+from numpy import *
 
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
@@ -32,7 +33,7 @@ class EnemyBullet(pygame.sprite.Sprite):
 
 
 class EnemyShip(pygame.sprite.Sprite):
-    def __init__(self, picture_path="images/enemy_ship.png", x=MAX_X/2, y=MAX_Y/4, group=enemy_ship_group):
+    def __init__(self, picture_path="images/enemy_ship.png", group=enemy_ship_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -75,7 +76,6 @@ class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели план
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        # self.rect.center = ally.rect.center ???
         self.vy = 20
         group.add(self)
 
@@ -133,10 +133,11 @@ class AllyShip(pygame.sprite.Sprite):
         AllyBullet(x=self.x, y=self.y)
 
 
-def game_over(game=game_state):
+def game_over():
+    global game_state
     for group in groups:
         group.empty()
-    game = "gameover"
+    game_state = "gameover"
 
 
 class LineEnemy(EnemyShip):
