@@ -6,14 +6,14 @@ import sys
 
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
-game_state = "game"
-# пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
-# потом сделаем "menu", вместо "game" сделаем уровни и т.д. наверное
+
+# объявление game_state перемещено в classes.py, чтобы оттуда его менять
 
 background = pygame.image.load("images/background.jpg")
 
 AllyShip()
 LineEnemy()
+EnemyShip(y=MAX_Y/4-64)
 
 # enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 

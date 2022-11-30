@@ -5,3 +5,5 @@ FPS = 30
 
 BORDER_X = 36
 BORDER_Y = 28
+
+INTENSITY = 30  # enemy ships shoot one in INTENSITY ticks

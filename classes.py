@@ -10,6 +10,10 @@ groups = {enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_gro
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
 
+game_state = "game"
+# пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
+# потом сделаем "menu", вместо "game" сделаем уровни и т.д. наверное
+
 
 class EnemyBullet(pygame.sprite.Sprite):
     def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group=enemy_bullet_group):
@@ -19,8 +23,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        # self.rect.center = enemy.rect.center
-        self.vy = 20    # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
+        self.vy = 20  # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
         group.add(self)
 
     def update(self):
@@ -47,7 +50,7 @@ class EnemyShip(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
-        if randint(1, 100) == 100:
+        if randint(1, INTENSITY) == 1:
             self.shoot()
 
     def move(self):  # for inheritance purposes
@@ -123,30 +126,22 @@ class AllyShip(pygame.sprite.Sprite):
     def hit(self):
         for i in pygame.sprite.spritecollide(self, enemy_bullet_group, True):
             self.lives -= 1
-        if self.lives < 0:
-            for group in groups:
-                group.empty()
+        if self.lives <= 0:
             game_over()
 
     def shoot(self):
         AllyBullet(x=self.x, y=self.y)
 
 
-def game_over():
-    pass
-
-    # очищаются группы пуль и кораблей
-    # прекращаются игровые процессы
-    # вылезает менюшка
-
-    # for group in groups:
-    #     group.empty()
-    # game_state = "gameover"
+def game_over(game=game_state):
+    for group in groups:
+        group.empty()
+    game = "gameover"
 
 
 class LineEnemy(EnemyShip):
     def __init__(self, x=MAX_X/2, y=MAX_Y/4, speed=10, amplitude=MAX_X/3, center=MAX_X/2):
-        super().__init__(x=x, y=y)  # picture_path="line_enemy.png"
+        super().__init__(picture_path="images/line_enemy.png", x=x, y=y)
         self.vx = speed
         self.a = amplitude
         self.x0 = center
