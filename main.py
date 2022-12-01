@@ -1,30 +1,25 @@
 # import pygame - already imported through classes
 from classes import *
 import menu
-# from config import * - already imported through classes
-import sys
-# from random import randint - already imported through classes
+
 
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
-# объявление game_state перемещено в classes.py, чтобы оттуда его менять
-
 background = pygame.image.load("images/background.jpg")
-
-AllyShip()
-LineEnemy()
-CircleEnemy()
-EnemyShip()
-
 spawn_timer = 0
-
-# enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 
 pygame.mouse.set_visible(False)
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
+
+def initial_set():
+    """Создает игрока и изначальных врагов"""
+    AllyShip()
+    LineEnemy()
+    CircleEnemy()
+    EnemyShip()
 
 
 def update():
@@ -81,14 +76,15 @@ def spawn():
     """
     global spawn_timer
     spawn_timer += 1
-    if spawn_timer == 300:
+    if spawn_timer == SPAWN_TIME:
         spawn_timer = 0
         CircleEnemy()
-    elif spawn_timer == 100:
+    elif spawn_timer == SPAWN_TIME/3:
         EnemyShip()
-    elif spawn_timer == 200:
+    elif spawn_timer == SPAWN_TIME*2/3:
         LineEnemy()
 
+initial_set()
 
 while not finished:
     """
