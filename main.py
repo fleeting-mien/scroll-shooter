@@ -104,6 +104,5 @@ while not finished:
     draw()
 
     pygame.display.update()
-    # print(ally_ship.lives)
 
 pygame.quit()

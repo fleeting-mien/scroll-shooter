@@ -93,7 +93,7 @@ class EnemyShip(pygame.sprite.Sprite):
         при нулевом количестве жизней"""
         for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
             self.lives -= 1
-        if self.lives < 0:
+        if self.lives <= 0:
             self.kill()
 
 
@@ -149,8 +149,9 @@ class AllyShip(pygame.sprite.Sprite):
         ally_ship_group.add(self)
 
     def update(self):
-        self.rect.center = (self.x, self.y)
+        """Функция изменения состояния корабля"""
         self.move()
+        self.rect.center = (self.x, self.y)
         self.hit()
 
     def move(self):
