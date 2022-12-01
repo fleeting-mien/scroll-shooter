@@ -74,7 +74,9 @@ def react_on_keys(pygame_event):
             keys_down["d"] = 0
 
 def spawn():
-    """Функция спавна врагов"""
+    """
+    Эта функция, видимо, создаёт нам врагов (3 типа) раз в 100 тиков
+    """
     global spawn_timer
     spawn_timer += 1
     if spawn_timer == 300:
@@ -86,9 +88,11 @@ def spawn():
         LineEnemy()
 
 while not finished:
+    """
+    mainloop
+    """
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
-        # пока игра идет, спавним врагов, игрок стреляет и его корабль отзывается на клавиши
         spawn()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -104,5 +108,6 @@ while not finished:
     draw()
 
     pygame.display.update()
+    # print(ally_ship.lives)
 
 pygame.quit()
