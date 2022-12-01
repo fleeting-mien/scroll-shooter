@@ -1,0 +1,51 @@
+from pygame import *
+init()
+ARIAL_25 = font.SysFont('arial', 25)
+"""
+Це шрифт
+"""
+
+
+class Menu:
+    """
+    Класс меню. Пока что кнопочки только Start и Quit.
+    _option_surfaces - поверхности для пунктов меню
+    _callbacks - что делают кнопки
+    _current_option_index - выбранный пункт меню
+    """
+    def __init__(self):
+        self._option_surfaces = []
+        self._callbacks = []
+        self._current_option_index = 0
+
+    def append_oprion(self, option, callback):
+        """
+        Дабавляет пункт меню
+        """
+        self._option_surfaces.append(ARIAL_25.render(option, True, (255, 255, 255)))
+        self._callbacks.append(callback)
+
+    def switch(self, direction):
+        """
+        Переключение между пунктами меню.
+        """
+        self._current_option_index = max(0, min(self._current_option_index + direction, len(self._option_surfaces) - 1))
+
+    def select(self):
+        """
+        Делаем "тык" в пункт меню
+        """
+        self._callbacks[self._current_option_index]()
+
+    def drawmenu(self, surf, x, y, option_y_padding):
+        for i, option in enumerate(self._option_surfaces):
+            option_rect = option.get_rect()
+            option_rect.topleft = (x, y + i * option_y_padding)
+            if i == self._current_option_index:
+                draw.rect(surf, (0, 100, 0), option_rect)
+            surf.blit(option, option_rect)
+
+
+menu = Menu()
+menu.append_oprion('Start', lambda: print('Let\'s go'))
+menu.append_oprion('Quit', quit)

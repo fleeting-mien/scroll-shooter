@@ -1,5 +1,6 @@
 # import pygame - already imported through classes
 from classes import *
+import menu
 # from config import * - already imported through classes
 import sys
 # from random import randint - already imported through classes
@@ -103,6 +104,8 @@ while not finished:
 
 
     screen.blit(background, (0, 0))
+
+    menu.menu.drawmenu(screen, 25, 25, 25)
 
     update()
     draw()
