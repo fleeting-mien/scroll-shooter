@@ -1,6 +1,7 @@
 import pygame
 from config import *
 from random import randint
+from random import choice
 from numpy import *
 
 enemy_bullet_group = pygame.sprite.Group()
@@ -232,7 +233,7 @@ class CircleEnemy(EnemyShip):
         self.x0 = randint(self.R + BORDER_X, MAX_X - self.R - BORDER_X)
         self.y0 = randint(self.R + BORDER_Y, MAX_Y/2 - self.R)
         super().__init__(picture_path="images/line_enemy.png")
-        self.omega = 0.1
+        self.omega = choice([0.1, -0.1])
         self.angle = 0
         self.x = self.x0 + self.R * cos(self.angle)
         self.y = self.y0 + self.R * sin(self.angle)
