@@ -74,6 +74,7 @@ def react_on_keys(pygame_event):
         elif pygame_event.key == pygame.K_d:
             keys_down["d"] = 0
 
+
 def spawn():
     """
     Эта функция, видимо, создаёт нам врагов (3 типа) раз в 100 тиков
@@ -88,6 +89,7 @@ def spawn():
     elif spawn_timer == 200:
         LineEnemy()
 
+
 while not finished:
     """
     mainloop
@@ -100,12 +102,24 @@ while not finished:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 shoot()
-            react_on_keys(event)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    menu.menu_is_here.switch(1)
+                if event.key == pygame.K_UP:
+                    menu.menu_is_here.switch(-1)
+                if event.key == pygame.K_SPACE:
+                    if menu.menu_is_here.check_current_index() == 3:
+                        finished = True
+                        print(menu.menu_is_here.check_current_index())
+                        menu.menu_is_here.select()
+                    else:
+                        menu.menu_is_here.select()
 
+            react_on_keys(event)
 
     screen.blit(background, (0, 0))
 
-    menu.menu.drawmenu(screen, 25, 25, 25)
+    menu.menu_is_here.drawmenu(screen, 25, 25, 25)
 
     update()
     draw()

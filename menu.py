@@ -18,7 +18,7 @@ class Menu:
         self._callbacks = []
         self._current_option_index = 0
 
-    def append_oprion(self, option, callback):
+    def append_option(self, option, callback):
         """
         Дабавляет пункт меню
         """
@@ -37,6 +37,9 @@ class Menu:
         """
         self._callbacks[self._current_option_index]()
 
+    def check_current_index(self):
+        return self._current_option_index
+
     def drawmenu(self, surf, x, y, option_y_padding):
         for i, option in enumerate(self._option_surfaces):
             option_rect = option.get_rect()
@@ -46,6 +49,8 @@ class Menu:
             surf.blit(option, option_rect)
 
 
-menu = Menu()
-menu.append_oprion('Start', lambda: print('Let\'s go'))
-menu.append_oprion('Quit', quit)
+menu_is_here = Menu()
+menu_is_here.append_option('Start', lambda: print('Доделай старт'))
+menu_is_here.append_option('Pause', lambda: print('Доделай паузу'))
+menu_is_here.append_option('Restart', lambda: print('Ты сдох, доделай рестарт'))
+menu_is_here.append_option('Quit', lambda: print('Дасвиданя, иди делай анжуманя'))
