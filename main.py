@@ -74,6 +74,7 @@ def react_on_keys(pygame_event):
             keys_down["d"] = 0
 
 def spawn():
+    """Функция спавна врагов"""
     global spawn_timer
     spawn_timer += 1
     if spawn_timer == 300:
@@ -87,6 +88,7 @@ def spawn():
 while not finished:
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
+        # пока игра идет, спавним врагов, игрок стреляет и его корабль отзывается на клавиши
         spawn()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
