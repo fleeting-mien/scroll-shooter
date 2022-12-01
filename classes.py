@@ -11,7 +11,8 @@ ally_ship_group = pygame.sprite.Group()
 groups = {enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
 #большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
-keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} # словарь, используемый для перемещения игрока
+keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
+# словарь, используемый для перемещения игрока
 
 game_state = "game"
 # Пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
