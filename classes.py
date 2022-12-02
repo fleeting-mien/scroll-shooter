@@ -374,5 +374,3 @@ class Buff(pygame.sprite.Sprite):
     def update(self):
         self.y += self.vy
         self.rect.center = (self.x, self.y)
-
-d
