@@ -34,7 +34,7 @@ class Bullet(pygame.sprite.Sprite):
 
         v (optional) - скорость движения пули (ед. изм. - скорость по умолчанию)
         direction (optional) - направление движения пули (ед. изм. - рад., относ. Ox)
-        damage (optional) - сколько урона наносит (пока не влияет)
+        damage (optional) - сколько урона наносит
 
         """
         super().__init__()
@@ -89,6 +89,7 @@ class Ship(pygame.sprite.Sprite):
 
         self.rect.center = (self.x, self.y)
 
+        self.enemy = enemy
         group = enemy_ship_group if enemy else ally_ship_group
         group.add(self)
 
@@ -97,6 +98,21 @@ class Ship(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
+
+    def move(self):
+        """Перемещает корабль (переписан в AllyShip, наследуется EnemyShip)"""
+        self.x += self.vx
+        self.y += self.vy
+
+    def hit(self):
+        """Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
+            при нулевом количестве жизней"""
+        opposing_bullet_group = ally_bullet_group if self.enemy else enemy_bullet_group
+        for bullet in pygame.sprite.spritecollide(self, opposing_bullet_group, True):
+            self.lives -= bullet.damage
+        for i in pygame.sprite.spritecollide(self, asteroid_group, True):
+            self.lives -= 1
+
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
@@ -136,11 +152,6 @@ class EnemyShip(Ship):
         if randint(1, INTENSITY) == 1:
             self.shoot()
 
-    def move(self):  # for inheritance purposes
-        """Перемещает корабль"""
-        self.x += self.vx
-        self.y += self.vy
-
     def shoot(self):
         """Корабль стреляет: создает EnemyBullet, вылетающую из корабля"""
         EnemyBullet(x=self.x, y=self.y)
@@ -148,8 +159,7 @@ class EnemyShip(Ship):
     def hit(self):
         """Проверка столкновения вражеского корабля с дружественными пулями, и удаление корабля
         при нулевом количестве жизней"""
-        for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
-            self.lives -= 1
+        super().hit()
         if self.lives <= 0:
             self.kill()
 
@@ -209,10 +219,7 @@ class AllyShip(Ship):
     def hit(self):
         """Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
             при нулевом количестве жизней"""
-        for i in pygame.sprite.spritecollide(self, enemy_bullet_group, True):
-            self.lives -= 1
-        for i in pygame.sprite.spritecollide(self, asteroid_group, True):
-            self.lives -= 1
+        super().hit()
         if self.lives <= 0:
             game_over()
 
