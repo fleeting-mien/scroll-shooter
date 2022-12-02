@@ -285,7 +285,7 @@ class CircleEnemy(EnemyShip):
 
 
 class Asteroid(pygame.sprite.Sprite):
-    def __init__(self, picture_path="images/ally_ship.png"):
+    def __init__(self, picture_path="images/asteroid.png", group=asteroid_group):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
