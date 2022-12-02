@@ -1,4 +1,5 @@
 from pygame import *
+#from classes import game_state
 init()
 ARIAL_25 = font.SysFont('arial', 25)
 """
@@ -50,7 +51,7 @@ class Menu:
 
 
 menu_is_here = Menu()
-menu_is_here.append_option('Start', lambda: print('Доделай старт'))
-menu_is_here.append_option('Pause', lambda: print('Доделай паузу'))
-menu_is_here.append_option('Restart', lambda: print('Ты сдох, доделай рестарт'))
+menu_is_here.append_option('Start', lambda: "game")
+menu_is_here.append_option('Pause', lambda: "pause")
+menu_is_here.append_option('Restart', lambda: "game")
 menu_is_here.append_option('Quit', lambda: print('Дасвиданя, иди делай анжуманя'))
