@@ -81,7 +81,7 @@ def react_on_menu_keys(menu_event):
             menu.menu_is_here.switch(1)
         if menu_event.key == pygame.K_UP:
             menu.menu_is_here.switch(-1)
-        if menu_event.key == pygame.K_SPACE:
+        if menu_event.key == pygame.K_SPACE or menu_event.key == pygame.K_RETURN:
             if menu.menu_is_here.check_current_index() == 3:
                 print(menu.menu_is_here.check_current_index())
                 finished = True
