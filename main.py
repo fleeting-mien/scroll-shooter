@@ -1,31 +1,27 @@
 # import pygame - already imported through classes
 from classes import *
 import menu
-# from config import * - already imported through classes
-# import sys
-# from random import randint - already imported through classes
 
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
-# объявление game_state перемещено в classes.py, чтобы оттуда его менять
-
 background = pygame.image.load("images/background.jpg")
-
-AllyShip()
-LineEnemy()
-CircleEnemy()
-EnemyShip()
-
+ARIAL_25 = pygame.font.SysFont('arial', 25)
 spawn_timer = 0
-
-# enemy_bullet = EnemyBullet("images/enemy_bullet.png")
 
 pygame.mouse.set_visible(False)
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
+
+def initial_set():
+    """Создает игрока и изначальных врагов"""
+    global player
+    player = AllyShip()
+    LineEnemy()
+    CircleEnemy()
+    EnemyShip()
 
 
 def update():
@@ -75,7 +71,7 @@ def react_on_keys(pygame_event):
         elif pygame_event.key == pygame.K_d:
             keys_down["d"] = 0
 
-def react_on_menu_keys(pygame_event):
+def react_on_menu_keys(event):
     """
     Реакция на нажатие кнопок меню
     """
@@ -101,14 +97,24 @@ def spawn():
     """
     global spawn_timer
     spawn_timer += 1
-    if spawn_timer == 300:
+    if spawn_timer == SPAWN_TIME:
         spawn_timer = 0
         CircleEnemy()
-    elif spawn_timer == 100:
+    elif spawn_timer == SPAWN_TIME/3:
         EnemyShip()
-    elif spawn_timer == 200:
+    elif spawn_timer == SPAWN_TIME*2/3:
         LineEnemy()
 
+
+def healthbar():
+    shots_text = ARIAL_25.render(
+        "Your health: " + str(player.lives),
+        True, (255, 255, 0)
+    )
+    screen.blit(shots_text, (MAX_X * 3 / 4, 0))
+
+
+initial_set()
 
 while not finished:
     """
@@ -137,6 +143,8 @@ while not finished:
 
     update()
     draw()
+
+    healthbar()
 
     pygame.display.update()
 
