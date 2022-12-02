@@ -23,7 +23,7 @@ game_state = "game"
 
 class Bullet(pygame.sprite.Sprite):
     """Класс-родитель пуль"""
-    def __init__(self, picture_path, x, y, enemy, v=1, direction=None):
+    def __init__(self, picture_path, x, y, enemy, damage=1, v=1, direction=None):
         """Конструктор класса Bullet
 
         Аргументы:
@@ -33,6 +33,7 @@ class Bullet(pygame.sprite.Sprite):
 
         v (optional) - скорость движения пули (ед. изм. - скорость по умолчанию)
         direction (optional) - направление движения пули (ед. изм. - рад., относ. Ox)
+        damage (optional) - сколько урона наносит (пока не влияет)
 
         """
         super().__init__()
@@ -41,7 +42,7 @@ class Bullet(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        self.v = v * 600 / FPS
+        self.v = v * DEFAULT_SPEED
 
         if direction is None:
             self.direction = -pi / 2 if enemy else pi / 2
@@ -51,12 +52,50 @@ class Bullet(pygame.sprite.Sprite):
         group = enemy_bullet_group if enemy else ally_bullet_group
         group.add(self)
 
+        self.damage = damage
+
     def update(self):
         """Изменяет положение пули, одновременно перемещая ее изображение"""
         self.y -= self.v * sin(self.direction)  # минус потому что Oy вниз
         self.x += self.v * cos(self.direction)
         self.rect.center = (self.x, self.y)
 
+
+class Ship(pygame.sprite.Sprite):
+    """Класс-родитель кораблей"""
+    def __init__(self, picture_path, x, y, enemy, speed=1, lives=1):
+        """Констурктор класса Ship
+
+        Аргументы:
+        picture_path - путь к текстурке корабля
+        x, y - положение
+        enemy - True если Enemy, False если Ally
+        speed (optional) - собственная скорость (ед. изм. - скорость по умолчанию)
+        lives (optional) - количество жизней
+
+        """
+        super().__init__()
+        self.image = pygame.image.load(picture_path)
+        self.rect = self.image.get_rect()
+
+        self.x = x
+        self.y = y
+        self.vx = 0
+        self.vy = 0
+
+        self.lives = lives
+        self.v = speed * DEFAULT_SPEED
+
+        self.rect.center = (self.x, self.y)
+
+        group = enemy_ship_group if enemy else ally_ship_group
+        group.add(self)
+
+    def update(self):
+        """Функция изменения состояния корабля"""
+        self.rect.center = (self.x, self.y)
+        self.move()
+        self.hit()
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
@@ -71,9 +110,9 @@ class EnemyBullet(Bullet):
         super().__init__(picture_path, x, y, enemy=True)
 
 
-class EnemyShip(pygame.sprite.Sprite):
+class EnemyShip(Ship):
     """Класс вражеских кораблей"""
-    def __init__(self, picture_path="images/enemy_ship.png", group=enemy_ship_group):
+    def __init__(self, picture_path="images/enemy_ship.png"):
         """Констурктор класса EnemyShip
 
         Атрибуты:
@@ -84,24 +123,15 @@ class EnemyShip(pygame.sprite.Sprite):
         lives - количество жизней корабля
 
         """
-        super().__init__()
-        self.image = pygame.image.load(picture_path)
-        self.rect = self.image.get_rect()
-        self.x = randint(BORDER_X, MAX_X - BORDER_X)
-        self.y = randint(BORDER_Y, MAX_Y/2)
 
-        self.vx = 0
-        self.vy = 0
-        self.lives = 1
+        x = randint(BORDER_X, MAX_X - BORDER_X)
+        y = randint(BORDER_Y, MAX_Y/2)
 
-        self.rect.center = (self.x, self.y)
-        group.add(self)
+        super().__init__(picture_path, x, y, True)
 
     def update(self):
         """Функция изменения состояния корабля"""
-        self.rect.center = (self.x, self.y)
-        self.move()
-        self.hit()
+        super().update()
         if randint(1, INTENSITY) == 1:
             self.shoot()
 
@@ -136,7 +166,7 @@ class AllyBullet(Bullet):
         super().__init__(picture_path, x, y, enemy=False)
 
 
-class AllyShip(pygame.sprite.Sprite):
+class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
     def __init__(self, picture_path="images/ally_ship.png", x=MAX_X/2, y=MAX_Y*3/4):
         """Констурктор класса AllyShip
@@ -149,22 +179,8 @@ class AllyShip(pygame.sprite.Sprite):
         lives - количество жизней корабля
 
         """
-        super().__init__()
-        self.image = pygame.image.load(picture_path)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.v = 600 / FPS
-        self.vx = 0
-        self.vy = 0
-        self.lives = 3
-        ally_ship_group.add(self)
 
-    def update(self):
-        """Функция изменения состояния корабля"""
-        self.move()
-        self.rect.center = (self.x, self.y)
-        self.hit()
+        super().__init__(picture_path, x, y, False, lives=3)
 
     def move(self):
         """Функция перемещения корабля"""
