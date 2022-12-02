@@ -110,7 +110,7 @@ class Ship(pygame.sprite.Sprite):
         opposing_bullet_group = ally_bullet_group if self.enemy else enemy_bullet_group
         for bullet in pygame.sprite.spritecollide(self, opposing_bullet_group, True):
             self.lives -= bullet.damage
-        for i in pygame.sprite.spritecollide(self, asteroid_group, True):
+        for i in pygame.sprite.spritecollide(self, asteroid_group, False):
             self.lives -= 1
 
 
