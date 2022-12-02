@@ -24,7 +24,7 @@ game_state = "game"
 
 class Bullet(pygame.sprite.Sprite):
     """Класс-родитель пуль"""
-    def __init__(self, picture_path, x, y, enemy, damage=1, v=1, direction=None):
+    def __init__(self, x, y, picture_path, enemy, damage=1, v=1, direction=None):
         """Конструктор класса Bullet
 
         Аргументы:
@@ -64,7 +64,7 @@ class Bullet(pygame.sprite.Sprite):
 
 class Ship(pygame.sprite.Sprite):
     """Класс-родитель кораблей"""
-    def __init__(self, picture_path, x, y, enemy, speed=1, lives=1):
+    def __init__(self, x, y, picture_path, enemy, speed=1, lives=1):
         """Констурктор класса Ship
 
         Аргументы:
@@ -116,7 +116,7 @@ class Ship(pygame.sprite.Sprite):
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
-    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4):
+    def __init__(self, x, y, picture_path="images/enemy_bullet.png"):
         """Конструктор класса EnemyBullet
 
         Аргументы:
@@ -124,7 +124,7 @@ class EnemyBullet(Bullet):
         x, y - положение пули (в пикселях)
 
         """
-        super().__init__(picture_path, x, y, enemy=True)
+        super().__init__(x, y, picture_path, enemy=True)
 
 
 class EnemyShip(Ship):
@@ -144,7 +144,7 @@ class EnemyShip(Ship):
         x = randint(BORDER_X, MAX_X - BORDER_X)
         y = randint(BORDER_Y, MAX_Y/2)
 
-        super().__init__(picture_path, x, y, True)
+        super().__init__(x, y, picture_path, True)
 
     def update(self):
         """Функция изменения состояния корабля"""
@@ -166,7 +166,7 @@ class EnemyShip(Ship):
 
 class AllyBullet(Bullet):
     """Класс дружественных пуль"""
-    def __init__(self, picture_path="images/ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4):
+    def __init__(self, x, y, picture_path="images/ally_bullet.png"):
         """Конструктор класса AllyBullet
 
         Аргументы:
@@ -174,12 +174,12 @@ class AllyBullet(Bullet):
         x, y - положение пули (в пикселях)
 
         """
-        super().__init__(picture_path, x, y, enemy=False)
+        super().__init__(x, y, picture_path, enemy=False)
 
 
 class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
-    def __init__(self, picture_path="images/ally_ship.png", x=MAX_X/2, y=MAX_Y*3/4):
+    def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
         """Констурктор класса AllyShip
 
         Атрибуты:
@@ -191,7 +191,7 @@ class AllyShip(Ship):
 
         """
 
-        super().__init__(picture_path, x, y, False, lives=3)
+        super().__init__(x, y, picture_path, False, lives=3)
 
     def move(self):
         """Функция перемещения корабля"""
@@ -285,7 +285,7 @@ class CircleEnemy(EnemyShip):
 
 
 class Asteroid(pygame.sprite.Sprite):
-    def __init__(self, picture_path="images/ally_ship.png", group=asteroid_group):
+    def __init__(self, picture_path="images/ally_ship.png"):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -296,7 +296,7 @@ class Asteroid(pygame.sprite.Sprite):
         self.lives = 5
 
         self.rect.center = (self.x, self.y)
-        group.add(self)
+        asteroid_group.add(self)
 
     def move(self):
         self.y += self.vy
