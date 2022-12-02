@@ -106,12 +106,17 @@ def spawn():
         Asteroid()
 
 
-def healthbar():
-    shots_text = ARIAL_25.render(
+def textbar():
+    healthbar = ARIAL_25.render(
         "Your health: " + str(player.lives),
         True, (255, 255, 0)
     )
-    screen.blit(shots_text, (MAX_X * 3 / 4, 0))
+    screen.blit(healthbar, (MAX_X * 3 / 4, 0))
+    scorebar = ARIAL_25.render(
+        "Your score: " + str(score),
+        True, (255, 255, 0)
+    )
+    screen.blit(scorebar, (MAX_X * 3 / 4, 30))
 
 
 initial_set()
@@ -144,7 +149,7 @@ while not finished:
     update()
     draw()
 
-    healthbar()
+    textbar()
 
     pygame.display.update()
 

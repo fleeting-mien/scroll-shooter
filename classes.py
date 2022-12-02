@@ -16,6 +16,7 @@ groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_grou
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
 # словарь, используемый для перемещения игрока
+score = 0
 
 game_state = "game"
 # Пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
@@ -159,9 +160,11 @@ class EnemyShip(Ship):
     def hit(self):
         """Проверка столкновения вражеского корабля с дружественными пулями, и удаление корабля
         при нулевом количестве жизней"""
+        global score
         super().hit()
         if self.lives <= 0:
             self.kill()
+            score += 1
 
 
 class AllyBullet(Bullet):
@@ -221,6 +224,7 @@ class AllyShip(Ship):
             при нулевом количестве жизней"""
         super().hit()
         if self.lives <= 0:
+            self.lives = 0
             game_over()
 
     def shoot(self):
