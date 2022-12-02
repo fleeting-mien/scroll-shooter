@@ -7,6 +7,7 @@ pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = pygame.image.load("images/background.jpg")
+ARIAL_25 = pygame.font.SysFont('arial', 25)
 spawn_timer = 0
 
 pygame.mouse.set_visible(False)
@@ -16,7 +17,8 @@ finished = False
 
 def initial_set():
     """Создает игрока и изначальных врагов"""
-    AllyShip()
+    global player
+    player = AllyShip()
     LineEnemy()
     CircleEnemy()
     EnemyShip()
@@ -84,6 +86,13 @@ def spawn():
     elif spawn_timer == SPAWN_TIME*2/3:
         LineEnemy()
 
+def healthbar():
+    shots_text = ARIAL_25.render(
+        "Your health: " + str(player.lives),
+        True, (255, 255, 0)
+    )
+    screen.blit(shots_text, (MAX_X * 3 / 4, 0))
+
 initial_set()
 
 while not finished:
@@ -119,6 +128,8 @@ while not finished:
 
     update()
     draw()
+
+    healthbar()
 
     pygame.display.update()
 
