@@ -191,10 +191,15 @@ class AllyShip(Ship):
         x, y - положение корабля
         vx, vy - скорость его движения
         lives - количество жизней корабля
+        shooting_num - число, отвечающее за стрельбу корабля.
+            Пока равно нулю - стрельба не ведется
+            Пока стрельба ведется, каждый кадр увеличивается на 1
+            Далее каждое кратное значение shooting_num производится выстрел
 
         """
 
         super().__init__(x, y, picture_path, False, lives=3)
+        self.shooting_num = 0
 
     def move(self):
         """Функция перемещения корабля"""
@@ -226,6 +231,18 @@ class AllyShip(Ship):
         if self.lives <= 0:
             self.lives = 0
             game_over()
+
+    def start_shooting(self):
+        self.shooting_num = 1
+
+    def stop_shooting(self):
+        self.shooting_num = 0
+
+    def shooting(self):
+        if self.shooting_num % 9 == 1:
+            self.shoot()
+        if self.shooting_num > 0:
+            self.shooting_num += 1
 
     def shoot(self):
         """Корабль стреляет: создает EnemyBullet, вылетающую из корабля"""
@@ -318,7 +335,7 @@ class Asteroid(pygame.sprite.Sprite):
 
 
 class Buff():
-    """нематериальная теневая сущность"""
+    """Нематериальная теневая сущность"""
     def __init__(self, state):
         self.timer = 0
         self.state = state

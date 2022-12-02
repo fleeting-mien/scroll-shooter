@@ -39,12 +39,27 @@ def draw():
         group.draw(screen)
 
 
-def shoot():
+def start_shooting():
+    """
+    all allies start shooting
+    """
+    for ship in ally_ship_group:
+        ship.start_shooting()
+
+
+def stop_shooting():
+    """
+    all allies stop shooting
+    """
+    for ship in ally_ship_group:
+        ship.stop_shooting()
+
+def shooting():
     """
     all allies shoot
     """
     for ship in ally_ship_group:
-        ship.shoot()
+        ship.shooting()
 
 
 def react_on_keys(pygame_event):
@@ -128,11 +143,14 @@ while not finished:
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
         spawn()
+        shooting()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                shoot()
+                start_shooting()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
     elif game_state == "gameover":
