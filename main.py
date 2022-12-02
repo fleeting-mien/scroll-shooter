@@ -2,7 +2,6 @@
 from classes import *
 import menu
 
-
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
@@ -72,6 +71,25 @@ def react_on_keys(pygame_event):
             keys_down["d"] = 0
 
 
+def react_on_menu_keys(menu_event):
+    """
+    Реакция на нажатие кнопок меню
+    """
+    global finished
+    if menu_event.type == pygame.KEYDOWN:
+        if menu_event.key == pygame.K_DOWN:
+            menu.menu_is_here.switch(1)
+        if menu_event.key == pygame.K_UP:
+            menu.menu_is_here.switch(-1)
+        if menu_event.key == pygame.K_SPACE:
+            if menu.menu_is_here.check_current_index() == 3:
+                print(menu.menu_is_here.check_current_index())
+                finished = True
+                menu.menu_is_here.select()
+            else:
+                menu.menu_is_here.select()
+
+
 def spawn():
     """
     Эта функция, видимо, создаёт нам врагов (3 типа) раз в 100 тиков
@@ -110,20 +128,14 @@ while not finished:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 shoot()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    menu.menu_is_here.switch(1)
-                if event.key == pygame.K_UP:
-                    menu.menu_is_here.switch(-1)
-                if event.key == pygame.K_SPACE:
-                    if menu.menu_is_here.check_current_index() == 3:
-                        finished = True
-                        print(menu.menu_is_here.check_current_index())
-                        menu.menu_is_here.select()
-                    else:
-                        menu.menu_is_here.select()
-
+            react_on_menu_keys(event)
             react_on_keys(event)
+    elif game_state == "gameover":
+        pass
+        # дописать
+    elif game_state == "pause":
+        pass
+        # дописать
 
     screen.blit(background, (0, 0))
 
