@@ -10,7 +10,8 @@ enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
-groups = {enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
+asteroid_group = pygame.sprite.Group()
+groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
@@ -210,6 +211,8 @@ class AllyShip(Ship):
             при нулевом количестве жизней"""
         for i in pygame.sprite.spritecollide(self, enemy_bullet_group, True):
             self.lives -= 1
+        for i in pygame.sprite.spritecollide(self, asteroid_group, True):
+            self.lives -= 1
         if self.lives <= 0:
             game_over()
 
@@ -274,41 +277,30 @@ class CircleEnemy(EnemyShip):
         self.y = self.y0 + self.R * sin(self.angle)
 
 
-# Старый код, который Миша попросил закомментить но не убирать. Не уверен что с последними
-# обновлениями он всё еще работает
-#
-# pygame.init()
-# clock = pygame.time.Clock()
-# print(type(enemy_bullet_group), enemy_bullet_group)
-#
-# enemy = EnemyBullet("enemy_bullet.png")
-# enemy.create()
-#
-# background = pygame.image.load("background.jpg")
-#
-# ally_ship = AllyShip("ally_ship.png")
-# ship_group = pygame.sprite.Group()
-# ship_group.add(ally_ship)
-# ship = AllyShip("ally_ship.png")
-# screen_width = 600
-# screen_height = 700
-# screen = pygame.display.set_mode((screen_width, screen_height))
-# enemy_bullet = EnemyBullet("enemy_bullet.png")
-# pygame.mouse.set_visible(False)
-#
-# while True:
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             pygame.quit()
-#             sys.exit()
-#         elif event.type == pygame.KEYDOWN:
-#            ally_ship.evolve(event)
-#     screen.blit(background, (0,0))
-#     ship.hit()
-#     if randint(1, 10000) == 10:
-#         enemy_bullet.create()
-#     enemy_bullet_group.draw(screen)
-#     ship_group.draw(screen)
-#     ship_group.update()
-#     pygame.display.update()
-#     print(ship.lives)
+class Asteroid(pygame.sprite.Sprite):
+    def __init__(self, picture_path="images/ally_ship.png", group=asteroid_group):
+        super().__init__()
+        self.image = pygame.image.load(picture_path)
+        self.rect = self.image.get_rect()
+        self.x = randint(BORDER_X, MAX_X - BORDER_X)
+        self.y = -20
+
+        self.vy = 300 / FPS
+        self.lives = 5
+
+        self.rect.center = (self.x, self.y)
+        group.add(self)
+
+    def move(self):
+        self.y += self.vy
+
+    def hit(self):
+        for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
+            self.lives -= 1
+        if self.lives <= 0:
+            self.kill()
+
+    def update(self):
+        self.rect.center = (self.x, self.y)
+        self.move()
+        self.hit()
