@@ -9,7 +9,6 @@ background = pygame.image.load("images/background.jpg")
 ARIAL_25 = pygame.font.SysFont('arial', 25)
 spawn_timer = 0
 
-pygame.mouse.set_visible(False)
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
@@ -104,6 +103,7 @@ def spawn():
         EnemyShip()
     elif spawn_timer == SPAWN_TIME*2/3:
         LineEnemy()
+        Asteroid()
 
 
 def healthbar():
