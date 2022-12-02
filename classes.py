@@ -311,3 +311,31 @@ class Asteroid(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
+
+
+class Buff():
+    """нематериальная теневая сущность"""
+    def __init__(self, state):
+        self.timer = 0
+        self.state = state
+
+    def update(self):
+        if self.state == "applied":
+            if self.timer > 0:
+                self.timer -= 1
+            elif self.timer == 0:
+                self.state = False
+
+    def apply(self, state, time):
+        self.state = state
+        self.timer += time * FPS # время указывается в секундах!
+
+shield = Buff("not applied")
+score_x2 = Buff("not applied")
+shooting_style = Buff("normal")
+
+# Функции взаимодействия игрока с баффами:
+# def apply_shield():
+# 	shield.apply("applied", 10)
+# def apply_laser():
+# 	shooting_style.apply("laser", 10)
