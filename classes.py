@@ -5,13 +5,21 @@ from random import choice
 from numpy import *
 
 import math
+powerup_images ={}
+powerup_images['heal'] = pygame.image.load('images/heal_buff.png')
+powerup_images['shield'] = pygame.image.load('images/shield_buff.png')
+powerup_images['laser'] = pygame.image.load('images/laser.png')
+powerup_images['double_score'] = pygame.image.load('images/coins_buff.png')
+powerup_images['double_shot'] = pygame.image.load('images/double_shot.png')
+powerup_images['triple_shot'] = pygame.image.load('images/triple_shot.png')
 
+buff_group = pygame.sprite.Group()
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
-groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
+groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, buff_group}
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
@@ -163,6 +171,8 @@ class EnemyShip(Ship):
         global score
         super().hit()
         if self.lives <= 0:
+            if randint(1, 2) == 1:
+                Buff(x=self.x, y=self.y)
             self.kill()
             score += 1
 
@@ -198,7 +208,7 @@ class AllyShip(Ship):
 
         """
 
-        super().__init__(x, y, picture_path, False, lives=3)
+        super().__init__(x, y, picture_path, False, lives=1000)
         self.shooting_num = 0
 
     def move(self):
@@ -226,11 +236,26 @@ class AllyShip(Ship):
 
     def hit(self):
         """Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
-            при нулевом количестве жизней"""
+            при нулевом количестве жизней, а также наложение эффекта баффа"""
         super().hit()
         if self.lives <= 0:
             self.lives = 0
             game_over()
+        for i in pygame.sprite.spritecollide(self, buff_group, True):
+            if i.type == 'shield':
+                pass
+            elif i.type == 'laser':
+                pass
+            elif i.type == 'shield':
+                pass
+            elif i.type == 'heal':
+                self.lives += 2
+            elif i.type == 'double_shot':
+                pass
+            elif i.type == 'triple_shot':
+                pass
+            elif i.type == 'double_score':
+                pass
 
     def start_shooting(self):
         self.shooting_num = 1
@@ -334,31 +359,20 @@ class Asteroid(pygame.sprite.Sprite):
         self.hit()
 
 
-class Buff():
-    """Нематериальная теневая сущность"""
-    def __init__(self, state):
-        self.timer = 0
-        self.state = state
+class Buff(pygame.sprite.Sprite):
+    def __init__(self, x, y, group = buff_group):
+        super().__init__()
+        self.type = random.choice(['shield', 'heal', 'triple_shot', 'double_shot', 'laser', 'double_score'])
+        self.image = powerup_images[self.type]
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.vy = 300/FPS
+
+        group.add(self)
 
     def update(self):
-        if self.state == "applied":
-            if self.timer > 0:
-                self.timer -= 1
-            elif self.timer == 0:
-                self.state = False
+        self.y += self.vy
+        self.rect.center = (self.x, self.y)
 
-    def apply(self, state, time):
-        self.state = state
-        self.timer += time * FPS # время указывается в секундах!
-
-
-
-shield = Buff("not applied")
-score_x2 = Buff("not applied")
-shooting_style = Buff("normal")
-
-# Функции взаимодействия игрока с баффами:
-# def apply_shield():
-# 	shield.apply("applied", 10)
-# def apply_laser():
-# 	shooting_style.apply("laser", 10)
+d
