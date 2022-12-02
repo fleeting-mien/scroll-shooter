@@ -4,12 +4,14 @@ from random import randint
 from random import choice
 from numpy import *
 
+import math
+
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 groups = {enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group}
-#большая группа групп, чтобы по ней можно было итерировать все группы сразу
+# большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
 # словарь, используемый для перемещения игрока
@@ -19,16 +21,18 @@ game_state = "game"
 # Потом сделаем "menu", вместо "game" сделаем уровни и т.д.
 
 
-class EnemyBullet(pygame.sprite.Sprite):
-    """Класс вражеских пуль"""
-    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4, group=enemy_bullet_group):
-        """Конструктор класса EnemyBullet
+class Bullet(pygame.sprite.Sprite):
+    """Класс-родитель пуль"""
+    def __init__(self, picture_path, x, y, enemy, v=1, direction=None):
+        """Конструктор класса Bullet
 
-        Атрибуты:
-        image - изображение пули
-        rect - 'прямоугольник' пули, хитбокс
-        x, y - положение пули
-        vy - скорость ее движения
+        Аргументы:
+        picture_path - изображение пули
+        x, y - положение пули (в пикселях)
+        enemy - True если Enemy, False если Ally
+
+        v (optional) - скорость движения пули (ед. изм. - скорость по умолчанию)
+        direction (optional) - направление движения пули (ед. изм. - рад., относ. Ox)
 
         """
         super().__init__()
@@ -37,13 +41,34 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        self.vy = 600 / FPS  # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
+        self.v = v * 600 / FPS
+
+        if direction is None:
+            self.direction = -pi / 2 if enemy else pi / 2
+        else:
+            self.direction = direction
+
+        group = enemy_bullet_group if enemy else ally_bullet_group
         group.add(self)
 
     def update(self):
         """Изменяет положение пули, одновременно перемещая ее изображение"""
-        self.y += self.vy
+        self.y -= self.v * sin(self.direction)  # минус потому что Oy вниз
+        self.x += self.v * cos(self.direction)
         self.rect.center = (self.x, self.y)
+
+
+class EnemyBullet(Bullet):
+    """Класс вражеских пуль"""
+    def __init__(self, picture_path="images/enemy_bullet.png", x=MAX_X/2, y=MAX_Y*1/4):
+        """Конструктор класса EnemyBullet
+
+        Аргументы:
+        picture_path - изображение пули
+        x, y - положение пули (в пикселях)
+
+        """
+        super().__init__(picture_path, x, y, enemy=True)
 
 
 class EnemyShip(pygame.sprite.Sprite):
@@ -98,31 +123,17 @@ class EnemyShip(pygame.sprite.Sprite):
             self.kill()
 
 
-class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели планировали классы? всё равно по-другому вышло
+class AllyBullet(Bullet):
     """Класс дружественных пуль"""
-    def __init__(self, picture_path="images/ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4, group=ally_bullet_group):
+    def __init__(self, picture_path="images/ally_bullet.png", x=MAX_X/2, y=MAX_Y*3/4):
         """Конструктор класса AllyBullet
 
-        Атрибуты:
-        image - изображение пули
-        rect - 'прямоугольник' пули, хитбокс
-        x, y - положение пули
-        vy - скорость ее движения
+        Аргументы:
+        picture_path - изображение пули
+        x, y - положение пули (в пикселях)
 
         """
-        super().__init__()
-        self.image = pygame.image.load(picture_path)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.center = (self.x, self.y)
-        self.vy = 600 / FPS
-        group.add(self)
-
-    def update(self):
-        """Изменяет положение пули, одновременно перемещая ее изображение"""
-        self.y -= self.vy
-        self.rect.center = (self.x, self.y)
+        super().__init__(picture_path, x, y, enemy=False)
 
 
 class AllyShip(pygame.sprite.Sprite):
@@ -143,7 +154,7 @@ class AllyShip(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.v =  600 / FPS
+        self.v = 600 / FPS
         self.vx = 0
         self.vy = 0
         self.lives = 3
@@ -218,6 +229,7 @@ class LineEnemy(EnemyShip):
         if not (self.x0 - self.a < self.x < self.x0 + self.a):
             self.vx *= -1
         super().move()
+
 
 class CircleEnemy(EnemyShip):
     """Класс врагов, которые не стоят на месте, а двигаются по окружности"""

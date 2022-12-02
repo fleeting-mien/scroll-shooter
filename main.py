@@ -14,6 +14,7 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
+
 def initial_set():
     """Создает игрока и изначальных врагов"""
     AllyShip()
@@ -83,6 +84,7 @@ def spawn():
         EnemyShip()
     elif spawn_timer == SPAWN_TIME*2/3:
         LineEnemy()
+
 
 initial_set()
 
