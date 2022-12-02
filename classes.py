@@ -37,7 +37,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        self.vy = 20  # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
+        self.vy = 600 / FPS  # Можно добавить ползунок сложности и менять значение скорости вражеских пуль
         group.add(self)
 
     def update(self):
@@ -116,7 +116,7 @@ class AllyBullet(pygame.sprite.Sprite):  # зачем мы сидели план
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        self.vy = 20
+        self.vy = 600 / FPS
         group.add(self)
 
     def update(self):
@@ -143,7 +143,7 @@ class AllyShip(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.v = 20
+        self.v =  600 / FPS
         self.vx = 0
         self.vy = 0
         self.lives = 3
@@ -211,7 +211,7 @@ class LineEnemy(EnemyShip):
         self.a = randint(MAX_X/5, MAX_X/2 - 2*BORDER_X)
         self.x0 = randint(self.a + BORDER_X, MAX_X - self.a - BORDER_X)
         super().__init__(picture_path="images/line_enemy.png")
-        self.vx = randint(-10, 10)
+        self.vx = randint(-300 / FPS, -300 / FPS)
         self.x = self.x0
 
     def move(self):
@@ -235,7 +235,7 @@ class CircleEnemy(EnemyShip):
         self.x0 = randint(self.R + BORDER_X, MAX_X - self.R - BORDER_X)
         self.y0 = randint(self.R + BORDER_Y, MAX_Y/2 - self.R)
         super().__init__(picture_path="images/line_enemy.png")
-        self.omega = choice([0.1, -0.1])
+        self.omega = choice([3 / FPS, -3 / FPS])
         self.angle = 0
         self.x = self.x0 + self.R * cos(self.angle)
         self.y = self.y0 + self.R * sin(self.angle)
