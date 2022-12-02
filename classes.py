@@ -272,7 +272,7 @@ class CircleEnemy(EnemyShip):
         self.R = randint(10, 50)
         self.x0 = randint(self.R + BORDER_X, MAX_X - self.R - BORDER_X)
         self.y0 = randint(self.R + BORDER_Y, MAX_Y/2 - self.R)
-        super().__init__(picture_path="images/line_enemy.png")
+        super().__init__(picture_path="images/circle_enemy.png")
         self.omega = choice([3 / FPS, -3 / FPS])
         self.angle = 0
         self.x = self.x0 + self.R * cos(self.angle)
