@@ -70,22 +70,22 @@ def react_on_keys(pygame_event):
         elif pygame_event.key == pygame.K_d:
             keys_down["d"] = 0
 
-def react_on_menu_keys(event):
+
+def react_on_menu_keys(menu_event):
     """
     Реакция на нажатие кнопок меню
     """
     global finished
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_DOWN:
+    if menu_event.type == pygame.KEYDOWN:
+        if menu_event.key == pygame.K_DOWN:
             menu.menu_is_here.switch(1)
-        if event.key == pygame.K_UP:
+        if menu_event.key == pygame.K_UP:
             menu.menu_is_here.switch(-1)
-        if event.key == pygame.K_SPACE:
+        if menu_event.key == pygame.K_SPACE:
             if menu.menu_is_here.check_current_index() == 3:
                 print(menu.menu_is_here.check_current_index())
                 finished = True
                 menu.menu_is_here.select()
-
             else:
                 menu.menu_is_here.select()
 
