@@ -239,7 +239,7 @@ class AllyShip(Ship):
         self.shooting_num = 0
 
     def shooting(self):
-        if self.shooting_num % 9 == 1:
+        if self.shooting_num % SHOOTING_COEFF == 1:
             self.shoot()
         if self.shooting_num > 0:
             self.shooting_num += 1
@@ -350,6 +350,8 @@ class Buff():
     def apply(self, state, time):
         self.state = state
         self.timer += time * FPS # время указывается в секундах!
+
+
 
 shield = Buff("not applied")
 score_x2 = Buff("not applied")
