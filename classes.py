@@ -5,7 +5,7 @@ from random import choice
 from numpy import *
 
 import math
-powerup_images ={}
+powerup_images = {}
 powerup_images['heal'] = pygame.image.load('images/heal_buff.png')
 powerup_images['shield'] = pygame.image.load('images/shield_buff.png')
 powerup_images['laser'] = pygame.image.load('images/laser.png')
@@ -33,7 +33,7 @@ game_state = "game"
 
 class Bullet(pygame.sprite.Sprite):
     """Класс-родитель пуль"""
-    def __init__(self, x, y, picture_path, enemy, damage=1, v=1, direction=None):
+    def __init__(self, x, y, picture_path, direction, enemy, damage=1, v=1, ):
         """Конструктор класса Bullet
 
         Аргументы:
@@ -47,17 +47,13 @@ class Bullet(pygame.sprite.Sprite):
 
         """
         super().__init__()
+        self.direction = direction
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
         self.v = v * DEFAULT_SPEED
-
-        if direction is None:
-            self.direction = -pi / 2 if enemy else pi / 2
-        else:
-            self.direction = direction
 
         group = enemy_bullet_group if enemy else ally_bullet_group
         group.add(self)
@@ -130,7 +126,7 @@ class Ship(pygame.sprite.Sprite):
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
-    def __init__(self, x, y, picture_path="images/enemy_bullet.png"):
+    def __init__(self, x, y, direction, picture_path="images/enemy_bullet.png"):
         """Конструктор класса EnemyBullet
 
         Аргументы:
@@ -138,7 +134,7 @@ class EnemyBullet(Bullet):
         x, y - положение пули (в пикселях)
 
         """
-        super().__init__(x, y, picture_path, enemy=True)
+        super().__init__(x, y, picture_path, direction, enemy=True, )
 
 
 class EnemyShip(Ship):
@@ -168,7 +164,7 @@ class EnemyShip(Ship):
 
     def shoot(self):
         """Корабль стреляет: создает EnemyBullet, вылетающую из корабля"""
-        EnemyBullet(x=self.x, y=self.y)
+        EnemyBullet(x=self.x, y=self.y, direction=-pi/2)
 
     def hit(self):
         """Проверка столкновения вражеского корабля с дружественными пулями, и удаление корабля
@@ -184,7 +180,7 @@ class EnemyShip(Ship):
 
 class AllyBullet(Bullet):
     """Класс дружественных пуль"""
-    def __init__(self, x, y, picture_path="images/ally_bullet.png"):
+    def __init__(self, x, y, direction, picture_path="images/ally_bullet.png"):
         """Конструктор класса AllyBullet
 
         Аргументы:
@@ -192,7 +188,7 @@ class AllyBullet(Bullet):
         x, y - положение пули (в пикселях)
 
         """
-        super().__init__(x, y, picture_path, enemy=False)
+        super().__init__(x, y,  picture_path, direction, enemy=False)
 
 
 class AllyShip(Ship):
@@ -307,20 +303,23 @@ class AllyShip(Ship):
 
     def normal_shot(self):
         """Обычный выстрел"""
-        AllyBullet(x=self.x, y=self.y)
+        AllyBullet(x=self.x, y=self.y, direction=pi/2)
 
     # ДРУГИЕ ТИПЫ ВЫСТРЕЛОВ ПОКА НЕ ПРОРАБОТАНЫ
     def double_shot(self):
         """Двойной выстрел"""
-        AllyBullet(x=self.x, y=self.y)
+        AllyBullet(x=self.x-16, y=self.y, direction=pi/2)
+        AllyBullet(x=self.x+16, y=self.y, direction=pi/2)
 
     def triple_shot(self):
         """Тройной выстрел"""
-        AllyBullet(x=self.x, y=self.y)
+        AllyBullet(x=self.x, y=self.y, direction=pi/2)
+        AllyBullet(x=self.x, y=self.y, direction=pi/2.5)
+        AllyBullet(x=self.x, y=self.y, direction=-3.5 * pi/2.5)
 
     def laser_shot(self):
         """Лазер"""
-        AllyBullet(x=self.x, y=self.y)
+        AllyBullet(x=self.x, y=self.y, direction=pi/2)
 
 
 def game_over():
