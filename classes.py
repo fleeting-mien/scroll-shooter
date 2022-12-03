@@ -13,13 +13,13 @@ powerup_images['double_score'] = pygame.image.load('images/coins_buff.png')
 powerup_images['double_shot'] = pygame.image.load('images/double_shot.png')
 powerup_images['triple_shot'] = pygame.image.load('images/triple_shot.png')
 
-buff_group = pygame.sprite.Group()
+drop_group = pygame.sprite.Group()
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
-groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, buff_group}
+groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, drop_group}
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
@@ -107,6 +107,7 @@ class Ship(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
+        self.update_buffs()
 
     def move(self):
         """Перемещает корабль (переписан в AllyShip, наследуется EnemyShip)"""
@@ -121,6 +122,10 @@ class Ship(pygame.sprite.Sprite):
             self.lives -= bullet.damage
         for i in pygame.sprite.spritecollide(self, asteroid_group, False):
             self.lives -= 1
+
+    def update_buffs(self):
+        """Функция обновления состояния баффов, переписана в AllyShip"""
+        pass
 
 
 class EnemyBullet(Bullet):
@@ -171,8 +176,8 @@ class EnemyShip(Ship):
         global score
         super().hit()
         if self.lives <= 0:
-            if randint(1, 2) == 1:
-                Buff(x=self.x, y=self.y)
+            if randint(1, DROP_CHANCE) == 1:
+                Drop(x=self.x, y=self.y)
             self.kill()
             score += 1
 
@@ -210,6 +215,10 @@ class AllyShip(Ship):
 
         super().__init__(x, y, picture_path, False, lives=1000)
         self.shooting_num = 0
+        self.shield = Buff("not applied")  # 2 состояния: "applied" и "not applied"
+        self.shooting_style = Buff("normal")
+        # 4 состояния: "normal", "double", "triple", "laser"
+        self.score_factor = Buff("x1")  # 2 состояния: "х1" и "х2"
 
     def move(self):
         """Функция перемещения корабля"""
@@ -241,21 +250,25 @@ class AllyShip(Ship):
         if self.lives <= 0:
             self.lives = 0
             game_over()
-        for i in pygame.sprite.spritecollide(self, buff_group, True):
-            if i.type == 'shield':
-                pass
-            elif i.type == 'laser':
-                pass
-            elif i.type == 'shield':
-                pass
-            elif i.type == 'heal':
+        # проверка того, что игрок подобрал бафф
+        for drop in pygame.sprite.spritecollide(self, drop_group, True):
+            if drop.type == 'shield':
+                self.shield.apply("applied", BUFF_DURATION)
+            elif drop.type == 'laser':
+                self.shooting_style.apply("laser", BUFF_DURATION)
+            elif drop.type == 'heal':
                 self.lives += 2
-            elif i.type == 'double_shot':
-                pass
-            elif i.type == 'triple_shot':
-                pass
-            elif i.type == 'double_score':
-                pass
+            elif drop.type == 'double_shot':
+                self.shooting_style.apply("double", BUFF_DURATION)
+            elif drop.type == 'triple_shot':
+                self.shooting_style.apply("triple", BUFF_DURATION)
+            elif drop.type == 'double_score':
+                self.score_factor.apply("x2", BUFF_DURATION)
+
+    def update_buffs(self):
+        self.shield.update()
+        self.shooting_style.update()
+        self.score_factor.update()
 
     def start_shooting(self):
         self.shooting_num = 1
@@ -270,7 +283,35 @@ class AllyShip(Ship):
             self.shooting_num += 1
 
     def shoot(self):
-        """Корабль стреляет: создает EnemyBullet, вылетающую из корабля"""
+        """Корабль стреляет по-разному в зависимости от того,
+            какое значение self.shooting_style"""
+        if self.shooting_style.state == "normal":
+            self.normal_shot()
+
+        elif self.shooting_style.state == "double":
+            self.double_shot()
+
+        elif self.shooting_style.state == "triple":
+            self.triple_shot()
+
+        elif self.shooting_style.state == "laser":
+            self.laser_shot()
+
+    def normal_shot(self):
+        """Обычный выстрел"""
+        AllyBullet(x=self.x, y=self.y)
+
+    # ДРУГИЕ ТИПЫ ВЫСТРЕЛОВ ПОКА НЕ ПРОРАБОТАНЫ
+    def double_shot(self):
+        """Двойной выстрел"""
+        AllyBullet(x=self.x, y=self.y)
+
+    def triple_shot(self):
+        """Тройной выстрел"""
+        AllyBullet(x=self.x, y=self.y)
+
+    def laser_shot(self):
+        """Лазер"""
         AllyBullet(x=self.x, y=self.y)
 
 
@@ -361,6 +402,8 @@ class Asteroid(pygame.sprite.Sprite):
 
 class Buff(pygame.sprite.Sprite):
     def __init__(self, x, y, group = buff_group):
+class Drop(pygame.sprite.Sprite):
+    def __init__(self, x, y, group=drop_group):
         super().__init__()
         self.type = random.choice(['shield', 'heal', 'triple_shot', 'double_shot', 'laser', 'double_score'])
         self.image = powerup_images[self.type]
@@ -374,3 +417,20 @@ class Buff(pygame.sprite.Sprite):
     def update(self):
         self.y += self.vy
         self.rect.center = (self.x, self.y)
+
+
+class Buff:
+    def __init__(self, state):
+        self.timer = 0
+        self.default_state = state
+        self.state = self.default_state
+
+    def update(self):
+        if self.timer > 0:
+            self.timer -= 1
+        elif self.timer == 0:
+            self.state = self.default_state
+
+    def apply(self, state, time):
+        self.state = state
+        self.timer += time * FPS # время указывается в секундах!

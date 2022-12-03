@@ -169,6 +169,9 @@ while not finished:
 
     textbar()
 
+    print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
+    # для проверки состояния баффа на тип стрельбы
+
     pygame.display.update()
 
 pygame.quit()
