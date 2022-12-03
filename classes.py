@@ -210,6 +210,10 @@ class AllyShip(Ship):
             Пока равно нулю - стрельба не ведется
             Пока стрельба ведется, каждый кадр увеличивается на 1
             Далее каждое кратное значение shooting_num производится выстрел
+        shield - переменная, отвечающая за то, взят ли щит игроком или нет
+        shooting_style - переменная, определяющая то, как в данный момент
+            будет стрелять корабль игрока
+        score_factor - переменная, отвечающая за множитель очков игрока
 
         """
 
@@ -266,18 +270,22 @@ class AllyShip(Ship):
                 self.score_factor.apply("x2", BUFF_DURATION)
 
     def update_buffs(self):
+        """Функция, обновляющая состояние баффов игрока"""
         self.shield.update()
         self.shooting_style.update()
         self.score_factor.update()
 
     def start_shooting(self):
+        """Начало стрельбы по нажатию кнопки мыши"""
         self.shooting_num = 1
 
     def stop_shooting(self):
+        """Прекращение стрельбы по отпусканию кнопки мыши"""
         self.shooting_num = 0
 
     def shooting(self):
-        if self.shooting_num % SHOOTING_COEFF == 1:
+        """Собственно стрельба (зависит от SHOOTING_COEF)"""
+        if self.shooting_num % SHOOTING_COEF == 1:
             self.shoot()
         if self.shooting_num > 0:
             self.shooting_num += 1
@@ -316,6 +324,7 @@ class AllyShip(Ship):
 
 
 def game_over():
+    """Функция окончания игры когда игрок был сражен"""
     global game_state
     for group in groups:
         group.empty()
@@ -372,7 +381,18 @@ class CircleEnemy(EnemyShip):
 
 
 class Asteroid(pygame.sprite.Sprite):
+    """Класс астероидов, летящих навстречу игроку"""
     def __init__(self, picture_path="images/asteroid.png", group=asteroid_group):
+        """Констурктор класса Asteroid
+
+        Атрибуты:
+        image - изображение астероида
+        rect - 'прямоугольник' астероида, хитбокс
+        x, y - положение астероида
+        vy - скорость его движения
+        lives - количество жизней астероида
+
+        """
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -386,24 +406,38 @@ class Asteroid(pygame.sprite.Sprite):
         asteroid_group.add(self)
 
     def move(self):
+        """Функция движения астероида"""
         self.y += self.vy
 
     def hit(self):
+        """Функция столкновения астероида с дружественными пулями"""
         for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
             self.lives -= 1
         if self.lives <= 0:
             self.kill()
 
     def update(self):
+        """Функция обновления состояния астероида"""
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
 
 
-class Buff(pygame.sprite.Sprite):
-    def __init__(self, x, y, group = buff_group):
 class Drop(pygame.sprite.Sprite):
+    """Класс того дропа ('плюшек'), который падает с
+        поверженных врагов (с некоторой вероятностью)"""
     def __init__(self, x, y, group=drop_group):
+        """Коструктор класса Drop
+
+        Атрибуты:
+        type - тип дропа
+        image - изображение дропа
+        rect - 'прямоугольник' дропа, хитбокс
+        x, y - положение дропа
+        vy - скорость его движения
+        lives - количество жизней дропа
+
+        """
         super().__init__()
         self.type = random.choice(['shield', 'heal', 'triple_shot', 'double_shot', 'laser', 'double_score'])
         self.image = powerup_images[self.type]
@@ -415,22 +449,35 @@ class Drop(pygame.sprite.Sprite):
         group.add(self)
 
     def update(self):
+        """Обновление положения летящего дропа"""
         self.y += self.vy
         self.rect.center = (self.x, self.y)
 
 
 class Buff:
+    """Класс баффа, которым может обладать корабль игрока"""
     def __init__(self, state):
+        """Конструктор класса Buff
+
+        Атрибуты:
+        timer - значение времени, которое еще бафф будет длиться
+        state - переменная состояния баффа
+        default_state - значение state по умолчанию (фактически отличает
+            разные виды баффов друг от друга)
+
+        """
         self.timer = 0
         self.default_state = state
         self.state = self.default_state
 
     def update(self):
+        """Функция того, как 'тикает' таймер баффа"""
         if self.timer > 0:
             self.timer -= 1
         elif self.timer == 0:
             self.state = self.default_state
 
     def apply(self, state, time):
+        """Функция присваивания баффу определенного состояния на определенное время"""
         self.state = state
         self.timer += time * FPS # время указывается в секундах!
