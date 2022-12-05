@@ -4,8 +4,11 @@ from random import randint
 from random import choice
 from numpy import *
 
-import math
+# import math
 powerup_images = {}
+'''
+powerup_images - Used skins (dictionary)
+'''
 powerup_images['heal'] = pygame.image.load('images/heal_buff.png')
 powerup_images['shield'] = pygame.image.load('images/shield_buff.png')
 powerup_images['laser'] = pygame.image.load('images/laser.png')
@@ -13,17 +16,24 @@ powerup_images['double_score'] = pygame.image.load('images/coins_buff.png')
 powerup_images['double_shot'] = pygame.image.load('images/double_shot.png')
 powerup_images['triple_shot'] = pygame.image.load('images/triple_shot.png')
 
+
 drop_group = pygame.sprite.Group()
+'''
+drop_group - Group hierarchy
+'''
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
 groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, drop_group}
+
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
-# словарь, используемый для перемещения игрока
+'''
+keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используемый для перемещения игрока
+'''
 score = 0
 
 game_state = "game"
@@ -34,7 +44,8 @@ game_state = "game"
 class Bullet(pygame.sprite.Sprite):
     """Класс-родитель пуль"""
     def __init__(self, x, y, picture_path, direction, enemy, damage=1, v=1, ):
-        """Конструктор класса Bullet
+        """
+        Конструктор класса Bullet
 
         Аргументы:
         picture_path - изображение пули
@@ -70,11 +81,13 @@ class Bullet(pygame.sprite.Sprite):
 class Ship(pygame.sprite.Sprite):
     """Класс-родитель кораблей"""
     def __init__(self, x, y, picture_path, enemy, speed=1, lives=1):
-        """Констурктор класса Ship
+        """
+        Конструктор класса Ship
 
         Аргументы:
-        picture_path - путь к текстурке корабля
+        picture_path - путь к текстуре корабля
         x, y - положение
+        vx, vy - проекции скоростей за тик
         enemy - True если Enemy, False если Ally
         speed (optional) - собственная скорость (ед. изм. - скорость по умолчанию)
         lives (optional) - количество жизней
@@ -111,8 +124,9 @@ class Ship(pygame.sprite.Sprite):
         self.y += self.vy
 
     def hit(self):
-        """Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
-            при нулевом количестве жизней"""
+        """
+        Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля при нулевом количестве жизней
+        """
         opposing_bullet_group = ally_bullet_group if self.enemy else enemy_bullet_group
         for bullet in pygame.sprite.spritecollide(self, opposing_bullet_group, True):
             self.lives -= bullet.damage
@@ -120,14 +134,17 @@ class Ship(pygame.sprite.Sprite):
             self.lives -= 1
 
     def update_buffs(self):
-        """Функция обновления состояния баффов, переписана в AllyShip"""
+        """
+        Функция обновления состояния баффов, переписана в AllyShip
+        """
         pass
 
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
     def __init__(self, x, y, direction, picture_path="images/enemy_bullet.png"):
-        """Конструктор класса EnemyBullet
+        """
+        Конструктор класса EnemyBullet
 
         Аргументы:
         picture_path - изображение пули
@@ -140,7 +157,8 @@ class EnemyBullet(Bullet):
 class EnemyShip(Ship):
     """Класс вражеских кораблей"""
     def __init__(self, picture_path="images/enemy_ship.png"):
-        """Констурктор класса EnemyShip
+        """
+        Конструктор класса EnemyShip
 
         Атрибуты:
         image - изображение корабля
@@ -167,8 +185,10 @@ class EnemyShip(Ship):
         EnemyBullet(x=self.x, y=self.y, direction=-pi/2)
 
     def hit(self):
-        """Проверка столкновения вражеского корабля с дружественными пулями, и удаление корабля
-        при нулевом количестве жизней"""
+        """
+        Проверка столкновения вражеского корабля с дружественными пулями, и
+        удаление корабля при нулевом количестве жизней
+        """
         global score
         super().hit()
         if self.lives <= 0:
@@ -194,7 +214,8 @@ class AllyBullet(Bullet):
 class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
     def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
-        """Констурктор класса AllyShip
+        """
+        Констурктор класса AllyShip
 
         Атрибуты:
         image - изображение корабля
@@ -203,7 +224,7 @@ class AllyShip(Ship):
         vx, vy - скорость его движения
         lives - количество жизней корабля
         shooting_num - число, отвечающее за стрельбу корабля.
-            Пока равно нулю - стрельба не ведется
+            Пока равно нулю - стрельба не ведется.
             Пока стрельба ведется, каждый кадр увеличивается на 1
             Далее каждое кратное значение shooting_num производится выстрел
         shield - переменная, отвечающая за то, взят ли щит игроком или нет
@@ -244,8 +265,10 @@ class AllyShip(Ship):
             self.y = y
 
     def hit(self):
-        """Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
-            при нулевом количестве жизней, а также наложение эффекта баффа"""
+        """
+        Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
+        при нулевом количестве жизней, а также наложение эффекта баффа
+        """
         super().hit()
         if self.lives <= 0:
             self.lives = 0
@@ -287,8 +310,10 @@ class AllyShip(Ship):
             self.shooting_num += 1
 
     def shoot(self):
-        """Корабль стреляет по-разному в зависимости от того,
-            какое значение self.shooting_style"""
+        """
+        Корабль стреляет по-разному в зависимости от того,
+        какое значение self.shooting_style
+        """
         if self.shooting_style.state == "normal":
             self.normal_shot()
 
@@ -333,7 +358,8 @@ def game_over():
 class LineEnemy(EnemyShip):
     """Класс врагов, которые не стоят на месте, а двигаются по горизонтальной прямой"""
     def __init__(self):
-        """Конструктор класса LineEnemy
+        """
+        Конструктор класса LineEnemy
 
         Атрибуты:
         a - 'амплитуда', значение, на которое корабль отклоняется от центрального положения
@@ -355,7 +381,8 @@ class LineEnemy(EnemyShip):
 class CircleEnemy(EnemyShip):
     """Класс врагов, которые не стоят на месте, а двигаются по окружности"""
     def __init__(self):
-        """Конструктор класса LineEnemy
+        """
+        Конструктор класса LineEnemy
 
         Атрибуты:
         R - радиус окружности, его траектории
@@ -382,7 +409,8 @@ class CircleEnemy(EnemyShip):
 class Asteroid(pygame.sprite.Sprite):
     """Класс астероидов, летящих навстречу игроку"""
     def __init__(self, picture_path="images/asteroid.png", group=asteroid_group):
-        """Констурктор класса Asteroid
+        """
+        Конструктор класса Asteroid
 
         Атрибуты:
         image - изображение астероида
@@ -426,7 +454,8 @@ class Drop(pygame.sprite.Sprite):
     """Класс того дропа ('плюшек'), который падает с
         поверженных врагов (с некоторой вероятностью)"""
     def __init__(self, x, y, group=drop_group):
-        """Коструктор класса Drop
+        """
+        Конструктор класса Drop
 
         Атрибуты:
         type - тип дропа
@@ -456,7 +485,8 @@ class Drop(pygame.sprite.Sprite):
 class Buff:
     """Класс баффа, которым может обладать корабль игрока"""
     def __init__(self, state):
-        """Конструктор класса Buff
+        """
+        Конструктор класса Buff
 
         Атрибуты:
         timer - значение времени, которое еще бафф будет длиться
@@ -479,4 +509,4 @@ class Buff:
     def apply(self, state, time):
         """Функция присваивания баффу определенного состояния на определенное время"""
         self.state = state
-        self.timer += time * FPS # время указывается в секундах!
+        self.timer += time * FPS  # время указывается в секундах!

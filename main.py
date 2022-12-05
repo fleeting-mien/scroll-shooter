@@ -54,6 +54,7 @@ def stop_shooting():
     for ship in ally_ship_group:
         ship.stop_shooting()
 
+
 def shooting():
     """
     all allies shoot
