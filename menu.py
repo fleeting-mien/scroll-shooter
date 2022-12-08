@@ -1,7 +1,7 @@
-from pygame import *
-#from classes import game_state
-init()
-ARIAL_25 = font.SysFont('arial', 25)
+import pygame as pg
+# from classes import game_state
+pg.init()
+ARIAL_25 = pg.font.SysFont('arial', 25)
 """
 Це шрифт
 """
@@ -21,7 +21,7 @@ class Menu:
 
     def append_option(self, option, callback):
         """
-        Дабавляет пункт меню
+        Добавляет пункт меню
         """
         self._option_surfaces.append(ARIAL_25.render(option, True, (255, 255, 255)))
         self._callbacks.append(callback)
@@ -46,12 +46,14 @@ class Menu:
             option_rect = option.get_rect()
             option_rect.topleft = (x, y + i * option_y_padding)
             if i == self._current_option_index:
-                draw.rect(surf, (0, 100, 0), option_rect)
+                pg.draw.rect(surf, (0, 100, 0), option_rect)
             surf.blit(option, option_rect)
 
 
 menu_is_here = Menu()
 menu_is_here.append_option('Start', lambda: "game")
 menu_is_here.append_option('Pause', lambda: "pause")
-menu_is_here.append_option('Restart', lambda: "game")
 menu_is_here.append_option('Quit', lambda: print('Дасвиданя, иди делай анжуманя'))
+menu_is_here.append_option('Restart', lambda: "startscreen")
+menu_is_here.append_option('About', lambda: "about")
+

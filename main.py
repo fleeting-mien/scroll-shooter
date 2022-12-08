@@ -1,12 +1,13 @@
 # import pygame - already imported through classes
 from classes import *
-import menu
+from menu import *
 
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = pygame.image.load("images/background.jpg")
 ARIAL_25 = pygame.font.SysFont('arial', 25)
+ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
 
 pygame.display.update()
@@ -92,23 +93,33 @@ def react_on_menu_keys(menu_event):
     Реакция на нажатие кнопок меню
     """
     global finished
+    global game_state
     if menu_event.type == pygame.KEYDOWN:
         if menu_event.key == pygame.K_DOWN:
-            menu.menu_is_here.switch(1)
+            menu_is_here.switch(1)
         if menu_event.key == pygame.K_UP:
-            menu.menu_is_here.switch(-1)
+            menu_is_here.switch(-1)
         if menu_event.key == pygame.K_SPACE or menu_event.key == pygame.K_RETURN:
-            if menu.menu_is_here.check_current_index() == 3:
-                print(menu.menu_is_here.check_current_index())
+            if menu_is_here.check_current_index() == 0:
+                if game_state == "game":
+                    print("Ты уже и так играешь, идиот")
+                else:
+                    game_state = "game"
+            elif menu_is_here.check_current_index() == 1:
+                game_state = "pause"
+                # game_state = menu_is_here.select()
+                # команда выше, вероятно будет работать, когда я до конца допишу условия для всех game_state
+                # pass
+            elif menu_is_here.check_current_index() == 2:
+                print(menu_is_here.check_current_index())
                 finished = True
-                menu.menu_is_here.select()
-            else:
-                menu.menu_is_here.select()
+                menu_is_here.select()
+
 
 
 def spawn():
     """
-    Эта функция, видимо, создаёт нам врагов (3 типа) раз в 100 тиков
+    Эта функция создаёт нам 4 типа врагов раз в 100 тиков
     """
     global spawn_timer
     spawn_timer += 1
@@ -123,6 +134,9 @@ def spawn():
 
 
 def textbar():
+    """
+    Игровая информация на экране в правом верхнем углу
+    """
     healthbar = ARIAL_25.render(
         "Your health: " + str(player.lives),
         True, (255, 255, 0)
@@ -154,25 +168,48 @@ while not finished:
                 stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
+        menu_is_here.drawmenu(screen, 25, 25, 25)
+        update()
+        draw()
+        textbar()
+        print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
+        # для проверки состояния баффа на тип стрельбы
+        pygame.display.update()
+    elif game_state == "pause":
+        stop_shooting()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            react_on_menu_keys(event)
+        menu_is_here.drawmenu(screen, 25, 25, 25)
+        pausebar = ARIAL_45.render("Pause!", True, (255, 255, 0))
+        screen.blit(pausebar, (MAX_X / 2 - 50, MAX_Y / 2))
+        update()
+        textbar()
+        print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
+        # для проверки состояния баффа на тип стрельбы
+
+        pygame.display.update()
+    screen.blit(background, (0, 0))
+
+if finished:
+    '''
+    Здесь происходят все события вне mainloop
+    '''
+    if game_state == "startscreen":
+        pass
     elif game_state == "gameover":
         pass
         # дописать
-    elif game_state == "pause":
+    elif game_state == "about":
         pass
         # дописать
 
     screen.blit(background, (0, 0))
 
-    menu.menu_is_here.drawmenu(screen, 25, 25, 25)
+    menu_is_here.drawmenu(screen, 25, 25, 25)
 
     update()
-    draw()
-
-    textbar()
-
-    print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
-    # для проверки состояния баффа на тип стрельбы
 
     pygame.display.update()
-
 pygame.quit()
