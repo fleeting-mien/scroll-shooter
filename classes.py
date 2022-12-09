@@ -242,6 +242,7 @@ class AllyShip(Ship):
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
+        self.heal = Buff("not applied")
         # 4 состояния: "normal", "double", "triple", "laser"
         self.score_factor = Buff("x1")  # 2 состояния: "х1" и "х2"
         self.score = 0
@@ -290,6 +291,7 @@ class AllyShip(Ship):
                 self.shooting_style.apply("laser", BUFF_DURATION)
             elif drop.type == 'heal':
                 self.lives += 2
+                self.heal.apply("applied", FPS)
             elif drop.type == 'double_shot':
                 self.shooting_style.apply("double", BUFF_DURATION)
             elif drop.type == 'triple_shot':

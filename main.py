@@ -8,6 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = Background()
+ARIAL_18 = pygame.font.SysFont('arial', 18)
 ARIAL_25 = pygame.font.SysFont('arial', 25)
 ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
@@ -143,7 +144,6 @@ def textbar():
     """
     Игровая информация на экране в правом верхнем углу
     """
-    global score
     healthbar = ARIAL_25.render(
         "Your health: " + str(player.lives),
         True, (255, 255, 0)
@@ -154,6 +154,51 @@ def textbar():
         True, (255, 255, 0)
     )
     screen.blit(scorebar, (MAX_X * 3 / 4, 30))
+
+
+def round(x):
+    return int(10*x) / 10
+
+
+def buff_text():
+    if player.shield.timer > 0:
+        shieldbar = ARIAL_18.render(
+            "Shield: " + str(round(player.shield.timer / FPS)) + " sec",
+            True, (255, 255, 0)
+        )
+        screen.blit(shieldbar, (0, MAX_Y/2))
+
+    if player.score_factor.timer > 0:
+        scorefactorbar = ARIAL_18.render(
+            "x2: " + str(round(player.score_factor.timer / FPS)) + "sec",
+            True, (255, 255, 0)
+        )
+        screen.blit(scorefactorbar, (0, MAX_Y/2 + 20))
+
+    if player.shooting_style.timer > 0:
+        if player.shooting_style.state == "double":
+            shootingbar = ARIAL_18.render(
+                "Double shot: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                True, (255, 255, 0)
+            )
+        elif player.shooting_style.state == "triple":
+            shootingbar = ARIAL_18.render(
+                "Triple shot: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                True, (255, 255, 0)
+            )
+        else:
+            shootingbar = ARIAL_18.render(
+                "Laser: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                True, (255, 255, 0)
+            )
+        screen.blit(shootingbar, (0, MAX_Y/2 + 40))
+
+    if player.heal.timer > 0:
+        healbar = ARIAL_18.render(
+            "Healed 1 HP!",
+            True, (255, 255, 0)
+        )
+        screen.blit(healbar, (0, MAX_Y/2 + 60))
 
 
 initial_set()
@@ -179,6 +224,7 @@ while not finished:
         update()
         draw()
         textbar()
+        buff_text()
         if player.score >= BOSS_SCORE and not boss:
             boss = Boss(ARIAL_25)
         pygame.display.update()
