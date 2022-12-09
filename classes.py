@@ -4,8 +4,6 @@ from random import randint
 from random import choice
 from numpy import *
 
-# import math
-
 
 powerup_images = {}
 '''
@@ -153,7 +151,7 @@ class EnemyBullet(Bullet):
         x, y - положение пули (в пикселях)
 
         """
-        super().__init__(x, y, picture_path, direction, enemy=True, )
+        super().__init__(x, y, picture_path, direction, enemy=True)
 
 
 class EnemyShip(Ship):
@@ -568,3 +566,64 @@ class Background:
         if self.y == 0:
             self.y = -2400
         screen.blit(self.image, (self.x, self.y))
+
+class Boss(EnemyShip):
+    def __init__(self, font):
+        super().__init__(picture_path="images/boss.png")
+        self.x0 = MAX_X/2 # серединка восьмерки
+        self.y0 = MAX_Y/6
+        self.R = 100
+        self.omega = 3 / FPS
+        self.angle = 0
+        self.x = self.x0 + self.R * (-1 + cos(self.angle))
+        self.y = self.y0 + self.R * sin(self.angle)
+        self.lives = 100
+        self.font = font
+
+    def move(self):
+        if 0 <= self.angle < 2*pi:
+            self.angle += self.omega
+            self.x = self.x0 + self.R * (1 - cos(self.angle))
+            self.y = self.y0 + self.R * sin(self.angle)
+        elif 2*pi <= self.angle < 4*pi:
+            self.angle += self.omega
+            self.x = self.x0 + self.R * (-1 + cos(-self.angle))
+            self.y = self.y0 + self.R * sin(self.angle)
+        elif self.angle >= 4*pi:
+            self.angle = 0
+
+    def shoot(self):
+        BossBullet(x=self.x, y=self.y, direction=-pi/2)
+
+    def update(self):
+        self.rect.center = (self.x, self.y)
+        self.move()
+        self.hit()
+        self.health_bar()
+        if randint(1, INTENSITY) == 1:
+            self.shoot()
+
+    def health_bar(self):
+        healthbar = self.font.render(
+            str(self.lives),
+            True, (255, 255, 0)
+        )
+        screen.blit(healthbar, (self.x, self.y + 30))
+
+
+class BossBullet(EnemyBullet):
+    def __init__(self, x, y, direction):
+        super().__init__(x, y, direction)
+        self.damage = 3
+        self.phase = 0
+        self.omega = self.omega = choice([20 / FPS, -20 / FPS])
+        self.image = pygame.image.load("images/boss_bullet.png")
+
+    def update(self):
+        """Изменяет положение пули, одновременно перемещая ее изображение"""
+        self.phase += self.omega
+        self.y += self.v  # минус потому что Oy вниз
+        self.x += self.v * cos(self.phase)
+        self.rect.center = (self.x, self.y)
+        if self.x > MAX_X or self.x < 0 or self.y < 0 or self.y > MAX_Y:
+            self.group.remove(self)

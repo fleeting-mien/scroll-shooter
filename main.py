@@ -15,6 +15,7 @@ spawn_timer = 0
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
+boss = 0
 
 
 def initial_set():
@@ -123,7 +124,11 @@ def spawn():
     Эта функция создаёт нам 4 типа врагов раз в 100 тиков
     """
     global spawn_timer
-    spawn_timer += 1
+    if not boss:
+        spawn_timer += 1
+    else:
+        spawn_timer = 0
+
     if spawn_timer == SPAWN_TIME:
         spawn_timer = 0
         CircleEnemy()
@@ -174,8 +179,8 @@ while not finished:
         update()
         draw()
         textbar()
-        # print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
-        # для проверки состояния баффа на тип стрельбы
+        if player.score >= BOSS_SCORE and not boss:
+            boss = Boss(ARIAL_25)
         pygame.display.update()
     elif game_state == "pause":
         stop_shooting()
