@@ -6,6 +6,7 @@ from numpy import *
 
 # import math
 
+
 powerup_images = {}
 '''
 powerup_images - Used skins (dictionary)
@@ -335,6 +336,8 @@ class AllyShip(Ship):
 
         elif self.shooting_style.state == "laser":
             self.laser_shot()
+
+        self.sound.play()
 
     def normal_shot(self):
         """Обычный выстрел"""
