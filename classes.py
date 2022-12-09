@@ -275,6 +275,9 @@ class AllyShip(Ship):
         """
         if self.shield.state == "not applied":
             super().hit()
+        else:
+            pygame.sprite.spritecollide(self, enemy_bullet_group, True)
+
         if self.lives <= 0:
             self.lives = 0
             game_over()

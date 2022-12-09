@@ -10,7 +10,7 @@ SPAWN_SECONDS = 5  # количество секунд, за которое сп
 SPAWN_TIME = FPS * SPAWN_SECONDS
 SHOOTING_COEF = 10  # раз в сколько кадров будет вылетать пуля при зажатой мышке
 BUFF_DURATION = 5  # количество секунд, которое длится бафф корабля игрока
-DROP_CHANCE = 5  # раз в сколько смертей с врагов будет падать дроп
+DROP_CHANCE = 1  # раз в сколько смертей с врагов будет падать дроп
 INTENSITY = 30  # enemy ships shoot one in INTENSITY ticks
 
 DEFAULT_SPEED = 600 / FPS
