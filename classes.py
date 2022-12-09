@@ -598,7 +598,10 @@ class Boss(EnemyShip):
             self.angle = 0
 
     def shoot(self):
-        BossBullet(x=self.x, y=self.y, direction=-pi/2)
+        if randint(1, 40) == 1:
+            BossBullet(x=self.x, y=self.y, direction=-pi / 2, image=pygame.image.load("images/pelmen.png"))
+        else:
+            BossBullet(x=self.x, y=self.y, direction=-pi/2, image=pygame.image.load("images/boss_bullet.png"))
 
     def update(self):
         self.rect.center = (self.x, self.y)
@@ -617,12 +620,12 @@ class Boss(EnemyShip):
 
 
 class BossBullet(EnemyBullet):
-    def __init__(self, x, y, direction):
+    def __init__(self, x, y, direction, image):
         super().__init__(x, y, direction)
         self.damage = 3
         self.phase = 0
         self.omega = self.omega = choice([20 / FPS, -20 / FPS])
-        self.image = pygame.image.load("images/boss_bullet.png")
+        self.image = image
 
     def update(self):
         """Изменяет положение пули, одновременно перемещая ее изображение"""
