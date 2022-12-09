@@ -66,8 +66,8 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.v = v * DEFAULT_SPEED
 
-        group = enemy_bullet_group if enemy else ally_bullet_group
-        group.add(self)
+        self.group = enemy_bullet_group if enemy else ally_bullet_group
+        self.group.add(self)
 
         self.damage = damage
 
@@ -76,6 +76,8 @@ class Bullet(pygame.sprite.Sprite):
         self.y -= self.v * sin(self.direction)  # минус потому что Oy вниз
         self.x += self.v * cos(self.direction)
         self.rect.center = (self.x, self.y)
+        if self.x > MAX_X or self.x < 0 or self.y < 0 or self.y > MAX_Y:
+            self.group.remove(self)
 
 
 class Ship(pygame.sprite.Sprite):
