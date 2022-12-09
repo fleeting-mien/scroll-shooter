@@ -5,6 +5,9 @@ from random import choice
 from numpy import *
 
 # import math
+
+
+
 powerup_images = {}
 '''
 powerup_images - Used skins (dictionary)
@@ -239,6 +242,7 @@ class AllyShip(Ship):
         """
 
         super().__init__(x, y, picture_path, False, lives=1000)
+        self.sound = pygame.mixer.Sound('OST/shooting_sound.wav')
         self.shooting_num = 0
         self.shield = Buff("not applied")  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
@@ -342,6 +346,7 @@ class AllyShip(Ship):
 
         elif self.shooting_style.state == "laser":
             self.laser_shot()
+        self.sound.play()
 
     def normal_shot(self):
         """Обычный выстрел"""
