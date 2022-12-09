@@ -293,7 +293,7 @@ class AllyShip(Ship):
                 self.shooting_style.apply("laser", BUFF_DURATION)
             elif drop.type == 'heal':
                 self.lives += 2
-                self.heal.apply("applied", FPS)
+                self.heal.apply("applied", 1)
             elif drop.type == 'double_shot':
                 self.shooting_style.apply("double", BUFF_DURATION)
             elif drop.type == 'triple_shot':
@@ -306,6 +306,7 @@ class AllyShip(Ship):
         self.shield.update()
         self.shooting_style.update()
         self.score_factor.update()
+        self.heal.update()
 
     def start_shooting(self):
         """Начало стрельбы по нажатию кнопки мыши"""
