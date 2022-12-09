@@ -549,7 +549,6 @@ class Shield(Buff):
             self.rect.center = (self.x, self.y)
 
 
-
 class Background:
     def __init__(self, picture_path="images/back.png"):
         global screen
