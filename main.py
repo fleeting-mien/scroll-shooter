@@ -3,6 +3,8 @@ from classes import *
 from menu import *
 
 pygame.init()
+
+
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = Background()

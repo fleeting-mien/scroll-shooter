@@ -5,6 +5,7 @@ from random import choice
 from numpy import *
 
 # import math
+
 powerup_images = {}
 '''
 powerup_images - Used skins (dictionary)
@@ -238,6 +239,7 @@ class AllyShip(Ship):
         """
 
         super().__init__(x, y, picture_path, False, lives=ALLY_LIVES)
+        self.sound = pygame.mixer.Sound('OST/shooting_sound.wav')
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
