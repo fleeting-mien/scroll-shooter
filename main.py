@@ -185,7 +185,6 @@ while not finished:
         menu_is_here.drawmenu(screen, 25, 25, 25)
         pausebar = ARIAL_45.render("Pause!", True, (255, 255, 0))
         screen.blit(pausebar, (MAX_X / 2 - 50, MAX_Y / 2))
-        update()
         textbar()
 
         pygame.display.update()
