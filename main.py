@@ -144,7 +144,7 @@ def textbar():
     )
     screen.blit(healthbar, (MAX_X * 3 / 4, 0))
     scorebar = ARIAL_25.render(
-        "Your score: " + str(score),
+        "Your score: " + str(player.score),
         True, (255, 255, 0)
     )
     screen.blit(scorebar, (MAX_X * 3 / 4, 30))

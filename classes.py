@@ -34,7 +34,6 @@ keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
 '''
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используемый для перемещения игрока
 '''
-score = 0
 
 game_state = "game"
 # Пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
@@ -199,7 +198,8 @@ class EnemyShip(Ship):
             if randint(1, DROP_CHANCE) == 1:
                 Drop(x=self.x, y=self.y)
             self.kill()
-            score += 1
+            for ship in ally_ship_group:
+                ship.score += 1
 
 
 class AllyBullet(Bullet):
@@ -244,6 +244,7 @@ class AllyShip(Ship):
         self.shooting_style = Buff("normal")
         # 4 состояния: "normal", "double", "triple", "laser"
         self.score_factor = Buff("x1")  # 2 состояния: "х1" и "х2"
+        self.score = 0
 
     def move(self):
         """Функция перемещения корабля"""
