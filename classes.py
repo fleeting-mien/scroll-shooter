@@ -5,6 +5,7 @@ from random import choice
 from numpy import *
 
 # import math
+
 powerup_images = {}
 '''
 powerup_images - Used skins (dictionary)
@@ -238,6 +239,7 @@ class AllyShip(Ship):
         """
 
         super().__init__(x, y, picture_path, False, lives=ALLY_LIVES)
+        self.sound = pygame.mixer.Sound('OST/shooting_sound.wav')
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
@@ -299,6 +301,14 @@ class AllyShip(Ship):
     def update_buffs(self):
         """Функция, обновляющая состояние баффов игрока"""
         self.shield.update()
+        if self.shield.state == "applied":
+            self.image = pygame.image.load("images/ally_ship_shielded.png")
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+        else:
+            self.image = pygame.image.load("images/ally_ship.png")
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
         self.shooting_style.update()
         self.score_factor.update()
 
@@ -504,20 +514,8 @@ class Buff:
 
         """
         self.timer = 0
-
         self.default_state = state
-        """
-        shield: "not applied". other states: "applied"
-        shooting_style: "normal". other states: "double", "triple", "laser"
-        score_factor: "x1". other states: "x2"
-        """
-
         self.state = self.default_state
-        """
-        shield: "not applied", "applied"
-        shooting_style: "normal", "double", "triple", "laser"
-        score_factor: "x1", "x2"
-        """
 
     def update(self):
         """Функция того, как 'тикает' таймер баффа"""
@@ -532,35 +530,18 @@ class Buff:
         self.timer += time * FPS  # время указывается в секундах!
 
 
-class Shield(Buff):
-    def __init__(self, state, ship, picture_path="images/shield.png"):
-        super().__init__(state)
-        self.image = pygame.image.load(picture_path)
-        self.rect = self.image.get_rect()
-        self.ship = ship
-        self.x, self.y = ship.rect.center
-
-    def update(self):
-        super().update()  # updates timer
-        if self.state == "applied":
-            screen.blit(self.image, self.rect)
-            self.x = self.ship.x
-            self.y = self.ship.y
-            self.rect.center = (self.x, self.y)
-
-
-
 class Background:
     def __init__(self, picture_path="images/back.png"):
-        global screen
-        screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
         self.x = 0
         self.y = -2400
         self.vy = 2
 
     def update(self):
+        global screen
+        screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.y += self.vy
         if self.y == 0:
             self.y = -2400
         screen.blit(self.image, (self.x, self.y))
+
