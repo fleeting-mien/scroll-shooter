@@ -103,7 +103,7 @@ class Ship(pygame.sprite.Sprite):
         self.y = y
         self.vx = 0
         self.vy = 0
-
+        # self.active = active
         self.lives = lives
         self.v = speed * DEFAULT_SPEED
 
@@ -168,6 +168,7 @@ class EnemyShip(Ship):
         x, y - положение корабля
         vx, vy - скорость его движения
         lives - количество жизней корабля
+        active - активность корабля в игре (True - стреляет, False - не стреляет)
 
         """
 
@@ -179,7 +180,8 @@ class EnemyShip(Ship):
     def update(self):
         """Функция изменения состояния корабля"""
         super().update()
-        if randint(1, INTENSITY) == 1:
+        active = True # Временная заплатка
+        if randint(1, INTENSITY) == 1 and active:
             self.shoot()
 
     def shoot(self):

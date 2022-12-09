@@ -172,7 +172,7 @@ while not finished:
         update()
         draw()
         textbar()
-        print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
+        # print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
         # для проверки состояния баффа на тип стрельбы
         pygame.display.update()
     elif game_state == "pause":
@@ -186,7 +186,7 @@ while not finished:
         screen.blit(pausebar, (MAX_X / 2 - 50, MAX_Y / 2))
         update()
         textbar()
-        print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
+        # print(str(player.shooting_style.state) + " " + str(player.shooting_style.timer))
         # для проверки состояния баффа на тип стрельбы
 
         pygame.display.update()
