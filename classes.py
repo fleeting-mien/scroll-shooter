@@ -271,7 +271,8 @@ class AllyShip(Ship):
         Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
         при нулевом количестве жизней, а также наложение эффекта баффа
         """
-        super().hit()
+        if self.shield.state == "not applied":
+            super().hit()
         if self.lives <= 0:
             self.lives = 0
             game_over()
@@ -293,6 +294,14 @@ class AllyShip(Ship):
     def update_buffs(self):
         """Функция, обновляющая состояние баффов игрока"""
         self.shield.update()
+        if self.shield.state == "applied":
+            self.image = pygame.image.load("images/ally_ship_shielded.png")
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+        else:
+            self.image = pygame.image.load("images/ally_ship.png")
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
         self.shooting_style.update()
         self.score_factor.update()
 
