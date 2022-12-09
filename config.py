@@ -14,3 +14,5 @@ DROP_CHANCE = 1  # раз в сколько смертей с врагов бу�
 INTENSITY = 30  # enemy ships shoot one in INTENSITY ticks
 
 DEFAULT_SPEED = 600 / FPS
+
+ALLY_LIVES = 500

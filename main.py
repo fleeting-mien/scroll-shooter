@@ -5,7 +5,6 @@ from menu import *
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
-
 background = Background()
 ARIAL_25 = pygame.font.SysFont('arial', 25)
 ARIAL_45 = pygame.font.SysFont('arial', 45)
@@ -117,7 +116,6 @@ def react_on_menu_keys(menu_event):
                 menu_is_here.select()
 
 
-
 def spawn():
     """
     Эта функция создаёт нам 4 типа врагов раз в 100 тиков
@@ -138,6 +136,7 @@ def textbar():
     """
     Игровая информация на экране в правом верхнем углу
     """
+    global score
     healthbar = ARIAL_25.render(
         "Your health: " + str(player.lives),
         True, (255, 255, 0)
@@ -210,4 +209,5 @@ if finished:
     update()
 
     pygame.display.update()
+
 pygame.quit()
