@@ -191,14 +191,16 @@ class EnemyShip(Ship):
         Проверка столкновения вражеского корабля с дружественными пулями, и
         удаление корабля при нулевом количестве жизней
         """
-        global score
         super().hit()
         if self.lives <= 0:
             if randint(1, DROP_CHANCE) == 1:
                 Drop(x=self.x, y=self.y)
             self.kill()
             for ship in ally_ship_group:
-                ship.score += 1
+                if ship.score_factor.state == "x2":
+                    ship.score += 2
+                else:
+                    ship.score += 1
 
 
 class AllyBullet(Bullet):
