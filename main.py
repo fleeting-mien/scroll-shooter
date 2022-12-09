@@ -5,7 +5,8 @@ from menu import *
 pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
-background = pygame.image.load("images/background.jpg")
+
+background = Background()
 ARIAL_25 = pygame.font.SysFont('arial', 25)
 ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
@@ -188,7 +189,7 @@ while not finished:
         textbar()
 
         pygame.display.update()
-    screen.blit(background, (0, 0))
+    background.update()
 
 if finished:
     '''
@@ -203,7 +204,7 @@ if finished:
         pass
         # дописать
 
-    screen.blit(background, (0, 0))
+    background.update()
 
     menu_is_here.drawmenu(screen, 25, 25, 25)
 

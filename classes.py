@@ -523,3 +523,20 @@ class Buff:
         """Функция присваивания баффу определенного состояния на определенное время"""
         self.state = state
         self.timer += time * FPS  # время указывается в секундах!
+
+
+class Background:
+    def __init__(self, picture_path="images/back.png"):
+        self.image = pygame.image.load(picture_path)
+        self.x = 0
+        self.y = -2400
+        self.vy = 2
+
+    def update(self):
+        global screen
+        screen = pygame.display.set_mode((MAX_X, MAX_Y))
+        self.y += self.vy
+        if self.y == 0:
+            self.y = -2400
+        screen.blit(self.image, (self.x, self.y))
+
