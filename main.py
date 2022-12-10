@@ -43,6 +43,17 @@ def update():
         group.update()
 
 
+def restart_game():
+    """
+    Перезапускает игру сначала
+    """
+    for group in groups:
+        group.empty()
+    global game_state
+    game_state = "game"
+    initial_set()
+
+
 def draw():
     """
     calls the draw method of all objects
@@ -125,7 +136,7 @@ def react_on_menu_keys(menu_event):
                 else:
                     game_state = "startscreen"
             elif menu_is_here.check_current_index() == 3:
-                game_state = "startscreen"
+                restart_game()
             elif menu_is_here.check_current_index() == 4:
                 game_state = "about"
 
