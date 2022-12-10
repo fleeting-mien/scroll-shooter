@@ -117,6 +117,8 @@ def react_on_menu_keys(menu_event):
             elif menu_is_here.check_current_index() == 2:
                 finished = True
                 menu_is_here.select()
+            elif menu_is_here.check_current_index() == 4:
+                game_state = "about"
 
 
 def spawn():
@@ -228,7 +230,7 @@ while not finished:
                 stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
-        menu_is_here.drawmenu(screen, 25, 25, 25)
+        menu_is_here.drawmenu(screen, 5, 5, 25)
         update()
         draw()
         textbar()
@@ -243,12 +245,22 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
             react_on_menu_keys(event)
-        menu_is_here.drawmenu(screen, 25, 25, 25)
-        pausebar = ARIAL_45.render("Pause!", True, (255, 255, 0))
+        menu_is_here.drawmenu(screen, 5, 5, 25)
+        pausebar = ARIAL_25.render("Pause!", True, (255, 255, 0))
         screen.blit(pausebar, (MAX_X / 2 - 50, MAX_Y / 2))
         textbar()
-
         pygame.display.update()
+    elif game_state == "about":
+        stop_shooting()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            react_on_menu_keys(event)
+        menu_is_here.drawmenu(screen, 5, 5, 25)
+        aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
+        screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
+        pygame.display.update()
+
     background.update()
 
 if finished:
@@ -258,9 +270,6 @@ if finished:
     if game_state == "startscreen":
         pass
     elif game_state == "gameover":
-        pass
-        # дописать
-    elif game_state == "about":
         pass
         # дописать
 
