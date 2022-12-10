@@ -178,7 +178,7 @@ class EnemyShip(Ship):
     def update(self):
         """Функция изменения состояния корабля"""
         super().update()
-        active = True  # Временная заплатка
+        active = True # Временная заплатка
         if randint(1, INTENSITY) == 1 and active:
             self.shoot()
 
@@ -220,7 +220,7 @@ class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
     def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
         """
-        Конструктор класса AllyShip
+        Констурктор класса AllyShip
 
         Атрибуты:
         image - изображение корабля
@@ -572,11 +572,10 @@ class Background:
             self.y = -2400
         screen.blit(self.image, (self.x, self.y))
 
-
 class Boss(EnemyShip):
     def __init__(self, font):
         super().__init__(picture_path="images/boss.png")
-        self.x0 = MAX_X/2  # серединка восьмерки
+        self.x0 = MAX_X/2 # серединка восьмерки
         self.y0 = MAX_Y/6
         self.R = 100
         self.omega = 3 / FPS
@@ -600,9 +599,11 @@ class Boss(EnemyShip):
 
     def shoot(self):
         if randint(1, 40) == 1:
-            BossBullet(x=self.x, y=self.y, direction=-pi / 2, image=pygame.image.load("images/pelmen.png"))
+            BossBullet(x=self.x, y=self.y, direction=-pi / 2,
+                       image=pygame.image.load("images/pelmen.png"), damage=5)
         else:
-            BossBullet(x=self.x, y=self.y, direction=-pi/2, image=pygame.image.load("images/boss_bullet.png"))
+            BossBullet(x=self.x, y=self.y, direction=-pi/2,
+                       image=pygame.image.load("images/boss_bullet.png"), damage=3)
 
     def update(self):
         self.rect.center = (self.x, self.y)
@@ -621,12 +622,9 @@ class Boss(EnemyShip):
 
 
 class BossBullet(EnemyBullet):
-    """
-
-    """
-    def __init__(self, x, y, direction, image):
+    def __init__(self, x, y, direction, image, damage):
         super().__init__(x, y, direction)
-        self.damage = 3
+        self.damage = damage
         self.phase = 0
         self.omega = self.omega = choice([20 / FPS, -20 / FPS])
         self.image = image
