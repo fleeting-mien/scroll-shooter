@@ -22,6 +22,8 @@ class Menu:
     def append_option(self, option, callback):
         """
         Добавляет пункт меню
+        option - отображаемый текст кнопки в меню
+        callback - функция кнопки
         """
         self._option_surfaces.append(ARIAL_25.render(option, True, (255, 255, 255)))
         self._callbacks.append(callback)

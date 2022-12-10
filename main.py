@@ -115,7 +115,6 @@ def react_on_menu_keys(menu_event):
                 # команда выше, вероятно будет работать, когда я до конца допишу условия для всех game_state
                 # pass
             elif menu_is_here.check_current_index() == 2:
-                print(menu_is_here.check_current_index())
                 finished = True
                 menu_is_here.select()
 
@@ -156,21 +155,21 @@ def textbar():
     screen.blit(scorebar, (MAX_X * 3 / 4, 30))
 
 
-def round(x):
+def round_of_game(x):
     return int(10*x) / 10
 
 
 def buff_text():
     if player.shield.timer > 0:
         shieldbar = ARIAL_18.render(
-            "Shield: " + str(round(player.shield.timer / FPS)) + " sec",
+            "Shield: " + str(round_of_game(player.shield.timer / FPS)) + " sec",
             True, (255, 255, 0)
         )
         screen.blit(shieldbar, (0, MAX_Y/2))
 
     if player.score_factor.timer > 0:
         scorefactorbar = ARIAL_18.render(
-            "x2: " + str(round(player.score_factor.timer / FPS)) + "sec",
+            "x2: " + str(round_of_game(player.score_factor.timer / FPS)) + "sec",
             True, (255, 255, 0)
         )
         screen.blit(scorefactorbar, (0, MAX_Y/2 + 20))
@@ -178,17 +177,17 @@ def buff_text():
     if player.shooting_style.timer > 0:
         if player.shooting_style.state == "double":
             shootingbar = ARIAL_18.render(
-                "Double shot: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                "Double shot: " + str(round_of_game(player.shooting_style.timer / FPS)) + " sec",
                 True, (255, 255, 0)
             )
         elif player.shooting_style.state == "triple":
             shootingbar = ARIAL_18.render(
-                "Triple shot: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                "Triple shot: " + str(round_of_game(player.shooting_style.timer / FPS)) + " sec",
                 True, (255, 255, 0)
             )
         else:
             shootingbar = ARIAL_18.render(
-                "Laser: " + str(round(player.shooting_style.timer / FPS)) + " sec",
+                "Laser: " + str(round_of_game(player.shooting_style.timer / FPS)) + " sec",
                 True, (255, 255, 0)
             )
         screen.blit(shootingbar, (0, MAX_Y/2 + 40))
