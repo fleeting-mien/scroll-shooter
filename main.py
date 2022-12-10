@@ -24,6 +24,7 @@ ost_game = 0
 ost_boss = 0
 boss_timer = 0
 
+
 def initial_set():
     """Создает игрока и изначальных врагов"""
     global player
@@ -215,6 +216,7 @@ def boss_arrival():
         )
         screen.blit(bossbar, (MAX_X/4, 20))
 
+
 initial_set()
 
 while not finished:
@@ -247,7 +249,7 @@ while not finished:
         buff_text()
         boss_arrival()
         if player.score >= BOSS_SCORE:
-            boss_timer +=1
+            boss_timer += 1
             warning = ARIAL_25.render("WARNING, BOSS INCOMING!!!", True, (255, 255, 0))
             screen.blit(warning, (MAX_X / 4 + 15, MAX_Y / 1.5))
             if not ost_boss:
@@ -285,7 +287,6 @@ while not finished:
         aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
         screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
         pygame.display.update()
-
 
     background.update()
 

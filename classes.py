@@ -26,7 +26,6 @@ music['boss1'] = 'OST/boss_ost1_Hydrophobia.mp3'
 music['boss2'] = 'OST/better-call-saul.mp3'
 
 
-
 drop_group = pygame.sprite.Group()
 '''
 drop_group - Group hierarchy
@@ -37,7 +36,8 @@ ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
-groups = {laser_group, asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, drop_group}
+groups = {laser_group, asteroid_group, enemy_bullet_group, ally_bullet_group,
+          enemy_ship_group, ally_ship_group, drop_group}
 
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
@@ -233,6 +233,7 @@ class LaserBeam(pygame.sprite.Sprite):
     def update(self):
         self.rect.center = (self.x, self.y)
 
+
 class AllyBullet(Bullet):
     """Класс дружественных пуль"""
     def __init__(self, x, y, direction, picture_path="images/ally_bullet.png"):
@@ -250,7 +251,7 @@ class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
     def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
         """
-        Констурктор класса AllyShip
+        Конструктор класса AllyShip
 
         Атрибуты:
         image - изображение корабля
@@ -273,8 +274,8 @@ class AllyShip(Ship):
         super().__init__(x, y, picture_path, False, lives=ALLY_LIVES)
         self.shot_sound = pygame.mixer.Sound('OST/shooting_sound.wav')
         self.laser_sound = pygame.mixer.Sound('OST/laser_effect.wav')
-        self.shot_sound.set_volume((0.2))
-        self.laser_sound.set_volume((0.4))
+        self.shot_sound.set_volume(0.2)
+        self.laser_sound.set_volume(0.4)
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
@@ -360,7 +361,6 @@ class AllyShip(Ship):
             LaserBeam(x=self.x, y=self.y - 350)
             self.laser_sound.play()
 
-
     def shoot(self):
         """
         Корабль стреляет по-разному в зависимости от того,
@@ -374,7 +374,6 @@ class AllyShip(Ship):
 
         elif self.shooting_style.state == "triple":
             self.triple_shot()
-
 
     def normal_shot(self):
         """Обычный выстрел"""
@@ -663,13 +662,13 @@ class Boss(EnemyShip):
 
     def health_bar(self):
         pygame.draw.rect(screen, (127, 255, 0), [100, 10, 400, 20])
-        pygame.draw.rect(screen, (255, 0, 0), [500 - 400*((100 - self.lives)/100), 10, 400*((100 - self.lives)/100), 20])
+        pygame.draw.rect(screen, (255, 0, 0),
+                         [500 - 400*((100 - self.lives)/100), 10, 400*((100 - self.lives)/100), 20])
         healthbar = self.font.render(
             str(self.lives),
             True, (0, 0, 0)
         )
         screen.blit(healthbar, (300, 5))
-
 
 
 class BossBullet(EnemyBullet):
