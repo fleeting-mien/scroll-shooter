@@ -587,7 +587,7 @@ class Background:
 
 
 class AboutInfo:
-    def __init__(self, picture_path="images/test_about.png"):
+    def __init__(self, picture_path="images/test_about.jpg"):
         global screen
         screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
