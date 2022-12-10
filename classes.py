@@ -47,8 +47,6 @@ keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используе
 '''
 
 game_state = "startscreen"
-# Пока что будут два состояния: "game" когда играем, "gameover" когда мы проиграли.
-# Потом сделаем "menu", вместо "game" сделаем уровни и т.д.
 
 
 class Bullet(pygame.sprite.Sprite):
