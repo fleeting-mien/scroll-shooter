@@ -178,7 +178,7 @@ class EnemyShip(Ship):
     def update(self):
         """Функция изменения состояния корабля"""
         super().update()
-        active = True # Временная заплатка
+        active = True  # Временная заплатка
         if randint(1, INTENSITY) == 1 and active:
             self.shoot()
 
@@ -220,7 +220,7 @@ class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
     def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
         """
-        Констурктор класса AllyShip
+        Конструктор класса AllyShip
 
         Атрибуты:
         image - изображение корабля
@@ -572,10 +572,11 @@ class Background:
             self.y = -2400
         screen.blit(self.image, (self.x, self.y))
 
+
 class Boss(EnemyShip):
     def __init__(self, font):
         super().__init__(picture_path="images/boss.png")
-        self.x0 = MAX_X/2 # серединка восьмерки
+        self.x0 = MAX_X/2  # серединка восьмерки
         self.y0 = MAX_Y/6
         self.R = 100
         self.omega = 3 / FPS
@@ -620,6 +621,9 @@ class Boss(EnemyShip):
 
 
 class BossBullet(EnemyBullet):
+    """
+
+    """
     def __init__(self, x, y, direction, image):
         super().__init__(x, y, direction)
         self.damage = 3

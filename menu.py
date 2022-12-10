@@ -56,4 +56,3 @@ menu_is_here.append_option('Pause', lambda: "pause")
 menu_is_here.append_option('Quit', lambda: print('Дасвиданя, иди делай анжуманя'))
 menu_is_here.append_option('Restart', lambda: "startscreen")
 menu_is_here.append_option('About', lambda: "about")
-
