@@ -16,6 +16,17 @@ powerup_images['double_score'] = pygame.image.load('images/coins_buff.png')
 powerup_images['double_shot'] = pygame.image.load('images/double_shot.png')
 powerup_images['triple_shot'] = pygame.image.load('images/triple_shot.png')
 
+music = {}
+'''
+music - Used music (dictionary)
+'''
+music['game1'] = 'OST/game_ost1.mp3'
+music['game2'] = 'OST/game_ost2_KoppenAsF.mp3'
+music['boss1'] = 'OST/boss_ost1_Hydrophobia.mp3'
+music['boss2'] = 'OST/better-call-saul.mp3'
+
+
+
 drop_group = pygame.sprite.Group()
 '''
 drop_group - Group hierarchy
@@ -236,11 +247,13 @@ class AllyShip(Ship):
         shooting_style - переменная, определяющая то, как в данный момент
             будет стрелять корабль игрока
         score_factor - переменная, отвечающая за множитель очков игрока
+        sound - звук выстрела
 
         """
 
         super().__init__(x, y, picture_path, False, lives=ALLY_LIVES)
         self.sound = pygame.mixer.Sound('OST/shooting_sound.wav')
+        self.sound.set_volume((0.2))
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
@@ -587,7 +600,7 @@ class AboutInfo:
 
 class Boss(EnemyShip):
     def __init__(self, font):
-        super().__init__(picture_path="images/boss.png")
+        super().__init__(picture_path='images/boss.png')
         self.x0 = MAX_X/2  # серединка восьмерки
         self.y0 = MAX_Y/6
         self.R = 100
@@ -595,7 +608,7 @@ class Boss(EnemyShip):
         self.angle = 0
         self.x = self.x0 + self.R * (-1 + cos(self.angle))
         self.y = self.y0 + self.R * sin(self.angle)
-        self.lives = 100
+        self.lives = BOSS_LIVES
         self.font = font
 
     def move(self):
@@ -627,11 +640,14 @@ class Boss(EnemyShip):
             self.shoot()
 
     def health_bar(self):
+        pygame.draw.rect(screen, (127, 255, 0), [100, 10, 400, 20])
+        pygame.draw.rect(screen, (255, 0, 0), [500 - 400*((100 - self.lives)/100), 10, 400*((100 - self.lives)/100), 20])
         healthbar = self.font.render(
             str(self.lives),
-            True, (255, 255, 0)
+            True, (0, 0, 0)
         )
-        screen.blit(healthbar, (self.x, self.y + 30))
+        screen.blit(healthbar, (300, 5))
+
 
 
 class BossBullet(EnemyBullet):

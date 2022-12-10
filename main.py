@@ -1,4 +1,6 @@
 # import pygame - already imported through classes
+import pygame.time
+
 from classes import *
 from menu import *
 
@@ -18,7 +20,9 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 boss = 0
-
+ost_game = 0
+ost_boss = 0
+boss_timer = 0
 
 def initial_set():
     """Создает игрока и изначальных врагов"""
@@ -211,7 +215,6 @@ def boss_arrival():
         )
         screen.blit(bossbar, (MAX_X/4, 20))
 
-
 initial_set()
 
 while not finished:
@@ -220,6 +223,12 @@ while not finished:
     """
     clock.tick(FPS)
     if game_state == "game":  # блок действий, когда идет игра
+        if not ost_game:
+            game_music = random.choice(['game1', 'game2'])
+            print(music[game_music])
+            pygame.mixer.music.load(music[game_music])
+            pygame.mixer.music.play()
+            ost_game = 1
         spawn()
         shooting()
         for event in pygame.event.get():
@@ -237,8 +246,16 @@ while not finished:
         textbar()
         buff_text()
         boss_arrival()
-        if player.score >= BOSS_SCORE and not boss:
-            boss = Boss(ARIAL_25)
+        if player.score >= BOSS_SCORE:
+            boss_timer +=1
+            if not ost_boss:
+                game_music = random.choice(['boss1'])
+                pygame.mixer.music.load(music[game_music])
+                pygame.mixer.music.play()
+                ost_boss = 1
+                boss = 1
+            if boss_timer == 900:
+                Boss(ARIAL_25)
         pygame.display.update()
     elif game_state == "pause":
         stop_shooting()
