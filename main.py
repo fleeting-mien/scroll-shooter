@@ -200,6 +200,7 @@ def buff_text():
         )
         screen.blit(healbar, (0, MAX_Y/2 + 60))
 
+
 def boss_arrival():
     if BOSS_SCORE - 5 <= player.score < BOSS_SCORE:
         bossbar = ARIAL_18.render(
@@ -207,6 +208,7 @@ def boss_arrival():
             True, (255, 255, 0)
         )
         screen.blit(bossbar, (MAX_X/4, 20))
+
 
 initial_set()
 
