@@ -200,6 +200,13 @@ def buff_text():
         )
         screen.blit(healbar, (0, MAX_Y/2 + 60))
 
+def boss_arrival():
+    if BOSS_SCORE - 5 <= player.score < BOSS_SCORE:
+        bossbar = ARIAL_18.render(
+            str(BOSS_SCORE - player.score) + " point remaining until the arrival of the Boss",
+            True, (255, 255, 0)
+        )
+        screen.blit(bossbar, (MAX_X/4, 20))
 
 initial_set()
 
@@ -225,6 +232,7 @@ while not finished:
         draw()
         textbar()
         buff_text()
+        boss_arrival()
         if player.score >= BOSS_SCORE and not boss:
             boss = Boss(ARIAL_25)
         pygame.display.update()
