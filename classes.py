@@ -31,12 +31,13 @@ drop_group = pygame.sprite.Group()
 '''
 drop_group - Group hierarchy
 '''
+laser_group = pygame.sprite.Group()
 enemy_bullet_group = pygame.sprite.Group()
 ally_bullet_group = pygame.sprite.Group()
 enemy_ship_group = pygame.sprite.Group()
 ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
-groups = {asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, drop_group}
+groups = {laser_group, asteroid_group, enemy_bullet_group, ally_bullet_group, enemy_ship_group, ally_ship_group, drop_group}
 
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
@@ -203,6 +204,8 @@ class EnemyShip(Ship):
         удаление корабля при нулевом количестве жизней
         """
         super().hit()
+        for laser in pygame.sprite.spritecollide(self, laser_group, False):
+            self.lives -= 1
         if self.lives <= 0:
             if randint(1, DROP_CHANCE) == 1:
                 Drop(x=self.x, y=self.y)
@@ -213,6 +216,22 @@ class EnemyShip(Ship):
                 else:
                     ship.score += 1
 
+
+class LaserBeam(pygame.sprite.Sprite):
+    def __init__(self, x, y, picture_path="images/laser_beam.png", damage=1):
+        super().__init__()
+        self.image = pygame.image.load(picture_path)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.center = (self.x, self.y)
+        self.damage = damage
+
+        self.group = laser_group
+        self.group.add(self)
+
+    def update(self):
+        self.rect.center = (self.x, self.y)
 
 class AllyBullet(Bullet):
     """Класс дружественных пуль"""
@@ -252,8 +271,10 @@ class AllyShip(Ship):
         """
 
         super().__init__(x, y, picture_path, False, lives=ALLY_LIVES)
-        self.sound = pygame.mixer.Sound('OST/shooting_sound.wav')
-        self.sound.set_volume((0.2))
+        self.shot_sound = pygame.mixer.Sound('OST/shooting_sound.wav')
+        self.laser_sound = pygame.mixer.Sound('OST/laser_effect.wav')
+        self.shot_sound.set_volume((0.2))
+        self.laser_sound.set_volume((0.4))
         self.shooting_num = 0
         self.shield = Shield("not applied", self)  # 2 состояния: "applied" и "not applied"
         self.shooting_style = Buff("normal")
@@ -335,6 +356,10 @@ class AllyShip(Ship):
             self.shoot()
         if self.shooting_num > 0:
             self.shooting_num += 1
+        if self.shooting_style.state == 'laser':
+            LaserBeam(x=self.x, y=self.y - 350)
+            self.laser_sound.play()
+
 
     def shoot(self):
         """
@@ -350,30 +375,25 @@ class AllyShip(Ship):
         elif self.shooting_style.state == "triple":
             self.triple_shot()
 
-        elif self.shooting_style.state == "laser":
-            self.laser_shot()
-
-        self.sound.play()
 
     def normal_shot(self):
         """Обычный выстрел"""
         AllyBullet(x=self.x, y=self.y, direction=pi/2)
+        self.shot_sound.play()
 
     # ДРУГИЕ ТИПЫ ВЫСТРЕЛОВ ПОКА НЕ ПРОРАБОТАНЫ
     def double_shot(self):
         """Двойной выстрел"""
         AllyBullet(x=self.x-16, y=self.y, direction=pi/2)
         AllyBullet(x=self.x+16, y=self.y, direction=pi/2)
+        self.shot_sound.play()
 
     def triple_shot(self):
         """Тройной выстрел"""
         AllyBullet(x=self.x, y=self.y, direction=pi/2)
         AllyBullet(x=self.x, y=self.y, direction=pi/2.5)
         AllyBullet(x=self.x, y=self.y, direction=-3.5 * pi/2.5)
-
-    def laser_shot(self):
-        """Лазер"""
-        AllyBullet(x=self.x, y=self.y, direction=pi/2)
+        self.shot_sound.play()
 
 
 def game_over():
@@ -468,6 +488,8 @@ class Asteroid(pygame.sprite.Sprite):
     def hit(self):
         """Функция столкновения астероида с дружественными пулями"""
         for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
+            self.lives -= 1
+        for i in pygame.sprite.spritecollide(self, laser_group, False):
             self.lives -= 1
         if self.lives <= 0:
             self.kill()
