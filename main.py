@@ -111,18 +111,14 @@ def react_on_menu_keys(menu_event):
             menu_is_here.switch(-1)
         if menu_event.key == pygame.K_SPACE or menu_event.key == pygame.K_RETURN:
             if menu_is_here.check_current_index() == 0:
-                if game_state == "game":
-                    print("Ты уже и так играешь, идиот")
-                else:
-                    game_state = "game"
+                game_state = "game"
             elif menu_is_here.check_current_index() == 1:
                 game_state = "pause"
-                # game_state = menu_is_here.select()
-                # команда выше, вероятно будет работать, когда я до конца допишу условия для всех game_state
-                # pass
             elif menu_is_here.check_current_index() == 2:
                 finished = True
                 menu_is_here.select()
+            elif menu_is_here.check_current_index() == 3:
+                game_state = "startscreen"
             elif menu_is_here.check_current_index() == 4:
                 game_state = "about"
 
@@ -224,7 +220,22 @@ while not finished:
     mainloop
     """
     clock.tick(FPS)
-    if game_state == "game":  # блок действий, когда идет игра
+    if game_state == "startscreen":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            react_on_menu_keys(event)
+        menu_is_here.drawmenu(screen, MAX_X / 2 - 30, 40, 40)
+        start_text_1 = ARIAL_45.render("Press <Start> to play the game", True, (255, 0, 0))
+        screen.blit(start_text_1, (100, MAX_Y / 2 - 100))
+        start_text_2 = ARIAL_45.render("Press <About> to help and more info", True, (255, 0, 0))
+        screen.blit(start_text_2, (50, MAX_Y / 2))
+        help_text = ARIAL_18.render(
+            "Use the Up/Down arrow keys and press Enter/Space button to activate the selected option ",
+            True, (255, 255, 0))
+        screen.blit(help_text, (60, MAX_Y - 50))
+        pygame.display.update()
+    elif game_state == "game":  # блок действий, когда идет игра
         if not ost_game:
             game_music = random.choice(['game1', 'game2'])
             print(music[game_music])
@@ -290,22 +301,22 @@ while not finished:
 
     background.update()
 
-if finished:
-    '''
-    Здесь происходят все события вне mainloop
-    '''
-    if game_state == "startscreen":
-        pass
-    elif game_state == "gameover":
-        pass
-        # дописать
-
-    background.update()
-
-    menu_is_here.drawmenu(screen, 25, 25, 25)
-
-    update()
-
-    pygame.display.update()
+# if finished:
+#     '''
+#     Здесь происходят все события вне mainloop
+#     '''
+#     if game_state == "startscreen":
+#         pass
+#     elif game_state == "gameover":
+#         pass
+#         # дописать
+#
+#     background.update()
+#
+#     menu_is_here.drawmenu(screen, 25, 25, 25)
+#
+#     update()
+#
+#     pygame.display.update()
 
 pygame.quit()
