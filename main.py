@@ -210,7 +210,7 @@ def buff_text():
 def boss_arrival():
     if BOSS_SCORE - 5 <= player.score < BOSS_SCORE:
         bossbar = ARIAL_18.render(
-            str(BOSS_SCORE - player.score) + " point remaining until the arrival of the Boss",
+            str(BOSS_SCORE - player.score) + " points remaining until the arrival of the Boss",
             True, (255, 255, 0)
         )
         screen.blit(bossbar, (MAX_X/4, 20))
@@ -241,8 +241,8 @@ while not finished:
             react_on_menu_keys(event)
             react_on_keys(event)
         menu_is_here.drawmenu(screen, 5, 5, 25)
-        update()
         draw()
+        update()
         textbar()
         buff_text()
         boss_arrival()
