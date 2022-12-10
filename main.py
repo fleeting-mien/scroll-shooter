@@ -1,4 +1,3 @@
-# import pygame - already imported through classes
 import pygame.time
 
 from classes import *
@@ -26,7 +25,9 @@ boss_timer = 0
 
 
 def initial_set():
-    """Создает игрока и изначальных врагов"""
+    """
+    Создает игрока и изначальных врагов
+    """
     global player
     player = AllyShip()
     LineEnemy()
@@ -77,6 +78,7 @@ def shooting():
 def react_on_keys(pygame_event):
     """
     processes a KEYUP/KEYDOWN event and updates keys_down
+    function for wasd moving
     """
     if pygame_event.type == pygame.KEYDOWN:
         if pygame_event.key == pygame.K_w:
@@ -101,6 +103,8 @@ def react_on_keys(pygame_event):
 def react_on_menu_keys(menu_event):
     """
     Реакция на нажатие кнопок меню
+    Навигация по кнопкам - стрелки вверх/вниз
+    Активация выбранного пункта меню - Enter
     """
     global finished
     global game_state
@@ -109,14 +113,17 @@ def react_on_menu_keys(menu_event):
             menu_is_here.switch(1)
         if menu_event.key == pygame.K_UP:
             menu_is_here.switch(-1)
-        if menu_event.key == pygame.K_SPACE or menu_event.key == pygame.K_RETURN:
+        if menu_event.key == pygame.K_RETURN:
             if menu_is_here.check_current_index() == 0:
                 game_state = "game"
             elif menu_is_here.check_current_index() == 1:
                 game_state = "pause"
             elif menu_is_here.check_current_index() == 2:
-                finished = True
-                menu_is_here.select()
+                if game_state == "startscreen":
+                    finished = True
+                    menu_is_here.select()
+                else:
+                    game_state = "startscreen"
             elif menu_is_here.check_current_index() == 3:
                 game_state = "startscreen"
             elif menu_is_here.check_current_index() == 4:
@@ -146,6 +153,8 @@ def spawn():
 def textbar():
     """
     Игровая информация на экране в правом верхнем углу
+    healthbar - показывает жизни игрока
+    scorebar - показывает набранные игроком очки
     """
     healthbar = ARIAL_25.render(
         "Your health: " + str(player.lives),
@@ -160,10 +169,14 @@ def textbar():
 
 
 def round_of_game(x):
+    """Я хз, что это и для чего ))"""
     return int(10*x) / 10
 
 
 def buff_text():
+    """
+    Функция, выводящая информацию о баффах
+    """
     if player.shield.timer > 0:
         shieldbar = ARIAL_18.render(
             "Shield: " + str(round_of_game(player.shield.timer / FPS)) + " sec",
@@ -205,6 +218,9 @@ def buff_text():
 
 
 def boss_arrival():
+    """
+    Предупреждает, что скоро будет мясо
+    """
     if BOSS_SCORE - 5 <= player.score < BOSS_SCORE:
         bossbar = ARIAL_18.render(
             str(BOSS_SCORE - player.score) + " points remaining until the arrival of the Boss",
@@ -218,6 +234,7 @@ initial_set()
 while not finished:
     """
     mainloop
+    далее идёт обработка различных значений game_state
     """
     clock.tick(FPS)
     if game_state == "startscreen":
@@ -247,10 +264,12 @@ while not finished:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                start_shooting()
-            elif event.type == pygame.MOUSEBUTTONUP:
-                stop_shooting()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    start_shooting()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
         menu_is_here.drawmenu(screen, 5, 5, 25)
@@ -300,23 +319,5 @@ while not finished:
         pygame.display.update()
 
     background.update()
-
-# if finished:
-#     '''
-#     Здесь происходят все события вне mainloop
-#     '''
-#     if game_state == "startscreen":
-#         pass
-#     elif game_state == "gameover":
-#         pass
-#         # дописать
-#
-#     background.update()
-#
-#     menu_is_here.drawmenu(screen, 25, 25, 25)
-#
-#     update()
-#
-#     pygame.display.update()
 
 pygame.quit()
