@@ -8,6 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = Background()
+about_image = AboutInfo()
 ARIAL_18 = pygame.font.SysFont('arial', 18)
 ARIAL_25 = pygame.font.SysFont('arial', 25)
 ARIAL_45 = pygame.font.SysFont('arial', 45)
@@ -256,10 +257,12 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
             react_on_menu_keys(event)
+        about_image.update()
         menu_is_here.drawmenu(screen, 5, 5, 25)
         aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
         screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
         pygame.display.update()
+
 
     background.update()
 

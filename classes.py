@@ -573,6 +573,18 @@ class Background:
         screen.blit(self.image, (self.x, self.y))
 
 
+class AboutInfo:
+    def __init__(self, picture_path="images/test_about.png"):
+        global screen
+        screen = pygame.display.set_mode((MAX_X, MAX_Y))
+        self.image = pygame.image.load(picture_path)
+        self.x = 50
+        self.y = 125
+
+    def update(self):
+        screen.blit(self.image, (self.x, self.y))
+
+
 class Boss(EnemyShip):
     def __init__(self, font):
         super().__init__(picture_path="images/boss.png")
