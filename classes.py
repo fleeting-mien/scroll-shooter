@@ -203,7 +203,7 @@ class EnemyShip(Ship):
         """
         super().hit()
         for laser in pygame.sprite.spritecollide(self, laser_group, False):
-            self.lives -= 1
+            self.lives -= laser.damage
         if self.lives <= 0:
             if randint(1, DROP_CHANCE) == 1:
                 Drop(x=self.x, y=self.y)
@@ -216,7 +216,7 @@ class EnemyShip(Ship):
 
 
 class LaserBeam(pygame.sprite.Sprite):
-    def __init__(self, x, y, picture_path="images/laser_beam.png", damage=1):
+    def __init__(self, x, y, picture_path="images/laser_beam.png", damage=0.1):
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -661,9 +661,9 @@ class Boss(EnemyShip):
     def health_bar(self):
         pygame.draw.rect(screen, (127, 255, 0), [100, 10, 400, 20])
         pygame.draw.rect(screen, (255, 0, 0),
-                         [500 - 400*((100 - self.lives)/100), 10, 400*((100 - self.lives)/100), 20])
+                         [500 - 400*((BOSS_LIVES - self.lives)/BOSS_LIVES), 10, 400*((BOSS_LIVES - self.lives)/BOSS_LIVES) + 1, 20])
         healthbar = self.font.render(
-            str(self.lives),
+            str(round(self.lives / BOSS_LIVES * 100, 1)) + '%',
             True, (0, 0, 0)
         )
         screen.blit(healthbar, (300, 5))
