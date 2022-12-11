@@ -289,6 +289,10 @@ while not finished:
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     stop_shooting()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                start_shooting()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
         menu_is_here.drawmenu(screen, 5, 5, 25)
