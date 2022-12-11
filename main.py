@@ -291,12 +291,12 @@ while not finished:
                 finished = True
             react_on_menu_keys(event)
         menu_is_here.drawmenu(screen, MAX_X / 2 - 30, 40, 40)
-        start_text_1 = ARIAL_45.render("Press <Start> to play the game", True, (255, 0, 0))
+        start_text_1 = ARIAL_45.render("Press <Play> to play the game", True, (255, 0, 0))
         screen.blit(start_text_1, (100, MAX_Y / 2 - 100))
         start_text_2 = ARIAL_45.render("Press <About> to help and more info", True, (255, 0, 0))
         screen.blit(start_text_2, (50, MAX_Y / 2))
         help_text = ARIAL_18.render(
-            "Use the Up/Down arrow keys and press Enter/Space button to activate the selected option ",
+            "Use the Up/Down arrow keys and press Enter button to activate the selected option ",
             True, (255, 255, 0))
         screen.blit(help_text, (60, MAX_Y - 50))
         pygame.display.update()
