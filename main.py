@@ -128,9 +128,9 @@ def react_on_menu_keys(menu_event):
     global game_state
     if menu_event.type == pygame.KEYDOWN:
         if menu_event.key == pygame.K_DOWN:
-            menu_is_here.switch(1)
+            menu_is_here.switch_menu_index(1)
         if menu_event.key == pygame.K_UP:
-            menu_is_here.switch(-1)
+            menu_is_here.switch_menu_index(-1)
         if menu_event.key == pygame.K_RETURN:
             if menu_is_here.check_current_index() == 0:
                 game_state = "game"
@@ -139,7 +139,7 @@ def react_on_menu_keys(menu_event):
             elif menu_is_here.check_current_index() == 2:
                 if game_state == "startscreen":
                     finished = True
-                    menu_is_here.select()
+                    menu_is_here.activate_menu_option()
                 else:
                     game_state = "startscreen"
             elif menu_is_here.check_current_index() == 3:

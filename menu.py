@@ -1,5 +1,4 @@
 import pygame as pg
-# from classes import game_state
 pg.init()
 ARIAL_25 = pg.font.SysFont('arial', 25)
 """
@@ -28,13 +27,13 @@ class Menu:
         self._option_surfaces.append(ARIAL_25.render(option, True, (255, 255, 255)))
         self._callbacks.append(callback)
 
-    def switch(self, direction):
+    def switch_menu_index(self, direction):
         """
         Переключение между пунктами меню.
         """
         self._current_option_index = max(0, min(self._current_option_index + direction, len(self._option_surfaces) - 1))
 
-    def select(self):
+    def activate_menu_option(self):
         """
         Делаем "тык" в пункт меню
         """
