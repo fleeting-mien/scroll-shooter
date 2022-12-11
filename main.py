@@ -240,6 +240,31 @@ def boss_arrival():
         )
         screen.blit(bossbar, (MAX_X/4, 20))
 
+def boss_is_here():
+    global boss_timer, ost_boss, boss
+
+    if player.score >= BOSS_SCORE:
+        if boss_timer >= 901:
+            boss_timer = 901
+        else:
+            boss_timer += 1
+            warning = ARIAL_25.render("WARNING, BOSS INCOMING!!!", True, (255, 255, 0))
+            screen.blit(warning, (MAX_X / 4 + 15, MAX_Y / 1.5))
+
+        if not ost_boss:
+            game_music = random.choice(['boss1', 'boss2'])
+            pygame.mixer.music.load(music[game_music])
+            pygame.mixer.music.play()
+            ost_boss = 1
+            boss = 1
+
+        if 0 < boss_timer < 900 and boss_timer % 40 < 20:
+            screen.blit(pygame.image.load('images/boss_warning.png'), (MAX_X / 3.5, MAX_Y / 4))
+
+        if boss_timer == 900:
+            Boss(ARIAL_25)
+            # BOSS_SCORE += BOSS_SCORE
+
 
 initial_set()
 
@@ -249,7 +274,7 @@ while not finished:
     далее идёт обработка различных значений game_state
     """
     clock.tick(FPS)
-    
+
     if game_state == "startscreen":
         if not ost_menu:
             game_music = random.choice(['menu1', 'menu2'])
@@ -299,28 +324,7 @@ while not finished:
         textbar()
         buff_text()
         boss_arrival()
-        if player.score >= BOSS_SCORE:
-            if boss_timer >= 901:
-                boss_timer = 901
-            else:
-                boss_timer += 1
-                warning = ARIAL_25.render("WARNING, BOSS INCOMING!!!", True, (255, 255, 0))
-                screen.blit(warning, (MAX_X / 4 + 15, MAX_Y / 1.5))
-
-            if not ost_boss:
-                game_music = random.choice(['boss1', 'boss2'])
-                pygame.mixer.music.load(music[game_music])
-                pygame.mixer.music.play()
-                ost_boss = 1
-                boss = 1
-
-            if 0 < boss_timer < 900 and boss_timer % 40 < 20:
-                screen.blit(pygame.image.load('images/boss_warning.png'), (MAX_X / 3.5, MAX_Y / 4))
-
-            if boss_timer == 900:
-                Boss(ARIAL_25)
-                #BOSS_SCORE += BOSS_SCORE
-
+        boss_is_here()
         pygame.display.update()
         laser_group.empty()
 
