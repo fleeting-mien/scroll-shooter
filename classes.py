@@ -23,8 +23,9 @@ music - Used music (dictionary)
 music['game1'] = 'OST/game_ost1.mp3'
 music['game2'] = 'OST/game_ost2_KoppenAsF.mp3'
 music['boss1'] = 'OST/boss_ost1_Hydrophobia.mp3'
-music['boss2'] = 'OST/better-call-saul.mp3'
-
+music['boss2'] = 'OST/boss_ost2_BFGDivision.mp3'
+music['menu1'] = 'OST/menu_ost1_GIAA-FrozenTwilight.mp3'
+music['menu2'] = 'OST/menu_ost2_GIAA-EmpyreanGlow_CrystalCanyon.mp3'
 
 drop_group = pygame.sprite.Group()
 '''
