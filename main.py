@@ -150,7 +150,7 @@ def react_on_menu_keys(menu_event):
 
 def spawn():
     """
-    Эта функция создаёт нам 4 типа врагов раз в 100 тиков
+    Эта функция создаёт нам 4 типа врагов раз в FPS * SPAWN_SECONDS тиков
     """
     global spawn_timer
     if not boss and player.lives > 0:
@@ -243,6 +243,9 @@ def boss_arrival():
 
 
 def boss_is_here():
+    """
+    Функция, вызывающая босса в конце игры - когда игрок набирает BOSS_SCORE (см. config)
+    """
     global boss_timer, ost_boss, boss
 
     if player.score >= BOSS_SCORE:
