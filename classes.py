@@ -78,7 +78,6 @@ class Bullet(pygame.sprite.Sprite):
         self.group = enemy_bullet_group if enemy else ally_bullet_group
         self.group.add(self)
 
-
     def update(self):
         """Изменяет положение пули, одновременно перемещая ее изображение"""
         self.y -= self.v * sin(self.direction)  # минус потому что Oy вниз
@@ -662,7 +661,7 @@ class Boss(EnemyShip):
         omega - угловая скорость движения босса по восьмерке
         self.angle - отвечает за мгновенное положение босса на восьмерке
         x, y - мгновенное положение босса на экране
-        lives - количесиво его жизней
+        lives - количество его жизней
         font - шрифт текста на его healthbar-е (пришлось это сюда запихнуть)
 
         """

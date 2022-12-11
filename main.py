@@ -24,6 +24,7 @@ ost_boss = 0
 ost_menu = 0
 boss_timer = 0
 
+
 def initial_set():
     """
     Создает игрока и изначальных врагов
@@ -239,6 +240,7 @@ def boss_arrival():
             True, (255, 255, 0)
         )
         screen.blit(bossbar, (MAX_X/4, 20))
+
 
 def boss_is_here():
     global boss_timer, ost_boss, boss
