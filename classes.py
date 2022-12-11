@@ -668,7 +668,7 @@ class Boss(EnemyShip):
         """
         super().__init__(picture_path='images/boss.png')
         self.x0 = MAX_X/2
-        self.y0 = MAX_Y/6
+        self.y0 = MAX_Y/4
         self.R = 100
         self.omega = 3 / FPS
         self.angle = 0
