@@ -50,11 +50,12 @@ def restart_game():
     global ost_menu, ost_game, ost_boss
     for group in groups:
         group.empty()
-    global game_state
+    global game_state, boss
     game_state = "game"
     ost_game = 0
     ost_boss = 0
     ost_menu = 0
+    boss = 0
     initial_set()
 
 
@@ -150,7 +151,7 @@ def spawn():
     Эта функция создаёт нам 4 типа врагов раз в 100 тиков
     """
     global spawn_timer
-    if not boss:
+    if not boss and player.lives > 0:
         spawn_timer += 1
     else:
         spawn_timer = 0
