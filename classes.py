@@ -39,7 +39,6 @@ ally_ship_group = pygame.sprite.Group()
 asteroid_group = pygame.sprite.Group()
 groups = {laser_group, asteroid_group, enemy_bullet_group, ally_bullet_group,
           enemy_ship_group, ally_ship_group, drop_group}
-
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
 keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
@@ -74,11 +73,11 @@ class Bullet(pygame.sprite.Sprite):
         self.y = y
         self.rect.center = (self.x, self.y)
         self.v = v * DEFAULT_SPEED
+        self.damage = damage
 
         self.group = enemy_bullet_group if enemy else ally_bullet_group
         self.group.add(self)
 
-        self.damage = damage
 
     def update(self):
         """Изменяет положение пули, одновременно перемещая ее изображение"""
@@ -112,10 +111,8 @@ class Ship(pygame.sprite.Sprite):
         self.y = y
         self.vx = 0
         self.vy = 0
-        # self.active = active
         self.lives = lives
         self.v = speed * DEFAULT_SPEED
-
         self.rect.center = (self.x, self.y)
 
         self.enemy = enemy
@@ -153,7 +150,7 @@ class Ship(pygame.sprite.Sprite):
 
 class EnemyBullet(Bullet):
     """Класс вражеских пуль"""
-    def __init__(self, x, y, direction, picture_path="images/enemy_bullet.png"):
+    def __init__(self, x, y, direction, picture_path="images/enemy_bullet.png", damage=ENEMY_BULLET_DAMAGE):
         """
         Конструктор класса EnemyBullet
 
@@ -163,11 +160,12 @@ class EnemyBullet(Bullet):
 
         """
         super().__init__(x, y, picture_path, direction, enemy=True)
+        self.damage = damage
 
 
 class EnemyShip(Ship):
     """Класс вражеских кораблей"""
-    def __init__(self, picture_path="images/enemy_ship.png"):
+    def __init__(self, picture_path="images/enemy_ship.png", lives=ENEMY_SHIP_LIVES):
         """
         Конструктор класса EnemyShip
 
@@ -183,13 +181,13 @@ class EnemyShip(Ship):
 
         x = randint(BORDER_X, MAX_X - BORDER_X)
         y = randint(BORDER_Y, MAX_Y/2)
-
         super().__init__(x, y, picture_path, True)
+        self.lives = lives
 
     def update(self):
         """Функция изменения состояния корабля"""
         super().update()
-        active = True  # Временная заплатка
+        active = True  # Временная заплатка (или так и оставим)
         if randint(1, INTENSITY) == 1 and active:
             self.shoot()
 
@@ -200,7 +198,7 @@ class EnemyShip(Ship):
     def hit(self):
         """
         Проверка столкновения вражеского корабля с дружественными пулями, и
-        удаление корабля при нулевом количестве жизней
+        удаление корабля при нулевом количестве жизней. Начисление очков.
         """
         super().hit()
         for laser in pygame.sprite.spritecollide(self, laser_group, False):
@@ -217,7 +215,16 @@ class EnemyShip(Ship):
 
 
 class LaserBeam(pygame.sprite.Sprite):
+    """Класс, отвечающий за луч лазера"""
     def __init__(self, x, y, picture_path="images/laser_beam.png", damage=0.1):
+        """Конструктор класса Laser
+
+        Атрибуты:
+        image - изображение пули
+        x, y - положение пули (в пикселях)
+        damage (optional) - сколько урона наносит за 1 кадр
+
+        """
         super().__init__()
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -230,6 +237,7 @@ class LaserBeam(pygame.sprite.Sprite):
         self.group.add(self)
 
     def update(self):
+        """Обновляет положение луча"""
         self.rect.center = (self.x, self.y)
 
 
@@ -265,6 +273,7 @@ class AllyShip(Ship):
         shield - переменная, отвечающая за то, взят ли щит игроком или нет
         shooting_style - переменная, определяющая то, как в данный момент
             будет стрелять корабль игрока
+        heal - требуется для высвечивания "you got 1 hp!"
         score_factor - переменная, отвечающая за множитель очков игрока
         sound - звук выстрела
 
@@ -379,7 +388,6 @@ class AllyShip(Ship):
         AllyBullet(x=self.x, y=self.y, direction=pi/2)
         self.shot_sound.play()
 
-    # ДРУГИЕ ТИПЫ ВЫСТРЕЛОВ ПОКА НЕ ПРОРАБОТАНЫ
     def double_shot(self):
         """Двойной выстрел"""
         AllyBullet(x=self.x-16, y=self.y, direction=pi/2)
@@ -420,6 +428,7 @@ class LineEnemy(EnemyShip):
         self.x = self.x0
 
     def move(self):
+        """Функция перемещения"""
         if not (self.x0 - self.a < self.x < self.x0 + self.a):
             self.vx *= -1
         super().move()
@@ -448,6 +457,7 @@ class CircleEnemy(EnemyShip):
         self.y = self.y0 + self.R * sin(self.angle)
 
     def move(self):
+        """Функция перемещения"""
         self.angle += self.omega
         self.x = self.x0 + self.R * cos(self.angle)
         self.y = self.y0 + self.R * sin(self.angle)
@@ -472,12 +482,11 @@ class Asteroid(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = randint(BORDER_X, MAX_X - BORDER_X)
         self.y = -20
-
         self.vy = 300 / FPS
-        self.lives = 5
+        self.lives = ASTEROID_LIVES
 
         self.rect.center = (self.x, self.y)
-        asteroid_group.add(self)
+        group.add(self)
 
     def move(self):
         """Функция движения астероида"""
@@ -551,14 +560,10 @@ class Buff:
         shield: "not applied". other states: "applied"
         shooting_style: "normal". other states: "double", "triple", "laser"
         score_factor: "x1". other states: "x2"
+        heal: "not applied". other states: "applied"
         """
 
         self.state = self.default_state
-        """
-        shield: "not applied", "applied"
-        shooting_style: "normal", "double", "triple", "laser"
-        score_factor: "x1", "x2"
-        """
 
     def update(self):
         """Функция того, как 'тикает' таймер баффа"""
@@ -574,7 +579,16 @@ class Buff:
 
 
 class Shield(Buff):
+    """Класс баффа Shield"""
     def __init__(self, state, ship, picture_path="images/shield.png"):
+        """Конструктор класса Shield
+
+        Атрибуты:
+        image - изображение щита
+        ship - корабль, за которым щит должен следовать
+        x, y - положение щита
+
+        """
         super().__init__(state)
         self.image = pygame.image.load(picture_path)
         self.rect = self.image.get_rect()
@@ -582,6 +596,7 @@ class Shield(Buff):
         self.x, self.y = ship.rect.center
 
     def update(self):
+        """Функция обновления состояния щита: обновление таймера и положения"""
         super().update()  # updates timer
         if self.state == "applied":
             screen.blit(self.image, self.rect)
@@ -591,7 +606,17 @@ class Shield(Buff):
 
 
 class Background:
+    """Класс заднего фона игры"""
     def __init__(self, picture_path="images/back.png"):
+        """Конструктор класса Background
+
+        Атрибуты:
+        image - изображение
+        x - положение по горизонтали
+        y - положение по вертикали
+        vy - скорость прокручивания фона
+
+        """
         global screen
         screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
@@ -600,6 +625,7 @@ class Background:
         self.vy = 2
 
     def update(self):
+        """Функция прокручивания фона"""
         self.y += self.vy
         if self.y == 0:
             self.y = -2400
@@ -607,7 +633,13 @@ class Background:
 
 
 class AboutInfo:
+    """Класс меню 'About'"""
     def __init__(self, picture_path="images/test_about.jpg"):
+        """Конструктор класса AboutInfo
+
+        Атрибуты:
+        image - изображение
+        x, y - положение на экране"""
         global screen
         screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
@@ -615,13 +647,27 @@ class AboutInfo:
         self.y = 125
 
     def update(self):
+        """Обновление изображения"""
         screen.blit(self.image, (self.x, self.y))
 
 
 class Boss(EnemyShip):
+    """Класс босса игры"""
     def __init__(self, font):
+        """Конструктор класса Boss
+
+        Атрибуты:
+        x0, y0 - положение узла восьмерки, по которой босс двигается
+        R - радиус 'кружков' восьмерки
+        omega - угловая скорость движения босса по восьмерке
+        self.angle - отвечает за мгновенное положение босса на восьмерке
+        x, y - мгновенное положение босса на экране
+        lives - количесиво его жизней
+        font - шрифт текста на его healthbar-е (пришлось это сюда запихнуть)
+
+        """
         super().__init__(picture_path='images/boss.png')
-        self.x0 = MAX_X/2  # серединка восьмерки
+        self.x0 = MAX_X/2
         self.y0 = MAX_Y/6
         self.R = 100
         self.omega = 3 / FPS
@@ -632,6 +678,7 @@ class Boss(EnemyShip):
         self.font = font
 
     def move(self):
+        """Функция движения босса по восьмерке"""
         if 0 <= self.angle < 2*pi:
             self.angle += self.omega
             self.x = self.x0 + self.R * (1 - cos(self.angle))
@@ -644,6 +691,7 @@ class Boss(EnemyShip):
             self.angle = 0
 
     def shoot(self):
+        """Функция стрельбы босса особыми пулями: класса BossBullet"""
         if randint(1, 40) == 1:
             BossBullet(x=self.x, y=self.y, direction=-pi / 2,
                        image=pygame.image.load("images/pelmen.png"), damage=5)
@@ -652,6 +700,7 @@ class Boss(EnemyShip):
                        image=pygame.image.load("images/boss_bullet.png"), damage=3)
 
     def update(self):
+        """Функция обновления состояния босса"""
         self.rect.center = (self.x, self.y)
         self.move()
         self.hit()
@@ -660,9 +709,11 @@ class Boss(EnemyShip):
             self.shoot()
 
     def health_bar(self):
+        """Полоска жизни босса"""
         pygame.draw.rect(screen, (127, 255, 0), [100, 10, 400, 20])
         pygame.draw.rect(screen, (255, 0, 0),
-                         [500 - 400*((BOSS_LIVES - self.lives)/BOSS_LIVES), 10, 400*((BOSS_LIVES - self.lives)/BOSS_LIVES) + 1, 20])
+                         [500 - 400*((BOSS_LIVES - self.lives)/BOSS_LIVES), 10,
+                          400*((BOSS_LIVES - self.lives)/BOSS_LIVES) + 1, 20])
         healthbar = self.font.render(
             str(round(self.lives / BOSS_LIVES * 100, 1)) + '%',
             True, (0, 0, 0)
@@ -671,11 +722,21 @@ class Boss(EnemyShip):
 
 
 class BossBullet(EnemyBullet):
+    """Особые пули, которые выпускает босс"""
     def __init__(self, x, y, direction, image, damage):
+        """Конструктор класса BossBullet. В полете они двигаются по синусоиде
+
+        Атрибуты:
+        damage - урон пули
+        phase - фаза пули при движении по синусоиде
+        omega - угловая частота движения по синусоиде
+        image - изображение пули
+
+        """
         super().__init__(x, y, direction)
         self.damage = damage
         self.phase = 0
-        self.omega = self.omega = choice([20 / FPS, -20 / FPS])
+        self.omega = choice([20 / FPS, -20 / FPS])
         self.image = image
 
     def update(self):
