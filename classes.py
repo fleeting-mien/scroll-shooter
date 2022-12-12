@@ -215,7 +215,7 @@ class EnemyShip(Ship):
 
 class LaserBeam(pygame.sprite.Sprite):
     """Класс, отвечающий за луч лазера"""
-    def __init__(self, x, y, picture_path="images/laser_beam.png", damage=0.1):
+    def __init__(self, x, y, picture_path="images/laser_beam.png", damage=0.2):
         """Конструктор класса Laser
 
         Атрибуты:
