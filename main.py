@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((MAX_X, MAX_Y))
 background = Background()
 about_image = AboutInfo()
 ARIAL_18 = pygame.font.SysFont('arial', 18)
-ARIAL_25 = pygame.font.SysFont('arial', 25)
+# ARIAL_25 = pygame.font.SysFont('arial', 25) - уже импортируется из menu
 ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
 
@@ -123,6 +123,7 @@ def react_on_menu_keys(menu_event):
     Реакция на нажатие кнопок меню
     Навигация по кнопкам - стрелки вверх/вниз
     Активация выбранного пункта меню - Enter
+    Quit - завершает игру, если игрок находится на стартовом экране. В противном случае возвращает на стартовый экран
     """
     global finished
     global game_state
@@ -139,7 +140,6 @@ def react_on_menu_keys(menu_event):
             elif menu_is_here.check_current_index() == 2:
                 if game_state == "startscreen":
                     finished = True
-                    menu_is_here.activate_menu_option()
                 else:
                     game_state = "startscreen"
             elif menu_is_here.check_current_index() == 3:
@@ -323,6 +323,10 @@ while not finished:
                 stop_shooting()
             react_on_menu_keys(event)
             react_on_keys(event)
+
+        if player.lives <=0:
+            game_state = "gameover"
+
         menu_is_here.drawmenu(screen, 5, 5, 25)
         update()
         draw()
@@ -355,6 +359,8 @@ while not finished:
         aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
         screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
         pygame.display.update()
+    elif game_state == "gameover":
+        restart_game()  # Временная заплатка
 
     background.update()
 
