@@ -1,5 +1,4 @@
 import pygame.time
-
 from classes import *
 from menu import *
 
@@ -18,7 +17,6 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 boss_here = 0  # Переменная, отвечающая за то, начался ли боссфайт
-boss = 0  # Сам босс
 ost_game = 0
 ost_boss = 0
 ost_menu = 0
@@ -246,11 +244,13 @@ def boss_is_here():
     """
     Функция, вызывающая босса в конце игры - когда игрок набирает BOSS_SCORE (см. config)
     """
-    global boss_timer, ost_boss, boss, boss_here
+    global boss_timer, ost_boss, boss, boss_here, game_state
 
     if player.score >= BOSS_SCORE:
         if boss_timer >= 901:
             boss_timer = 901
+            if boss.lives <= 0:
+                game_state = "gameover"
         else:
             boss_timer += 1
             warning = ARIAL_25.render("WARNING, BOSS INCOMING!!!", True, (255, 255, 0))
@@ -323,7 +323,7 @@ while not finished:
             react_on_menu_keys(event)
             react_on_keys(event)
 
-        if player.lives <= 0:
+        if player.lives <= 0:  # проверяем смерть игрока
             game_state = "gameover"
 
         menu_is_here.drawmenu(screen, 5, 5, 25)
@@ -359,7 +359,30 @@ while not finished:
         screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
         pygame.display.update()
     elif game_state == "gameover":
-        restart_game()  # Временная заплатка
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            react_on_menu_keys(event)
+
+        menu_is_here.drawmenu(screen, 5, 5, 25)
+        from time import *
+        current_time = localtime()
+        time_in_seconds = int(mktime(current_time)) % 2  # по модулю два
+        if player.lives <= 0:  # Выводим надпись проигравшему
+            gameover_text = ARIAL_45.render("Game Over!", True, (255, 0, 0))
+            screen.blit(gameover_text, (MAX_X / 2 - 100, MAX_Y / 2 - 50))
+            help_to_loser_text = ARIAL_18.render("Press Restart to try it one more time", True, (255, 255, 0))
+            if time_in_seconds > 0:  # мигает раз в секунду
+                screen.blit(help_to_loser_text, (MAX_X / 2 - 115, MAX_Y / 2 + 100))
+        elif boss_here and boss.lives <= 0:  # Выводим надпись победившему
+            winner_text = ARIAL_45.render("You Won", True, (255, 0, 0))
+            help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
+            if clock.get_rawtime() % 2 < 1:  # мигаем по страшному
+                screen.blit(winner_text, (MAX_X / 2 - 75, MAX_Y / 2 - 50))
+            screen.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
+
+        pygame.display.update()
 
     background.update()
 
