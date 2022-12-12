@@ -330,9 +330,9 @@ while not finished:
         if player.lives <= 0:  # проверяем смерть игрока
             game_state = "gameover"
 
-        menu_is_here.drawmenu(screen, 10, 10, 30)
         update()
         draw()
+        menu_is_here.drawmenu(screen, 10, 10, 30)
         textbar()
         buff_text()
         boss_arrival()

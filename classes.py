@@ -79,7 +79,7 @@ class Bullet(pygame.sprite.Sprite):
         self.group.add(self)
 
     def update(self):
-        """Изменяет положение пули, одновременно перемещая ее изображение"""
+        """Изменяет положение пули. Удаляет из группы при вылезании за экран"""
         self.y -= self.v * sin(self.direction)  # минус потому что Oy вниз
         self.x += self.v * cos(self.direction)
         self.rect.center = (self.x, self.y)
@@ -521,6 +521,7 @@ class Drop(pygame.sprite.Sprite):
         x, y - положение дропа
         vy - скорость его движения
         lives - количество жизней дропа
+        group - группа дропа
 
         """
         super().__init__()
@@ -530,13 +531,16 @@ class Drop(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.vy = 300/FPS
+        self.group = group
 
         group.add(self)
 
     def update(self):
-        """Обновление положения летящего дропа"""
+        """Обновление положения летящего дропа. Удаляет из группы при вылезании за экран"""
         self.y += self.vy
         self.rect.center = (self.x, self.y)
+        if self.x > MAX_X or self.x < 0 or self.y < 0 or self.y > MAX_Y:
+            self.group.remove(self)
 
 
 class Buff:
@@ -739,7 +743,7 @@ class BossBullet(EnemyBullet):
         self.image = image
 
     def update(self):
-        """Изменяет положение пули, одновременно перемещая ее изображение"""
+        """Изменяет положение пули. Удаляет из группы при вылезании за экран"""
         self.phase += self.omega
         self.y += self.v  # минус потому что Oy вниз
         self.x += self.v * cos(self.phase)
