@@ -378,9 +378,9 @@ while not finished:
         elif boss_here and boss.lives <= 0:  # Выводим надпись победившему
             winner_text = ARIAL_45.render("You Won", True, (255, 0, 0))
             help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
-            if clock.get_rawtime() % 2 < 1:  # мигаем по страшному
-                screen.blit(winner_text, (MAX_X / 2 - 75, MAX_Y / 2 - 50))
-            screen.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
+            screen.blit(winner_text, (MAX_X / 2 - 75, MAX_Y / 2 - 50))
+            if time_in_seconds > 0:  # мигает раз в секунду
+                screen.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
 
         pygame.display.update()
 
