@@ -297,7 +297,7 @@ while not finished:
         help_text = ARIAL_18.render(
             "Use the Up/Down arrow keys and press Enter button to activate the selected option ",
             True, (255, 255, 0))
-        screen.blit(help_text, (60, MAX_Y - 50))
+        screen.blit(help_text, (80, MAX_Y - 50))
         pygame.display.update()
     elif game_state == "game":  # блок действий, когда идет игра
         if not ost_game:
