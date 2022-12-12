@@ -9,8 +9,12 @@ screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = Background()
 about_image = AboutInfo()
-ARIAL_18 = pygame.font.SysFont('arial', 18)
+# Шрифты
+ARIAL_18 = pygame.font.SysFont('arial', 18, italic=True, bold=True)
+ARIAL_25 = pg.font.SysFont('arial', 25)
 ARIAL_45 = pygame.font.SysFont('arial', 45)
+BIG_OLD_FONT = pygame.font.SysFont('couriernew', 30)  # можно сделать bold=True, но мне не нрав
+VERY_BIG_OLD_FONT = pygame.font.SysFont('couriernew', 45)
 spawn_timer = 0
 
 pygame.display.update()
@@ -289,15 +293,15 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
             react_on_menu_keys(event)
-        menu_is_here.drawmenu(screen, MAX_X / 2 - 30, 40, 40)
-        start_text_1 = ARIAL_45.render("Press <Play> to play the game", True, (255, 0, 0))
+        menu_is_here.drawmenu(screen, MAX_X / 2 - 35, 40, 40)
+        start_text_1 = BIG_OLD_FONT.render("Press <Play> to play the game", True, (255, 0, 0))
         screen.blit(start_text_1, (100, MAX_Y / 2 - 100))
-        start_text_2 = ARIAL_45.render("Press <About> to help and more info", True, (255, 0, 0))
+        start_text_2 = BIG_OLD_FONT.render("Press <About> to help and more info", True, (255, 0, 0))
         screen.blit(start_text_2, (50, MAX_Y / 2))
         help_text = ARIAL_18.render(
             "Use the Up/Down arrow keys and press Enter button to activate the selected option ",
             True, (255, 255, 0))
-        screen.blit(help_text, (80, MAX_Y - 50))
+        screen.blit(help_text, (60, MAX_Y - 50))
         pygame.display.update()
     elif game_state == "game":  # блок действий, когда идет игра
         if not ost_game:
@@ -326,7 +330,7 @@ while not finished:
         if player.lives <= 0:  # проверяем смерть игрока
             game_state = "gameover"
 
-        menu_is_here.drawmenu(screen, 5, 5, 25)
+        menu_is_here.drawmenu(screen, 10, 10, 30)
         update()
         draw()
         textbar()
@@ -335,14 +339,13 @@ while not finished:
         boss_is_here()
         pygame.display.update()
         laser_group.empty()
-
     elif game_state == "pause":
         stop_shooting()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
             react_on_menu_keys(event)
-        menu_is_here.drawmenu(screen, 5, 5, 25)
+        menu_is_here.drawmenu(screen, 10, 10, 30)
         pausebar = ARIAL_25.render("Pause!", True, (255, 255, 0))
         screen.blit(pausebar, (MAX_X / 2 - 50, MAX_Y / 2))
         textbar()
@@ -354,7 +357,7 @@ while not finished:
                 finished = True
             react_on_menu_keys(event)
         about_image.update()
-        menu_is_here.drawmenu(screen, 5, 5, 25)
+        menu_is_here.drawmenu(screen, 10, 10, 30)
         aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
         screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
         pygame.display.update()
@@ -365,20 +368,20 @@ while not finished:
                 finished = True
             react_on_menu_keys(event)
 
-        menu_is_here.drawmenu(screen, 5, 5, 25)
+        menu_is_here.drawmenu(screen, 10, 10, 30)
         from time import *
         current_time = localtime()
         time_in_seconds = int(mktime(current_time)) % 2  # по модулю два
         if player.lives <= 0:  # Выводим надпись проигравшему
-            gameover_text = ARIAL_45.render("Game Over!", True, (255, 0, 0))
-            screen.blit(gameover_text, (MAX_X / 2 - 100, MAX_Y / 2 - 50))
+            gameover_text = VERY_BIG_OLD_FONT.render("Game Over!", True, (255, 0, 0))
+            screen.blit(gameover_text, (MAX_X / 2 - 115, MAX_Y / 2 - 50))
             help_to_loser_text = ARIAL_18.render("Press Restart to try it one more time", True, (255, 255, 0))
             if time_in_seconds > 0:  # мигает раз в секунду
                 screen.blit(help_to_loser_text, (MAX_X / 2 - 115, MAX_Y / 2 + 100))
         elif boss_here and boss.lives <= 0:  # Выводим надпись победившему
-            winner_text = ARIAL_45.render("You Won", True, (255, 0, 0))
+            winner_text = VERY_BIG_OLD_FONT.render("You Won!", True, (255, 0, 0))
             help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
-            screen.blit(winner_text, (MAX_X / 2 - 75, MAX_Y / 2 - 50))
+            screen.blit(winner_text, (MAX_X / 2 - 90, MAX_Y / 2 - 50))
             if time_in_seconds > 0:  # мигает раз в секунду
                 screen.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
 

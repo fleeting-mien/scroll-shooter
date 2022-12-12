@@ -1,6 +1,7 @@
 import pygame as pg
 pg.init()
-ARIAL_25 = pg.font.SysFont('arial', 25)
+#ARIAL_25 = pg.font.SysFont('arial', 25)
+OLD_FONT = pg.font.SysFont('couriernew', 25)
 """
 Це шрифт
 """
@@ -24,7 +25,7 @@ class Menu:
         option - отображаемый текст кнопки в меню
         callback - функция кнопки
         """
-        self._option_surfaces.append(ARIAL_25.render(option, True, (255, 255, 255)))
+        self._option_surfaces.append(OLD_FONT.render(option, True, (255, 255, 255)))
         self._callbacks.append(callback)
 
     def switch_menu_index(self, direction):
