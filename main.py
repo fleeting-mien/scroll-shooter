@@ -11,7 +11,6 @@ screen = pygame.display.set_mode((MAX_X, MAX_Y))
 background = Background()
 about_image = AboutInfo()
 ARIAL_18 = pygame.font.SysFont('arial', 18)
-# ARIAL_25 = pygame.font.SysFont('arial', 25) - уже импортируется из menu
 ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
 
@@ -268,7 +267,6 @@ def boss_is_here():
 
         if boss_timer == 900:
             Boss(ARIAL_25)
-            # BOSS_SCORE += BOSS_SCORE
 
 
 initial_set()
@@ -324,7 +322,7 @@ while not finished:
             react_on_menu_keys(event)
             react_on_keys(event)
 
-        if player.lives <=0:
+        if player.lives <= 0:
             game_state = "gameover"
 
         menu_is_here.drawmenu(screen, 5, 5, 25)
