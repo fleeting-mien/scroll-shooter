@@ -11,14 +11,14 @@ screen = pygame.display.set_mode((MAX_X, MAX_Y))
 background = Background()
 about_image = AboutInfo()
 ARIAL_18 = pygame.font.SysFont('arial', 18)
-# ARIAL_25 = pygame.font.SysFont('arial', 25) - уже импортируется из menu
 ARIAL_45 = pygame.font.SysFont('arial', 45)
 spawn_timer = 0
 
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
-boss = 0
+boss_here = 0  # переменная, отвечающая за то, есть ли босс на поле
+boss = 0  # сам босс
 ost_game = 0
 ost_boss = 0
 ost_menu = 0
@@ -51,12 +51,12 @@ def restart_game():
     global ost_menu, ost_game, ost_boss
     for group in groups:
         group.empty()
-    global game_state, boss, boss_timer
+    global game_state, boss_here, boss_timer
     game_state = "game"
     ost_game = 0
     ost_boss = 0
     ost_menu = 0
-    boss = 0
+    boss_here = 0
     boss_timer = 0
     initial_set()
 
@@ -153,7 +153,7 @@ def spawn():
     Эта функция создаёт нам 4 типа врагов раз в FPS * SPAWN_SECONDS тиков
     """
     global spawn_timer
-    if not boss and player.lives > 0:
+    if not boss_here and player.lives > 0:
         spawn_timer += 1
     else:
         spawn_timer = 0
@@ -246,7 +246,7 @@ def boss_is_here():
     """
     Функция, вызывающая босса в конце игры - когда игрок набирает BOSS_SCORE (см. config)
     """
-    global boss_timer, ost_boss, boss
+    global boss_timer, ost_boss, boss, boss_here
 
     if player.score >= BOSS_SCORE:
         if boss_timer >= 901:
@@ -261,13 +261,13 @@ def boss_is_here():
             pygame.mixer.music.load(music[game_music])
             pygame.mixer.music.play()
             ost_boss = 1
-            boss = 1
+            boss_here = 1
 
         if 0 < boss_timer < 900 and boss_timer % 40 < 20:
             screen.blit(pygame.image.load('images/boss_warning.png'), (MAX_X / 3.5, MAX_Y / 4))
 
         if boss_timer == 900:
-            Boss(ARIAL_25)
+            boss = Boss(ARIAL_25)
             # BOSS_SCORE += BOSS_SCORE
 
 
