@@ -1,6 +1,5 @@
 import pygame as pg
 pg.init()
-#ARIAL_25 = pg.font.SysFont('arial', 25)
 OLD_FONT = pg.font.SysFont('couriernew', 25)
 """
 Це шрифт

@@ -226,7 +226,7 @@ def buff_text():
 
     if player.heal.timer > 0:
         healbar = ARIAL_18.render(
-            "Healed 1 HP!",
+            "Healed 2 HP!",
             True, (255, 255, 0)
         )
         screen.blit(healbar, (0, MAX_Y/2 + 60))
