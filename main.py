@@ -61,6 +61,10 @@ def restart_game():
     boss_here = 0
     boss_timer = 0
     initial_set()
+    keys_down["w"] = 0
+    keys_down["a"] = 0
+    keys_down["s"] = 0
+    keys_down["d"] = 0
 
 
 def draw():
