@@ -157,3 +157,4 @@ cython_debug/
 /.idea/scroll-shooter.iml
 /.idea/.gitignore
 /images/pixil-frame-0.png
+/docs/
