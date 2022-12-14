@@ -1,0 +1,99 @@
+:py:mod:`config`
+================
+
+.. py:module:: config
+
+
+Module Contents
+---------------
+
+.. py:data:: MAX_X
+   :annotation: = 700
+
+   
+
+.. py:data:: MAX_Y
+   :annotation: = 720
+
+   
+
+.. py:data:: FPS
+   :annotation: = 60
+
+   
+
+.. py:data:: BORDER_X
+   :annotation: = 36
+
+   
+
+.. py:data:: BORDER_Y
+   :annotation: = 28
+
+   
+
+.. py:data:: SPAWN_SECONDS
+   :annotation: = 5
+
+   
+
+.. py:data:: SHOOTING_COEF
+   :annotation: = 10
+
+   
+
+.. py:data:: BUFF_DURATION
+   :annotation: = 5
+
+   
+
+.. py:data:: DROP_CHANCE
+   :annotation: = 1
+
+   
+
+.. py:data:: INTENSITY
+   :annotation: = 30
+
+   
+
+.. py:data:: BOSS_SCORE
+   :annotation: = 20
+
+   
+
+.. py:data:: DEFAULT_SPEED
+   
+
+   
+
+.. py:data:: ALLY_LIVES
+   :annotation: = 5
+
+   
+
+.. py:data:: BOSS_LIVES
+   :annotation: = 100
+
+   
+
+.. py:data:: ENEMY_BULLET_DAMAGE
+   :annotation: = 1
+
+   
+
+.. py:data:: LASER_DAMAGE
+   :annotation: = 0.15
+
+   
+
+.. py:data:: ENEMY_SHIP_LIVES
+   :annotation: = 1
+
+   
+
+.. py:data:: ASTEROID_LIVES
+   :annotation: = 5
+
+   
+

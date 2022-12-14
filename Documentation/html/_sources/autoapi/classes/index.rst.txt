@@ -1,0 +1,432 @@
+:py:mod:`classes`
+=================
+
+.. py:module:: classes
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   classes.Bullet
+   classes.Ship
+   classes.EnemyBullet
+   classes.EnemyShip
+   classes.LaserBeam
+   classes.AllyBullet
+   classes.AllyShip
+   classes.LineEnemy
+   classes.CircleEnemy
+   classes.Asteroid
+   classes.Drop
+   classes.Buff
+   classes.Shield
+   classes.Background
+   classes.AboutInfo
+   classes.Boss
+   classes.BossBullet
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   classes.game_over
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   classes.powerup_images
+   classes.music
+   classes.drop_group
+   classes.laser_group
+   classes.enemy_bullet_group
+   classes.ally_bullet_group
+   classes.enemy_ship_group
+   classes.ally_ship_group
+   classes.asteroid_group
+   classes.groups
+   classes.keys_down
+   classes.game_state
+
+
+.. py:data:: powerup_images
+   
+
+   powerup_images - Used skins (dictionary)
+
+
+.. py:data:: music
+   
+
+   music - Used music (dictionary)
+
+
+.. py:data:: drop_group
+   
+
+   drop_group - Group hierarchy
+
+
+.. py:data:: laser_group
+   
+
+   
+
+.. py:data:: enemy_bullet_group
+   
+
+   
+
+.. py:data:: ally_bullet_group
+   
+
+   
+
+.. py:data:: enemy_ship_group
+   
+
+   
+
+.. py:data:: ally_ship_group
+   
+
+   
+
+.. py:data:: asteroid_group
+   
+
+   
+
+.. py:data:: groups
+   
+
+   
+
+.. py:data:: keys_down
+   
+
+   keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используемый для перемещения игрока
+
+
+.. py:data:: game_state
+   :annotation: = startscreen
+
+   
+
+.. py:class:: Bullet(x, y, picture_path, direction, enemy, damage=1, v=1)
+
+   Bases: :py:obj:`pygame.sprite.Sprite`
+
+   Класс-родитель пуль
+
+   .. py:method:: update()
+
+      Изменяет положение пули. Удаляет из группы при вылезании за экран
+
+
+
+.. py:class:: Ship(x, y, picture_path, enemy, speed=1, lives=1)
+
+   Bases: :py:obj:`pygame.sprite.Sprite`
+
+   Класс-родитель кораблей
+
+   .. py:method:: update()
+
+      Функция изменения состояния корабля
+
+
+   .. py:method:: move()
+
+      Перемещает корабль (переписан в AllyShip, наследуется EnemyShip)
+
+
+   .. py:method:: hit()
+
+      Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля при нулевом количестве жизней
+
+
+   .. py:method:: update_buffs()
+
+      Функция обновления состояния баффов, переписана в AllyShip
+
+
+
+.. py:class:: EnemyBullet(x, y, direction, picture_path='images/enemy_bullet.png', damage=ENEMY_BULLET_DAMAGE)
+
+   Bases: :py:obj:`Bullet`
+
+   Класс вражеских пуль
+
+
+.. py:class:: EnemyShip(picture_path='images/enemy_ship.png', lives=ENEMY_SHIP_LIVES)
+
+   Bases: :py:obj:`Ship`
+
+   Класс вражеских кораблей
+
+   .. py:method:: update()
+
+      Функция изменения состояния корабля
+
+
+   .. py:method:: shoot()
+
+      Корабль стреляет: создает EnemyBullet, вылетающую из корабля
+
+
+   .. py:method:: hit()
+
+      Проверка столкновения вражеского корабля с дружественными пулями, и
+      удаление корабля при нулевом количестве жизней. Начисление очков.
+
+
+
+.. py:class:: LaserBeam(x, y, picture_path='images/laser_beam.png', damage=LASER_DAMAGE)
+
+   Bases: :py:obj:`pygame.sprite.Sprite`
+
+   Класс, отвечающий за луч лазера
+
+   .. py:method:: update()
+
+      Обновляет положение луча
+
+
+
+.. py:class:: AllyBullet(x, y, direction, picture_path='images/ally_bullet.png')
+
+   Bases: :py:obj:`Bullet`
+
+   Класс дружественных пуль
+
+
+.. py:class:: AllyShip(x=MAX_X / 2, y=MAX_Y * 3 / 4, picture_path='images/ally_ship.png')
+
+   Bases: :py:obj:`Ship`
+
+   Класс дружеских кораблей (корабля?)
+
+   .. py:method:: move()
+
+      Функция перемещения корабля
+
+
+   .. py:method:: hit()
+
+      Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
+      при нулевом количестве жизней, а также наложение эффекта баффа
+
+
+   .. py:method:: update_buffs()
+
+      Функция, обновляющая состояние баффов игрока
+
+
+   .. py:method:: start_shooting()
+
+      Начало стрельбы по нажатию кнопки мыши
+
+
+   .. py:method:: stop_shooting()
+
+      Прекращение стрельбы по отпусканию кнопки мыши
+
+
+   .. py:method:: shooting()
+
+      Собственно стрельба (зависит от SHOOTING_COEF)
+
+
+   .. py:method:: shoot()
+
+      Корабль стреляет по-разному в зависимости от того,
+      какое значение self.shooting_style
+
+
+   .. py:method:: normal_shot()
+
+      Обычный выстрел
+
+
+   .. py:method:: double_shot()
+
+      Двойной выстрел
+
+
+   .. py:method:: triple_shot()
+
+      Тройной выстрел
+
+
+
+.. py:function:: game_over()
+
+   Функция окончания игры когда игрок был сражен
+
+
+.. py:class:: LineEnemy
+
+   Bases: :py:obj:`EnemyShip`
+
+   Класс врагов, которые не стоят на месте, а двигаются по горизонтальной прямой
+
+   .. py:method:: move()
+
+      Функция перемещения
+
+
+
+.. py:class:: CircleEnemy
+
+   Bases: :py:obj:`EnemyShip`
+
+   Класс врагов, которые не стоят на месте, а двигаются по окружности
+
+   .. py:method:: move()
+
+      Функция перемещения
+
+
+
+.. py:class:: Asteroid(picture_path='images/asteroid.png', group=asteroid_group)
+
+   Bases: :py:obj:`pygame.sprite.Sprite`
+
+   Класс астероидов, летящих навстречу игроку
+
+   .. py:method:: move()
+
+      Функция движения астероида
+
+
+   .. py:method:: hit()
+
+      Функция столкновения астероида с дружественными пулями
+
+
+   .. py:method:: update()
+
+      Функция обновления состояния астероида
+
+
+
+.. py:class:: Drop(x, y, group=drop_group)
+
+   Bases: :py:obj:`pygame.sprite.Sprite`
+
+   Класс того дропа ('плюшек'), который падает с
+   поверженных врагов (с некоторой вероятностью)
+
+   .. py:method:: update()
+
+      Обновление положения летящего дропа. Удаляет из группы при вылезании за экран
+
+
+
+.. py:class:: Buff(state)
+
+   Класс баффа, которым может обладать корабль игрока
+
+   .. py:attribute:: default_state
+      
+
+      shield: "not applied". other states: "applied"
+      shooting_style: "normal". other states: "double", "triple", "laser"
+      score_factor: "x1". other states: "x2"
+      heal: "not applied". other states: "applied"
+
+
+   .. py:method:: update()
+
+      Функция того, как 'тикает' таймер баффа
+
+
+   .. py:method:: apply(state, time)
+
+      Функция присваивания баффу определенного состояния на определенное время
+
+
+
+.. py:class:: Shield(state, ship, picture_path='images/shield.png')
+
+   Bases: :py:obj:`Buff`
+
+   Класс баффа Shield
+
+   .. py:method:: update()
+
+      Функция обновления состояния щита: обновление таймера и положения
+
+
+
+.. py:class:: Background(picture_path='images/back.png')
+
+   Класс заднего фона игры
+
+   .. py:method:: update()
+
+      Функция прокручивания фона
+
+
+
+.. py:class:: AboutInfo(picture_path='images/test_about.jpg')
+
+   Класс меню 'About'
+
+   .. py:method:: update()
+
+      Обновление изображения
+
+
+
+.. py:class:: Boss(font)
+
+   Bases: :py:obj:`EnemyShip`
+
+   Класс босса игры
+
+   .. py:method:: move()
+
+      Функция движения босса по восьмерке
+
+
+   .. py:method:: shoot()
+
+      Функция стрельбы босса особыми пулями: класса BossBullet
+
+
+   .. py:method:: update()
+
+      Функция обновления состояния босса
+
+
+   .. py:method:: health_bar()
+
+      Полоска жизни босса
+
+
+
+.. py:class:: BossBullet(x, y, direction, image, damage)
+
+   Bases: :py:obj:`EnemyBullet`
+
+   Особые пули, которые выпускает босс
+
+   .. py:method:: update()
+
+      Изменяет положение пули. Удаляет из группы при вылезании за экран
+
+
+

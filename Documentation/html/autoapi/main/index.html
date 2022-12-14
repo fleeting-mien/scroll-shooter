@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>main &#8212; документация scroll-shooter 1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-main">
+<span id="main"></span><h1><a class="reference internal" href="#module-main" title="main"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a><a class="headerlink" href="#module-main" title="Permalink to this heading">¶</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.initial_set" title="main.initial_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_set</span></code></a>()</p></td>
+<td><p>Создает игрока и изначальных врагов</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.update" title="main.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>()</p></td>
+<td><p>calls the update method of all objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.restart_game" title="main.restart_game"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restart_game</span></code></a>()</p></td>
+<td><p>Перезапускает игру сначала</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.draw" title="main.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>()</p></td>
+<td><p>calls the draw method of all objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.start_shooting" title="main.start_shooting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_shooting</span></code></a>()</p></td>
+<td><p>all allies start shooting</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.stop_shooting" title="main.stop_shooting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_shooting</span></code></a>()</p></td>
+<td><p>all allies stop shooting</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.shooting" title="main.shooting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shooting</span></code></a>()</p></td>
+<td><p>all allies shoot</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.react_on_keys" title="main.react_on_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">react_on_keys</span></code></a>(pygame_event)</p></td>
+<td><p>processes a KEYUP/KEYDOWN event and updates keys_down</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.react_on_menu_keys" title="main.react_on_menu_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">react_on_menu_keys</span></code></a>(menu_event)</p></td>
+<td><p>Реакция на нажатие кнопок меню</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.spawn" title="main.spawn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spawn</span></code></a>()</p></td>
+<td><p>Эта функция создаёт нам 4 типа врагов раз в FPS * SPAWN_SECONDS тиков</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.textbar" title="main.textbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textbar</span></code></a>()</p></td>
+<td><p>Игровая информация на экране в правом верхнем углу</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.buff_text" title="main.buff_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">buff_text</span></code></a>()</p></td>
+<td><p>Функция, выводящая информацию о баффах</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.boss_arrival" title="main.boss_arrival"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boss_arrival</span></code></a>()</p></td>
+<td><p>Предупреждает, что скоро будет мясо</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.boss_is_here" title="main.boss_is_here"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boss_is_here</span></code></a>()</p></td>
+<td><p>Функция, вызывающая босса в конце игры - когда игрок набирает BOSS_SCORE (см. config)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.screen" title="main.screen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screen</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.background" title="main.background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">background</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.about_image" title="main.about_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">about_image</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.ARIAL_18" title="main.ARIAL_18"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ARIAL_18</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.ARIAL_25" title="main.ARIAL_25"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ARIAL_25</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.ARIAL_45" title="main.ARIAL_45"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ARIAL_45</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.BIG_OLD_FONT" title="main.BIG_OLD_FONT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BIG_OLD_FONT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.VERY_BIG_OLD_FONT" title="main.VERY_BIG_OLD_FONT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VERY_BIG_OLD_FONT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.spawn_timer" title="main.spawn_timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spawn_timer</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.clock" title="main.clock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clock</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.finished" title="main.finished"><code class="xref py py-obj docutils literal notranslate"><span class="pre">finished</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.boss_here" title="main.boss_here"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boss_here</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.ost_game" title="main.ost_game"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ost_game</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.ost_boss" title="main.ost_boss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ost_boss</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.ost_menu" title="main.ost_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ost_menu</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.boss_timer" title="main.boss_timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boss_timer</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.game_music" title="main.game_music"><code class="xref py py-obj docutils literal notranslate"><span class="pre">game_music</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="main.screen">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">screen</span></span><a class="headerlink" href="#main.screen" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.background">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">background</span></span><a class="headerlink" href="#main.background" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.about_image">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">about_image</span></span><a class="headerlink" href="#main.about_image" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ARIAL_18">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ARIAL_18</span></span><a class="headerlink" href="#main.ARIAL_18" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ARIAL_25">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ARIAL_25</span></span><a class="headerlink" href="#main.ARIAL_25" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ARIAL_45">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ARIAL_45</span></span><a class="headerlink" href="#main.ARIAL_45" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.BIG_OLD_FONT">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">BIG_OLD_FONT</span></span><a class="headerlink" href="#main.BIG_OLD_FONT" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.VERY_BIG_OLD_FONT">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">VERY_BIG_OLD_FONT</span></span><a class="headerlink" href="#main.VERY_BIG_OLD_FONT" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.spawn_timer">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">spawn_timer</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.spawn_timer" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.clock">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">clock</span></span><a class="headerlink" href="#main.clock" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.finished">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">finished</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#main.finished" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.boss_here">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">boss_here</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.boss_here" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ost_game">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ost_game</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.ost_game" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ost_boss">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ost_boss</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.ost_boss" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.ost_menu">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">ost_menu</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.ost_menu" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.boss_timer">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">boss_timer</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#main.boss_timer" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.initial_set">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">initial_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.initial_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Создает игрока и изначальных врагов</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.update">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>calls the update method of all objects</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.restart_game">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">restart_game</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.restart_game" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Перезапускает игру сначала</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.draw">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.draw" title="Ссылка на это определение">¶</a></dt>
+<dd><p>calls the draw method of all objects</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.start_shooting">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">start_shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.start_shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>all allies start shooting</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.stop_shooting">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">stop_shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.stop_shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>all allies stop shooting</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.shooting">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>all allies shoot</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.react_on_keys">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">react_on_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pygame_event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.react_on_keys" title="Ссылка на это определение">¶</a></dt>
+<dd><p>processes a KEYUP/KEYDOWN event and updates keys_down
+function for wasd moving</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.react_on_menu_keys">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">react_on_menu_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menu_event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.react_on_menu_keys" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Реакция на нажатие кнопок меню
+Навигация по кнопкам - стрелки вверх/вниз
+Активация выбранного пункта меню - Enter
+Quit - завершает игру, если игрок находится на стартовом экране. В противном случае возвращает на стартовый экран</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.spawn">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">spawn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.spawn" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Эта функция создаёт нам 4 типа врагов раз в FPS * SPAWN_SECONDS тиков</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.textbar">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">textbar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.textbar" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Игровая информация на экране в правом верхнем углу
+healthbar - показывает жизни игрока
+scorebar - показывает набранные игроком очки</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.buff_text">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">buff_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.buff_text" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, выводящая информацию о баффах</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.boss_arrival">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">boss_arrival</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.boss_arrival" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Предупреждает, что скоро будет мясо</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.boss_is_here">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">boss_is_here</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.boss_is_here" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, вызывающая босса в конце игры - когда игрок набирает BOSS_SCORE (см. config)</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="main.game_music">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">game_music</span></span><a class="headerlink" href="#main.game_music" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">scroll-shooter</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Arthur Fedoruk, Mikhail Aldushonkov, Elizaveta Petukhova, Aleksandr Gaborak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/autoapi/main/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

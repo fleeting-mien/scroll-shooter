@@ -158,3 +158,10 @@ cython_debug/
 /.idea/.gitignore
 /images/pixil-frame-0.png
 /docs/
+/Documentation/_build/
+/Documentation/Makefile
+/Documentation/_templates/
+/Documentation/make.bat
+/Documentation/_static/
+/Documentation/index.rst
+/Documentation/conf.py

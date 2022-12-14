@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>classes &#8212; документация scroll-shooter 1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-classes">
+<span id="classes"></span><h1><a class="reference internal" href="#module-classes" title="classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">classes</span></code></a><a class="headerlink" href="#module-classes" title="Permalink to this heading">¶</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>Classes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.Bullet" title="classes.Bullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bullet</span></code></a></p></td>
+<td><p>Класс-родитель пуль</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.Ship" title="classes.Ship"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ship</span></code></a></p></td>
+<td><p>Класс-родитель кораблей</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.EnemyBullet" title="classes.EnemyBullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyBullet</span></code></a></p></td>
+<td><p>Класс вражеских пуль</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.EnemyShip" title="classes.EnemyShip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyShip</span></code></a></p></td>
+<td><p>Класс вражеских кораблей</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.LaserBeam" title="classes.LaserBeam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LaserBeam</span></code></a></p></td>
+<td><p>Класс, отвечающий за луч лазера</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.AllyBullet" title="classes.AllyBullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AllyBullet</span></code></a></p></td>
+<td><p>Класс дружественных пуль</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.AllyShip" title="classes.AllyShip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AllyShip</span></code></a></p></td>
+<td><p>Класс дружеских кораблей (корабля?)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.LineEnemy" title="classes.LineEnemy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LineEnemy</span></code></a></p></td>
+<td><p>Класс врагов, которые не стоят на месте, а двигаются по горизонтальной прямой</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.CircleEnemy" title="classes.CircleEnemy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CircleEnemy</span></code></a></p></td>
+<td><p>Класс врагов, которые не стоят на месте, а двигаются по окружности</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.Asteroid" title="classes.Asteroid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Asteroid</span></code></a></p></td>
+<td><p>Класс астероидов, летящих навстречу игроку</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.Drop" title="classes.Drop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Drop</span></code></a></p></td>
+<td><p>Класс того дропа ('плюшек'), который падает с</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.Buff" title="classes.Buff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Buff</span></code></a></p></td>
+<td><p>Класс баффа, которым может обладать корабль игрока</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.Shield" title="classes.Shield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shield</span></code></a></p></td>
+<td><p>Класс баффа Shield</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.Background" title="classes.Background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Background</span></code></a></p></td>
+<td><p>Класс заднего фона игры</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.AboutInfo" title="classes.AboutInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AboutInfo</span></code></a></p></td>
+<td><p>Класс меню 'About'</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.Boss" title="classes.Boss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Boss</span></code></a></p></td>
+<td><p>Класс босса игры</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.BossBullet" title="classes.BossBullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BossBullet</span></code></a></p></td>
+<td><p>Особые пули, которые выпускает босс</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.game_over" title="classes.game_over"><code class="xref py py-obj docutils literal notranslate"><span class="pre">game_over</span></code></a>()</p></td>
+<td><p>Функция окончания игры когда игрок был сражен</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.powerup_images" title="classes.powerup_images"><code class="xref py py-obj docutils literal notranslate"><span class="pre">powerup_images</span></code></a></p></td>
+<td><p>powerup_images - Used skins (dictionary)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.music" title="classes.music"><code class="xref py py-obj docutils literal notranslate"><span class="pre">music</span></code></a></p></td>
+<td><p>music - Used music (dictionary)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.drop_group" title="classes.drop_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_group</span></code></a></p></td>
+<td><p>drop_group - Group hierarchy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.laser_group" title="classes.laser_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">laser_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.enemy_bullet_group" title="classes.enemy_bullet_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enemy_bullet_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.ally_bullet_group" title="classes.ally_bullet_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ally_bullet_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.enemy_ship_group" title="classes.enemy_ship_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enemy_ship_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.ally_ship_group" title="classes.ally_ship_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ally_ship_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.asteroid_group" title="classes.asteroid_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asteroid_group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.groups" title="classes.groups"><code class="xref py py-obj docutils literal notranslate"><span class="pre">groups</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#classes.keys_down" title="classes.keys_down"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys_down</span></code></a></p></td>
+<td><p>keys_down = {&quot;w&quot;: 0, &quot;a&quot;: 0, &quot;s&quot;: 0, &quot;d&quot;: 0} - Cловарь, используемый для перемещения игрока</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#classes.game_state" title="classes.game_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">game_state</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.powerup_images">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">powerup_images</span></span><a class="headerlink" href="#classes.powerup_images" title="Ссылка на это определение">¶</a></dt>
+<dd><p>powerup_images - Used skins (dictionary)</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.music">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">music</span></span><a class="headerlink" href="#classes.music" title="Ссылка на это определение">¶</a></dt>
+<dd><p>music - Used music (dictionary)</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.drop_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">drop_group</span></span><a class="headerlink" href="#classes.drop_group" title="Ссылка на это определение">¶</a></dt>
+<dd><p>drop_group - Group hierarchy</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.laser_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">laser_group</span></span><a class="headerlink" href="#classes.laser_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.enemy_bullet_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">enemy_bullet_group</span></span><a class="headerlink" href="#classes.enemy_bullet_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.ally_bullet_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">ally_bullet_group</span></span><a class="headerlink" href="#classes.ally_bullet_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.enemy_ship_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">enemy_ship_group</span></span><a class="headerlink" href="#classes.enemy_ship_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.ally_ship_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">ally_ship_group</span></span><a class="headerlink" href="#classes.ally_ship_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.asteroid_group">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">asteroid_group</span></span><a class="headerlink" href="#classes.asteroid_group" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.groups">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">groups</span></span><a class="headerlink" href="#classes.groups" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.keys_down">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">keys_down</span></span><a class="headerlink" href="#classes.keys_down" title="Ссылка на это определение">¶</a></dt>
+<dd><p>keys_down = {«w»: 0, «a»: 0, «s»: 0, «d»: 0} - Cловарь, используемый для перемещения игрока</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="classes.game_state">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">game_state</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">startscreen</span></em><a class="headerlink" href="#classes.game_state" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Bullet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Bullet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Bullet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Класс-родитель пуль</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Bullet.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Bullet.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Изменяет положение пули. Удаляет из группы при вылезании за экран</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Ship">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Ship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Ship" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Класс-родитель кораблей</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Ship.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Ship.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция изменения состояния корабля</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Ship.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Ship.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Перемещает корабль (переписан в AllyShip, наследуется EnemyShip)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Ship.hit">
+<span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Ship.hit" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля при нулевом количестве жизней</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Ship.update_buffs">
+<span class="sig-name descname"><span class="pre">update_buffs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Ship.update_buffs" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обновления состояния баффов, переписана в AllyShip</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.EnemyBullet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">EnemyBullet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/enemy_bullet.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ENEMY_BULLET_DAMAGE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.EnemyBullet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.Bullet" title="classes.Bullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bullet</span></code></a></p>
+<p>Класс вражеских пуль</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.EnemyShip">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">EnemyShip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/enemy_ship.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ENEMY_SHIP_LIVES</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.EnemyShip" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.Ship" title="classes.Ship"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ship</span></code></a></p>
+<p>Класс вражеских кораблей</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.EnemyShip.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.EnemyShip.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция изменения состояния корабля</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.EnemyShip.shoot">
+<span class="sig-name descname"><span class="pre">shoot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.EnemyShip.shoot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Корабль стреляет: создает EnemyBullet, вылетающую из корабля</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.EnemyShip.hit">
+<span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.EnemyShip.hit" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Проверка столкновения вражеского корабля с дружественными пулями, и
+удаление корабля при нулевом количестве жизней. Начисление очков.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.LaserBeam">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">LaserBeam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/laser_beam.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">LASER_DAMAGE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.LaserBeam" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Класс, отвечающий за луч лазера</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.LaserBeam.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.LaserBeam.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обновляет положение луча</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.AllyBullet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">AllyBullet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/ally_bullet.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyBullet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.Bullet" title="classes.Bullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bullet</span></code></a></p>
+<p>Класс дружественных пуль</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.AllyShip">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">AllyShip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MAX_X</span> <span class="pre">/</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MAX_Y</span> <span class="pre">*</span> <span class="pre">3</span> <span class="pre">/</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/ally_ship.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.Ship" title="classes.Ship"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ship</span></code></a></p>
+<p>Класс дружеских кораблей (корабля?)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция перемещения корабля</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.hit">
+<span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.hit" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля
+при нулевом количестве жизней, а также наложение эффекта баффа</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.update_buffs">
+<span class="sig-name descname"><span class="pre">update_buffs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.update_buffs" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, обновляющая состояние баффов игрока</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.start_shooting">
+<span class="sig-name descname"><span class="pre">start_shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.start_shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Начало стрельбы по нажатию кнопки мыши</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.stop_shooting">
+<span class="sig-name descname"><span class="pre">stop_shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.stop_shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прекращение стрельбы по отпусканию кнопки мыши</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.shooting">
+<span class="sig-name descname"><span class="pre">shooting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.shooting" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Собственно стрельба (зависит от SHOOTING_COEF)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.shoot">
+<span class="sig-name descname"><span class="pre">shoot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.shoot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Корабль стреляет по-разному в зависимости от того,
+какое значение self.shooting_style</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.normal_shot">
+<span class="sig-name descname"><span class="pre">normal_shot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.normal_shot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обычный выстрел</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.double_shot">
+<span class="sig-name descname"><span class="pre">double_shot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.double_shot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Двойной выстрел</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AllyShip.triple_shot">
+<span class="sig-name descname"><span class="pre">triple_shot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AllyShip.triple_shot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Тройной выстрел</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="classes.game_over">
+<span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">game_over</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.game_over" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция окончания игры когда игрок был сражен</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.LineEnemy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">LineEnemy</span></span><a class="headerlink" href="#classes.LineEnemy" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.EnemyShip" title="classes.EnemyShip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyShip</span></code></a></p>
+<p>Класс врагов, которые не стоят на месте, а двигаются по горизонтальной прямой</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.LineEnemy.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.LineEnemy.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция перемещения</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.CircleEnemy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">CircleEnemy</span></span><a class="headerlink" href="#classes.CircleEnemy" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.EnemyShip" title="classes.EnemyShip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyShip</span></code></a></p>
+<p>Класс врагов, которые не стоят на месте, а двигаются по окружности</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.CircleEnemy.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.CircleEnemy.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция перемещения</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Asteroid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Asteroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/asteroid.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">asteroid_group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Asteroid" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Класс астероидов, летящих навстречу игроку</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Asteroid.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Asteroid.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция движения астероида</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Asteroid.hit">
+<span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Asteroid.hit" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция столкновения астероида с дружественными пулями</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Asteroid.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Asteroid.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обновления состояния астероида</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Drop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Drop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">drop_group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Drop" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Класс того дропа („плюшек“), который падает с
+поверженных врагов (с некоторой вероятностью)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Drop.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Drop.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обновление положения летящего дропа. Удаляет из группы при вылезании за экран</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Buff">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Buff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Buff" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Класс баффа, которым может обладать корабль игрока</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="classes.Buff.default_state">
+<span class="sig-name descname"><span class="pre">default_state</span></span><a class="headerlink" href="#classes.Buff.default_state" title="Ссылка на это определение">¶</a></dt>
+<dd><p>shield: «not applied». other states: «applied»
+shooting_style: «normal». other states: «double», «triple», «laser»
+score_factor: «x1». other states: «x2»
+heal: «not applied». other states: «applied»</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Buff.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Buff.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция того, как „тикает“ таймер баффа</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Buff.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Buff.apply" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция присваивания баффу определенного состояния на определенное время</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Shield">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Shield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/shield.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Shield" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.Buff" title="classes.Buff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Buff</span></code></a></p>
+<p>Класс баффа Shield</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Shield.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Shield.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обновления состояния щита: обновление таймера и положения</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Background">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/back.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Background" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Класс заднего фона игры</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Background.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Background.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция прокручивания фона</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.AboutInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">AboutInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picture_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'images/test_about.jpg'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.AboutInfo" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Класс меню „About“</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.AboutInfo.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.AboutInfo.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обновление изображения</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.Boss">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">Boss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.Boss" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.EnemyShip" title="classes.EnemyShip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyShip</span></code></a></p>
+<p>Класс босса игры</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Boss.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Boss.move" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция движения босса по восьмерке</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Boss.shoot">
+<span class="sig-name descname"><span class="pre">shoot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Boss.shoot" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция стрельбы босса особыми пулями: класса BossBullet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Boss.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Boss.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обновления состояния босса</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.Boss.health_bar">
+<span class="sig-name descname"><span class="pre">health_bar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.Boss.health_bar" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Полоска жизни босса</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.BossBullet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.</span></span><span class="sig-name descname"><span class="pre">BossBullet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classes.BossBullet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.EnemyBullet" title="classes.EnemyBullet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EnemyBullet</span></code></a></p>
+<p>Особые пули, которые выпускает босс</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.BossBullet.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.BossBullet.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Изменяет положение пули. Удаляет из группы при вылезании за экран</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">scroll-shooter</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Arthur Fedoruk, Mikhail Aldushonkov, Elizaveta Petukhova, Aleksandr Gaborak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/autoapi/classes/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,70 @@
+:py:mod:`menu`
+==============
+
+.. py:module:: menu
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   menu.Menu
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   menu.OLD_FONT
+   menu.menu_is_here
+
+
+.. py:data:: OLD_FONT
+   
+
+   Це шрифт
+
+
+.. py:class:: Menu
+
+   Класс меню. Пока что кнопочки только Start и Quit.
+   _option_surfaces - поверхности для пунктов меню
+   _callbacks - что делают кнопки
+   _current_option_index - выбранный пункт меню
+
+   .. py:method:: append_option(option, callback)
+
+      Добавляет пункт меню
+      option - отображаемый текст кнопки в меню
+      callback - функция кнопки
+
+
+   .. py:method:: switch_menu_index(direction)
+
+      Переключение между пунктами меню.
+
+
+   .. py:method:: activate_menu_option()
+
+      Делаем "тык" в пункт меню
+
+
+   .. py:method:: check_current_index()
+
+
+   .. py:method:: drawmenu(surf, x, y, option_y_padding)
+
+
+
+.. py:data:: menu_is_here
+   
+
+   
+
