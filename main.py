@@ -12,7 +12,7 @@ about_image = AboutInfo()
 # Шрифты
 ARIAL_18 = pygame.font.SysFont('arial', 18, italic=True, bold=True)
 ARIAL_25 = pg.font.SysFont('arial', 25)
-ARIAL_45 = pygame.font.SysFont('arial', 45)
+# ARIAL_45 = pygame.font.SysFont('arial', 45)
 BIG_OLD_FONT = pygame.font.SysFont('couriernew', 30)  # можно сделать bold=True, но мне не нрав
 VERY_BIG_OLD_FONT = pygame.font.SysFont('couriernew', 45)
 spawn_timer = 0
@@ -376,8 +376,8 @@ while not finished:
             react_on_menu_keys(event)
         about_image.update()
         menu_is_here.drawmenu(screen, 10, 10, 30)
-        aboutbar = ARIAL_45.render("About", True, (255, 255, 255))
-        screen.blit(aboutbar, (MAX_X / 2 - 50, 10))
+        aboutbar = VERY_BIG_OLD_FONT.render("About", True, (255, 255, 255))
+        screen.blit(aboutbar, (MAX_X / 2 - 60, 30))
         pygame.display.update()
     elif game_state == "gameover":
         pygame.mixer.music.set_volume(0.4)
