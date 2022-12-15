@@ -663,7 +663,7 @@ class Background:
 
 class AboutInfo:
     """Класс меню 'About'"""
-    def __init__(self, picture_path="images/test_about.jpg"):
+    def __init__(self, picture_path="images/about_tmp.png"):
         """Конструктор класса AboutInfo
 
         Атрибуты:
@@ -672,8 +672,8 @@ class AboutInfo:
         global screen
         screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
-        self.x = 50
-        self.y = 125
+        self.x = 0
+        self.y = -15
 
     def update(self):
         """Обновление изображения"""
