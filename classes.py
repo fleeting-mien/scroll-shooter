@@ -255,7 +255,7 @@ class AllyBullet(Bullet):
 
 class AllyShip(Ship):
     """Класс дружеских кораблей (корабля?)"""
-    def __init__(self, x=MAX_X/2, y=MAX_Y*3/4, picture_path="images/ally_ship.png"):
+    def __init__(self, picture_path='images/ally_ship.png', x=MAX_X/2, y=MAX_Y*3/4):
         """
         Конструктор класса AllyShip
 
@@ -290,6 +290,32 @@ class AllyShip(Ship):
         # 4 состояния: "normal", "double", "triple", "laser"
         self.score_factor = Buff("x1")  # 2 состояния: "х1" и "х2"
         self.score = 0
+
+    def update(self):
+        super().update()
+        if keys_down["a"] == 1 and keys_down["d"] == 0:
+            picture_path = "images/turn_left.png"
+            self.image = pygame.image.load(picture_path)
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+
+        if keys_down["a"] == 0 and keys_down["d"] == 0:
+            picture_path= "images/ally_ship.png"
+            self.image = pygame.image.load(picture_path)
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+
+        if keys_down["d"] == 1 and keys_down["a"] == 0:
+            picture_path = "images/turn_right.png"
+            self.image = pygame.image.load(picture_path)
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
+
+        if keys_down["d"] == 1 and keys_down["a"] == 1:
+            picture_path = "images/ally_ship.png."
+            self.image = pygame.image.load(picture_path)
+            self.rect = self.image.get_rect()
+            self.rect.center = (self.x, self.y)
 
     def move(self):
         """Функция перемещения корабля"""

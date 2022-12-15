@@ -308,6 +308,7 @@ while not finished:
         screen.blit(help_text, (60, MAX_Y - 50))
         pygame.display.update()
     elif game_state == "game":  # блок действий, когда идет игра
+        print(drop_group)
         if not ost_game:
             game_music = random.choice(['game1', 'game2'])
             pygame.mixer.music.load(music[game_music])
