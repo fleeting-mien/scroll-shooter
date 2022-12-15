@@ -300,7 +300,7 @@ class AllyShip(Ship):
             self.rect.center = (self.x, self.y)
 
         if keys_down["a"] == 0 and keys_down["d"] == 0:
-            picture_path= "images/ally_ship.png"
+            picture_path = "images/ally_ship.png"
             self.image = pygame.image.load(picture_path)
             self.rect = self.image.get_rect()
             self.rect.center = (self.x, self.y)
