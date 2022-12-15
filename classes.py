@@ -663,7 +663,7 @@ class Background:
 
 class AboutInfo:
     """Класс меню 'About'"""
-    def __init__(self, picture_path="images/about_tmp.png"):
+    def __init__(self, picture_path="images/about.png"):
         """Конструктор класса AboutInfo
 
         Атрибуты:
