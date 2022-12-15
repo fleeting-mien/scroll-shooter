@@ -57,7 +57,6 @@ def restart_game():
     game_state = "game"
     ost_game = 0
     ost_boss = 0
-    ost_menu = 0
     boss_here = 0
     boss_timer = 0
     initial_set()
