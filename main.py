@@ -288,6 +288,10 @@ while not finished:
     clock.tick(FPS)
 
     if game_state == "startscreen":
+        if 1 <= boss_timer <= 900:
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.pause()
+        pygame.mixer.music.set_volume(0.2)
         if not ost_menu:
             game_music = random.choice(['menu1', 'menu2'])
             pygame.mixer.music.load(music[game_music])
@@ -308,7 +312,8 @@ while not finished:
         screen.blit(help_text, (60, MAX_Y - 50))
         pygame.display.update()
     elif game_state == "game":  # блок действий, когда идет игра
-        pygame.mixer.music.unpause()
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.unpause()
         pygame.mixer.music.set_volume(1)
         if not ost_game:
             game_music = random.choice(['game1', 'game2'])
@@ -347,7 +352,8 @@ while not finished:
         laser_group.empty()
     elif game_state == "pause":
         if 1 <= boss_timer <= 900:
-            pygame.mixer.music.pause()
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.pause()
         pygame.mixer.music.set_volume(0.2)
         stop_shooting()
         for event in pygame.event.get():
@@ -361,7 +367,8 @@ while not finished:
         pygame.display.update()
     elif game_state == "about":
         if 1 <= boss_timer <= 900:
-            pygame.mixer.music.pause()
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.pause()
         pygame.mixer.music.set_volume(0.2)
         stop_shooting()
         for event in pygame.event.get():
