@@ -628,10 +628,10 @@ class Shield(Buff):
         """Функция обновления состояния щита: обновление таймера и положения"""
         super().update()  # updates timer
         if self.state == "applied":
-            screen.blit(self.image, self.rect)
             self.x = self.ship.x
             self.y = self.ship.y
             self.rect.center = (self.x, self.y)
+            screen.blit(self.image, self.rect)
 
 
 class Background:
