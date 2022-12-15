@@ -673,7 +673,7 @@ class AboutInfo:
         screen = pygame.display.set_mode((MAX_X, MAX_Y))
         self.image = pygame.image.load(picture_path)
         self.x = 0
-        self.y = -15
+        self.y = -25
 
     def update(self):
         """Обновление изображения"""
