@@ -5,48 +5,48 @@ from random import choice
 from numpy import *
 
 
-powerup_images = {}
+POWERUP_IMAGES = {}
 '''
-powerup_images - Used skins (dictionary)
+POWERUP_IMAGES - Used skins (dictionary)
 '''
-powerup_images['heal'] = pygame.image.load('images/heal_buff.png')
-powerup_images['shield'] = pygame.image.load('images/shield_buff.png')
-powerup_images['laser'] = pygame.image.load('images/laser.png')
-powerup_images['double_score'] = pygame.image.load('images/coins_buff.png')
-powerup_images['double_shot'] = pygame.image.load('images/double_shot.png')
-powerup_images['triple_shot'] = pygame.image.load('images/triple_shot.png')
+POWERUP_IMAGES['heal'] = pygame.image.load('images/heal_buff.png')
+POWERUP_IMAGES['shield'] = pygame.image.load('images/shield_buff.png')
+POWERUP_IMAGES['laser'] = pygame.image.load('images/laser.png')
+POWERUP_IMAGES['double_score'] = pygame.image.load('images/coins_buff.png')
+POWERUP_IMAGES['double_shot'] = pygame.image.load('images/double_shot.png')
+POWERUP_IMAGES['triple_shot'] = pygame.image.load('images/triple_shot.png')
 
-music = {}
+MUSIC = {}
 '''
-music - Used music (dictionary)
+MUSIC - Used MUSIC (dictionary)
 '''
-music['game1'] = 'OST/game_ost1.mp3'
-music['game2'] = 'OST/game_ost2_KoppenAsF.mp3'
-music['boss1'] = 'OST/boss_ost1_Hydrophobia.mp3'
-music['boss2'] = 'OST/boss_ost2_BFGDivision.mp3'
-music['menu1'] = 'OST/menu_ost1_GIAA-FrozenTwilight.mp3'
-music['menu2'] = 'OST/menu_ost2_GIAA-EmpyreanGlow_CrystalCanyon.mp3'
+MUSIC['game1'] = 'OST/game_ost1.mp3'
+MUSIC['game2'] = 'OST/game_ost2_KoppenAsF.mp3'
+MUSIC['boss1'] = 'OST/boss_ost1_Hydrophobia.mp3'
+MUSIC['boss2'] = 'OST/boss_ost2_BFGDivision.mp3'
+MUSIC['menu1'] = 'OST/menu_ost1_GIAA-FrozenTwilight.mp3'
+MUSIC['menu2'] = 'OST/menu_ost2_GIAA-EmpyreanGlow_CrystalCanyon.mp3'
 
-drop_group = pygame.sprite.Group()
+DROP_GROUP = pygame.sprite.Group()
 '''
-drop_group - Group hierarchy
+DROP_GROUP - Group hierarchy
 '''
-laser_group = pygame.sprite.Group()
-enemy_bullet_group = pygame.sprite.Group()
-ally_bullet_group = pygame.sprite.Group()
-enemy_ship_group = pygame.sprite.Group()
-ally_ship_group = pygame.sprite.Group()
-asteroid_group = pygame.sprite.Group()
-groups = {laser_group, asteroid_group, enemy_bullet_group, ally_bullet_group,
-          enemy_ship_group, ally_ship_group, drop_group}
+LASER_GROUP = pygame.sprite.Group()
+ENEMY_BULLET_GROUP = pygame.sprite.Group()
+ALLY_BULLET_GROUP = pygame.sprite.Group()
+ENEMY_SHIP_GROUP = pygame.sprite.Group()
+ALLY_SHIP_GROUP = pygame.sprite.Group()
+ASTEROID_GROUP = pygame.sprite.Group()
+GROUPS = {LASER_GROUP, ASTEROID_GROUP, ENEMY_BULLET_GROUP, ALLY_BULLET_GROUP,
+          ENEMY_SHIP_GROUP, ALLY_SHIP_GROUP, DROP_GROUP}
 # большая группа групп, чтобы по ней можно было итерировать все группы сразу
 
-keys_down = {"w": 0, "a": 0, "s": 0, "d": 0}
+KEYS_DOWN = {"w": 0, "a": 0, "s": 0, "d": 0}
 '''
-keys_down = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используемый для перемещения игрока
+KEYS_DOWN = {"w": 0, "a": 0, "s": 0, "d": 0} - Cловарь, используемый для перемещения игрока
 '''
 
-game_state = "startscreen"
+GAME_STATE = "startscreen"
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -75,7 +75,7 @@ class Bullet(pygame.sprite.Sprite):
         self.v = v * DEFAULT_SPEED
         self.damage = damage
 
-        self.group = enemy_bullet_group if enemy else ally_bullet_group
+        self.group = ENEMY_BULLET_GROUP if enemy else ALLY_BULLET_GROUP
         self.group.add(self)
 
     def update(self):
@@ -115,7 +115,7 @@ class Ship(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
         self.enemy = enemy
-        group = enemy_ship_group if enemy else ally_ship_group
+        group = ENEMY_SHIP_GROUP if enemy else ALLY_SHIP_GROUP
         group.add(self)
 
     def update(self):
@@ -134,10 +134,10 @@ class Ship(pygame.sprite.Sprite):
         """
         Проверка столкновения дружеского корабля с вражескими пулями, и удаление корабля при нулевом количестве жизней
         """
-        opposing_bullet_group = ally_bullet_group if self.enemy else enemy_bullet_group
+        opposing_bullet_group = ALLY_BULLET_GROUP if self.enemy else ENEMY_BULLET_GROUP
         for bullet in pygame.sprite.spritecollide(self, opposing_bullet_group, True):
             self.lives -= bullet.damage
-        for i in pygame.sprite.spritecollide(self, asteroid_group, False):
+        for i in pygame.sprite.spritecollide(self, ASTEROID_GROUP, False):
             self.lives -= 1
 
     def update_buffs(self):
@@ -200,13 +200,13 @@ class EnemyShip(Ship):
         удаление корабля при нулевом количестве жизней. Начисление очков.
         """
         super().hit()
-        for laser in pygame.sprite.spritecollide(self, laser_group, False):
+        for laser in pygame.sprite.spritecollide(self, LASER_GROUP, False):
             self.lives -= laser.damage
         if self.lives <= 0:
             if randint(1, DROP_CHANCE) == 1:
                 Drop(x=self.x, y=self.y)
             self.kill()
-            for ship in ally_ship_group:
+            for ship in ALLY_SHIP_GROUP:
                 if ship.score_factor.state == "x2":
                     ship.score += 2
                 else:
@@ -232,7 +232,7 @@ class LaserBeam(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
         self.damage = damage
 
-        self.group = laser_group
+        self.group = LASER_GROUP
         self.group.add(self)
 
     def update(self):
@@ -293,25 +293,25 @@ class AllyShip(Ship):
 
     def update(self):
         super().update()
-        if keys_down["a"] == 1 and keys_down["d"] == 0:
+        if KEYS_DOWN["a"] == 1 and KEYS_DOWN["d"] == 0:
             picture_path = "images/turn_left.png"
             self.image = pygame.image.load(picture_path)
             self.rect = self.image.get_rect()
             self.rect.center = (self.x, self.y)
 
-        if keys_down["a"] == 0 and keys_down["d"] == 0:
+        if KEYS_DOWN["a"] == 0 and KEYS_DOWN["d"] == 0:
             picture_path = "images/ally_ship.png"
             self.image = pygame.image.load(picture_path)
             self.rect = self.image.get_rect()
             self.rect.center = (self.x, self.y)
 
-        if keys_down["d"] == 1 and keys_down["a"] == 0:
+        if KEYS_DOWN["d"] == 1 and KEYS_DOWN["a"] == 0:
             picture_path = "images/turn_right.png"
             self.image = pygame.image.load(picture_path)
             self.rect = self.image.get_rect()
             self.rect.center = (self.x, self.y)
 
-        if keys_down["d"] == 1 and keys_down["a"] == 1:
+        if KEYS_DOWN["d"] == 1 and KEYS_DOWN["a"] == 1:
             picture_path = "images/ally_ship.png"
             self.image = pygame.image.load(picture_path)
             self.rect = self.image.get_rect()
@@ -319,8 +319,8 @@ class AllyShip(Ship):
 
     def move(self):
         """Функция перемещения корабля"""
-        self.vx = (keys_down["d"] - keys_down["a"]) * self.v
-        self.vy = (keys_down["s"] - keys_down["w"]) * self.v
+        self.vx = (KEYS_DOWN["d"] - KEYS_DOWN["a"]) * self.v
+        self.vy = (KEYS_DOWN["s"] - KEYS_DOWN["w"]) * self.v
 
         x = self.x + self.vx  # будущие координаты
         y = self.y + self.vy
@@ -348,13 +348,13 @@ class AllyShip(Ship):
         if self.shield.state == "not applied":
             super().hit()
         else:
-            pygame.sprite.spritecollide(self, enemy_bullet_group, True)
+            pygame.sprite.spritecollide(self, ENEMY_BULLET_GROUP, True)
 
         if self.lives <= 0:
             self.lives = 0
             game_over()
         # проверка того, что игрок подобрал бафф
-        for drop in pygame.sprite.spritecollide(self, drop_group, True):
+        for drop in pygame.sprite.spritecollide(self, DROP_GROUP, True):
             if drop.type == 'shield':
                 self.shield.apply("applied", BUFF_DURATION)
             elif drop.type == 'laser':
@@ -429,10 +429,10 @@ class AllyShip(Ship):
 
 def game_over():
     """Функция окончания игры когда игрок был сражен"""
-    global game_state
-    for group in groups:
+    global GAME_STATE
+    for group in GROUPS:
         group.empty()
-    game_state = "gameover"
+    GAME_STATE = "gameover"
 
 
 class LineEnemy(EnemyShip):
@@ -490,7 +490,7 @@ class CircleEnemy(EnemyShip):
 
 class Asteroid(pygame.sprite.Sprite):
     """Класс астероидов, летящих навстречу игроку"""
-    def __init__(self, picture_path="images/asteroid.png", group=asteroid_group):
+    def __init__(self, picture_path="images/asteroid.png", group=ASTEROID_GROUP):
         """
         Конструктор класса Asteroid
 
@@ -519,9 +519,9 @@ class Asteroid(pygame.sprite.Sprite):
 
     def hit(self):
         """Функция столкновения астероида с дружественными пулями"""
-        for i in pygame.sprite.spritecollide(self, ally_bullet_group, True):
+        for i in pygame.sprite.spritecollide(self, ALLY_BULLET_GROUP, True):
             self.lives -= 1
-        for i in pygame.sprite.spritecollide(self, laser_group, False):
+        for i in pygame.sprite.spritecollide(self, LASER_GROUP, False):
             self.lives -= 1
         if self.lives <= 0:
             self.kill()
@@ -536,7 +536,7 @@ class Asteroid(pygame.sprite.Sprite):
 class Drop(pygame.sprite.Sprite):
     """Класс того дропа ('плюшек'), который падает с
         поверженных врагов (с некоторой вероятностью)"""
-    def __init__(self, x, y, group=drop_group):
+    def __init__(self, x, y, group=DROP_GROUP):
         """
         Конструктор класса Drop
 
@@ -552,7 +552,7 @@ class Drop(pygame.sprite.Sprite):
         """
         super().__init__()
         self.type = random.choice(['shield', 'heal', 'triple_shot', 'double_shot', 'laser', 'double_score'])
-        self.image = powerup_images[self.type]
+        self.image = POWERUP_IMAGES[self.type]
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
