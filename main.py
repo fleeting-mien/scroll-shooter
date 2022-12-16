@@ -245,7 +245,9 @@ def boss_arrival():
         )
         SCREEN.blit(bossbar, (MAX_X/4, 20))
 
+
 def you_lost_text():
+    """Текст, который выводится на экран, когда ты проиграл"""
     gameover_text = VERY_BIG_OLD_FONT.render("Game Over!", True, (255, 0, 0))
     SCREEN.blit(gameover_text, (MAX_X / 2 - 115, MAX_Y / 2 - 50))
 
@@ -256,7 +258,9 @@ def you_lost_text():
     if time_in_seconds > 0:  # мигает раз в секунду
         SCREEN.blit(help_to_loser_text, (MAX_X / 2 - 115, MAX_Y / 2 + 100))
 
+
 def you_won_text():
+    """Текст, который выводится на экран, когда ты выиграл"""
     winner_text = VERY_BIG_OLD_FONT.render("You Won!", True, (255, 0, 0))
     help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
     SCREEN.blit(winner_text, (MAX_X / 2 - 90, MAX_Y / 2 - 50))
