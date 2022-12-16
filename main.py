@@ -4,7 +4,6 @@ from menu import *
 
 pygame.init()
 
-
 screen = pygame.display.set_mode((MAX_X, MAX_Y))
 
 background = Background()
@@ -12,9 +11,9 @@ about_image = AboutInfo()
 # Шрифты
 ARIAL_18 = pygame.font.SysFont('arial', 18, italic=True, bold=True)
 ARIAL_25 = pg.font.SysFont('arial', 25)
-# ARIAL_45 = pygame.font.SysFont('arial', 45)
 BIG_OLD_FONT = pygame.font.SysFont('couriernew', 30)  # можно сделать bold=True, но мне не нрав
 VERY_BIG_OLD_FONT = pygame.font.SysFont('couriernew', 45)
+
 spawn_timer = 0
 
 pygame.display.update()
