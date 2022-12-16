@@ -245,6 +245,24 @@ def boss_arrival():
         )
         SCREEN.blit(bossbar, (MAX_X/4, 20))
 
+def you_lost_text():
+    gameover_text = VERY_BIG_OLD_FONT.render("Game Over!", True, (255, 0, 0))
+    SCREEN.blit(gameover_text, (MAX_X / 2 - 115, MAX_Y / 2 - 50))
+
+    your_score_text = BIG_OLD_FONT.render("Your score is " + str(player.score), True, (255, 0, 0))
+    SCREEN.blit(your_score_text, (MAX_X / 2 - 120, MAX_Y / 2))
+
+    help_to_loser_text = ARIAL_18.render("Press Restart to try it one more time", True, (255, 255, 0))
+    if time_in_seconds > 0:  # мигает раз в секунду
+        SCREEN.blit(help_to_loser_text, (MAX_X / 2 - 115, MAX_Y / 2 + 100))
+
+def you_won_text():
+    winner_text = VERY_BIG_OLD_FONT.render("You Won!", True, (255, 0, 0))
+    help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
+    SCREEN.blit(winner_text, (MAX_X / 2 - 90, MAX_Y / 2 - 50))
+    if time_in_seconds > 0:  # мигает раз в секунду
+        SCREEN.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
+
 
 def boss_is_here():
     """
@@ -318,8 +336,10 @@ while not finished:
             pygame.mixer.music.load(MUSIC[game_music])
             pygame.mixer.music.play()
             OST_GAME = 1
+
         spawn()
         shooting()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
@@ -353,7 +373,6 @@ while not finished:
             if pygame.mixer.music.get_busy():
                 pygame.mixer.music.pause()
         pygame.mixer.music.set_volume(0.2)
-        stop_shooting()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
@@ -390,17 +409,9 @@ while not finished:
         current_time = localtime()
         time_in_seconds = int(mktime(current_time)) % 2  # по модулю два
         if player.lives <= 0:  # Выводим надпись проигравшему
-            gameover_text = VERY_BIG_OLD_FONT.render("Game Over!", True, (255, 0, 0))
-            SCREEN.blit(gameover_text, (MAX_X / 2 - 115, MAX_Y / 2 - 50))
-            help_to_loser_text = ARIAL_18.render("Press Restart to try it one more time", True, (255, 255, 0))
-            if time_in_seconds > 0:  # мигает раз в секунду
-                SCREEN.blit(help_to_loser_text, (MAX_X / 2 - 115, MAX_Y / 2 + 100))
+            you_lost_text()
         elif BOSS_HERE and boss.lives <= 0:  # Выводим надпись победившему
-            winner_text = VERY_BIG_OLD_FONT.render("You Won!", True, (255, 0, 0))
-            help_to_winner_text = ARIAL_18.render("Press Restart to play again and have more fun", True, (255, 255, 0))
-            SCREEN.blit(winner_text, (MAX_X / 2 - 90, MAX_Y / 2 - 50))
-            if time_in_seconds > 0:  # мигает раз в секунду
-                SCREEN.blit(help_to_winner_text, (MAX_X / 2 - 150, MAX_Y / 2 + 100))
+            you_won_text()
 
         pygame.display.update()
 
