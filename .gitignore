@@ -166,3 +166,6 @@ cython_debug/
 /Documentation/index.rst
 /Documentation/conf.py
 /exe building/
+/scroll-shooter-game compiled/markupsafe/
+/scroll-shooter-game compiled/psutil/
+/scroll-shooter-game compiled/win32com/
