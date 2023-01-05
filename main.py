@@ -128,6 +128,7 @@ def react_on_menu_keys(menu_event):
     Навигация по кнопкам - стрелки вверх/вниз
     Активация выбранного пункта меню - Enter
     Quit - завершает игру, если игрок находится на стартовом экране. В противном случае возвращает на стартовый экран
+    Быстрая активация паузы - Escape
     """
     global finished
     global GAME_STATE
@@ -150,6 +151,11 @@ def react_on_menu_keys(menu_event):
                 restart_game()
             elif menu_is_here.check_current_index() == 4:
                 GAME_STATE = "about"
+        if menu_event.key == pygame.K_ESCAPE:
+            if GAME_STATE == "game":
+                GAME_STATE = "pause"
+            elif GAME_STATE == "pause":
+                GAME_STATE = "game"
 
 
 def spawn():
