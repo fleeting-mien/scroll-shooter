@@ -689,7 +689,7 @@ class Boss(EnemyShip):
         x0, y0 - положение узла восьмерки, по которой босс двигается
         R - радиус 'кружков' восьмерки
         omega - угловая скорость движения босса по восьмерке
-        self.angle - отвечает за мгновенное положение босса на восьмерке
+        angle - отвечает за мгновенное положение босса на восьмерке
         x, y - мгновенное положение босса на экране
         lives - количество его жизней
         font - шрифт текста на его healthbar-е (пришлось это сюда запихнуть)
@@ -700,7 +700,7 @@ class Boss(EnemyShip):
         self.y0 = MAX_Y/4
         self.R = 100
         self.omega = 3 / FPS
-        self.angle = 0
+        self.angle = choice([1, 2, 3]) * pi / choice([1, 2])  # случайное начальное положение босса на восьмерке
         self.x = self.x0 + self.R * (-1 + cos(self.angle))
         self.y = self.y0 + self.R * sin(self.angle)
         self.lives = BOSS_LIVES
@@ -730,8 +730,8 @@ class Boss(EnemyShip):
 
     def update(self):
         """Функция обновления состояния босса"""
-        self.rect.center = (self.x, self.y)
         self.move()
+        self.rect.center = (self.x, self.y)
         self.hit()
         self.health_bar()
         if randint(1, INTENSITY) == 1:
@@ -757,14 +757,14 @@ class BossBullet(EnemyBullet):
 
         Атрибуты:
         damage - урон пули
-        phase - фаза пули при движении по синусоиде
+        phase - мгновенная фаза пули при движении по синусоиде
         omega - угловая частота движения по синусоиде
         image - изображение пули
 
         """
         super().__init__(x, y, direction)
         self.damage = damage
-        self.phase = 0
+        self.phase = choice([1, -1, 2, -2]) * pi / choice([1, 2, 3, 4, 5])  # случайная фаза у пуль
         self.omega = choice([20 / FPS, -20 / FPS])
         self.image = image
 
